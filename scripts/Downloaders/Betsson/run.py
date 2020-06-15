@@ -52,7 +52,8 @@ print('Beginning feed download...')
 download()
 
 # Add to queue
-with open(queue_csv_path, 'a') as fd:
-    fd.write('Betsson;' + timestamp + ';All;prematch;' + ",".join(event_feeds) + "\n")
+if len(event_feeds):
+	with open(queue_csv_path, 'a') as fd:
+	    fd.write('Betsson;' + timestamp + ';All;prematch;' + ",".join(event_feeds) + "\n")
 
 print("--- %s seconds ---" % (time.time() - start_time))

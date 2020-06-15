@@ -1,0 +1,98 @@
+import requests
+import time
+import os
+
+sports = {
+	'Basketball': [
+		"acb_copa.xml",
+        "acb.xml",
+        "eurobasket.xml",
+        "euroliga.xml",
+        "nba.xml",
+        "mundialBaloncesto.xml",
+	],
+	'Football': [
+		"adelante.xml",
+        "amistosos2018.xml",
+        "amistososClubes.xml",
+        "bundesliga.xml",
+        "champions.xml",
+        "copaAmerica.xml",
+        "copa_rey.xml",
+        "europaLeague.xml",
+        "LFPAdelante.xml",
+        "euro2020.xml",
+        "LFP_Rey.xml",
+        "LFP_Segunda_B.xml",
+        "internationalCup.xml",
+        "LFP_Tercera.xml",
+        "eurocopa.xml",
+        "LFP.xml",
+        "ligaArgentina.xml",
+        "ligaAustria.xml",
+        "ligaBelgica.xml",
+        "ligaBrasil.xml",
+        "ligaColombiana.xml",
+        "ligaEscocesa.xml",
+        "ligaHolandesa.xml",
+        "liga-mx.xml",
+        "ligaPortuguesa.xml",
+        "ligaSuiza.xml",
+        "ligue1.xml",
+        "mls.xml",
+        "serieA.xml",
+        "premier.xml",
+        "supercopa.xml",
+        "UEFA_nations_league.xml",
+        "mundialFemenino.xml",
+        "mundial2018.xml",
+	],
+	'Motor': [
+		"motociclismo.xml",
+        "motor.xml",
+	],
+	'American Football': [
+		"nfl.xml",
+        "super-bowl.xml",
+	],
+	'Tennis': [
+		"tenis.xml"
+	],
+	'Rugby': [
+		"rugby.xml"
+	],
+	'Boxing': [
+		'boxeo.xml'
+	]
+}
+start_time = time.time()
+timestamp = str(int(time.time()));
+queue_path = '../../../queues/Downloaders/'
+queue_csv_path = queue_path + 'queue.csv';
+queue_downloader_path = queue_path + 'Sportium/' + timestamp + '/';
+event_feeds = []
+
+for sport in sports:
+	feeds = sports[sport]
+	print('Beginning feed download for ' + sport)
+	if len(feeds):
+		for name in feeds:
+			feed_url = 'https://services.sportium.es/feed/xml/' + name
+			print('Beginning feed download for ' + feed_url)
+			response = requests.get(feed_url, verify=False)
+
+			if response.text:
+				if not os.path.exists(queue_downloader_path):
+					os.makedirs(queue_downloader_path)
+
+				file = open(queue_downloader_path + "events-" + sport + "-" + name, "wb")
+				file.write(response.text.encode('utf-8'))
+				file.close()
+				event_feeds.append("events-" + sport + "-" + name)
+
+# Add to queue
+if len(event_feeds):
+	with open(queue_csv_path, 'a') as fd:
+	    fd.write('Sportium;' + timestamp + ';All;prematch;' + ",".join(event_feeds) + "\n")
+
+print("--- %s seconds ---" % (time.time() - start_time))

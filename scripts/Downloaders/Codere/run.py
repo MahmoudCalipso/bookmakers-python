@@ -70,7 +70,8 @@ for sport in sports:
 #  os.remove("tournaments.json")
 
 # Add to queue
-with open(queue_csv_path, 'a') as fd:
-    fd.write('Codere;' + timestamp + ';All;prematch;' + ",".join(event_feeds) + "\n")
+if len(event_feeds):
+    with open(queue_csv_path, 'a') as fd:
+        fd.write('Codere;' + timestamp + ';All;prematch;' + ",".join(event_feeds) + "\n")
 
 print("--- %s seconds ---" % (time.time() - start_time))
