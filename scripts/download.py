@@ -13,9 +13,11 @@ for bookmaker in bookmakers:
 	update = bookmaker.get('update')
 
 	if update:
+		print('-------------------------------------------------------------------')
 		print('Running download script for ' + bookmaker_title + ': ' + str(update))
 
 		if update and os.path.exists('Downloaders/' + bookmaker_title):
-			os.system('cd Downloaders/' + bookmaker_title + ' && run.py')
+			os.system('cd Downloaders/' + bookmaker_title + ' && python run.py')
+			print('-------------------------------------------------------------------')
 
 print("--- The whole process took %s seconds to complete ---" % (time.time() - start_time))
