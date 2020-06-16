@@ -1065,7 +1065,7 @@ if os.path.exists(queue_csv_path):
 									teams = []
 									odds = []
 									date = ''
-									print(bookmaker_title + ' :: Processing API event: ' + event_name)
+									#print(bookmaker_title + ' :: Processing API event: ' + event_name)
 
 									# Get teams
 									if event.get('A') and event.get('H'):
