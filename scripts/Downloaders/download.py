@@ -31,7 +31,7 @@ for bookmaker in bookmakers:
 			print('Running ' + ('live' if is_live else 'prematch') + ' download for ' + bookmaker_title + ': ' + str(update))
 
 			if update and os.path.exists(bookmaker_title):
-				os.system('python ' + bookmaker_title + '/run.py' + (' live' if is_live else ''))
+				os.system('cd ' + bookmaker_title + ' && python run.py' + (' live' if is_live else ''))
 				print('-------------------------------------------------------------------')
 
 print("--- The whole process took %s seconds to complete ---" % (time.time() - start_time))
