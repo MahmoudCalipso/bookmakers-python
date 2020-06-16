@@ -5,7 +5,8 @@
 		"update": {
 			"prematch": true,
 			"live": true
-		}
+		},
+		"downloader": "downloader-1"
 	},
 	{
 		"id": 2,
@@ -13,7 +14,8 @@
 		"update": {
 			"prematch": true,
 			"live": true
-		}
+		},
+		"downloader": "downloader-1"
 	},
 	{
 		"id": 3,
@@ -21,7 +23,8 @@
 		"update": {
 			"prematch": true,
 			"live": true
-		}
+		},
+		"downloader": "downloader-1"
 	},
 	{
 		"id": 4,
@@ -29,7 +32,8 @@
 		"update": {
 			"prematch": true,
 			"live": true
-		}
+		},
+		"downloader": "downloader-3"
 	},
 	{
 		"id": 5,
@@ -37,7 +41,8 @@
 		"update": {
 			"prematch": true,
 			"live": true
-		}
+		},
+		"downloader": "downloader-1"
 	},
 	{
 		"id": 6,
@@ -45,7 +50,8 @@
 		"update": {
 			"prematch": true,
 			"live": false
-		}
+		},
+		"downloader": "downloader-2"
 	},
 	{
 		"id": 8,
@@ -53,7 +59,8 @@
 		"update": {
 			"prematch": true,
 			"live": false
-		}
+		},
+		"downloader": "downloader-2"
 	},
 	{
 		"id": 9,
@@ -61,7 +68,8 @@
 		"update": {
 			"prematch": true,
 			"live": true
-		}
+		},
+		"downloader": "downloader-2"
 	},
 	{
 		"id": 11,
@@ -69,7 +77,8 @@
 		"update": {
 			"prematch": true,
 			"live": true
-		}
+		},
+		"downloader": "downloader-3"
 	},
 	{
 		"id": 12,
@@ -77,7 +86,8 @@
 		"update": {
 			"prematch": true,
 			"live": true
-		}
+		},
+		"downloader": "downloader-2"
 	},
 	{
 		"id": 13,
@@ -85,7 +95,8 @@
 		"update": {
 			"prematch": true,
 			"live": false
-		}
+		},
+		"downloader": "downloader-2"
 	},
 	{
 		"id": 14,
@@ -93,7 +104,8 @@
 		"update": {
 			"prematch": true,
 			"live": true
-		}
+		},
+		"downloader": "downloader-1"
 	},
 	{
 		"id": 15,
@@ -101,7 +113,8 @@
 		"update": {
 			"prematch": true,
 			"live": true
-		}
+		},
+		"downloader": "downloader-1"
 	},
 	{
 		"id": 16,
@@ -109,7 +122,8 @@
 		"update": {
 			"prematch": true,
 			"live": true
-		}
+		},
+		"downloader": "downloader-1"
 	},
 	{
 		"id": 17,
@@ -117,7 +131,8 @@
 		"update": {
 			"prematch": true,
 			"live": true
-		}
+		},
+		"downloader": "downloader-1"
 	},
 	{
 		"id": 18,
@@ -125,6 +140,7 @@
 		"update": {
 			"prematch": true,
 			"live": false
-		}
+		},
+		"downloader": "downloader-2"
 	}
 ]

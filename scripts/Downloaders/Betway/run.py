@@ -20,7 +20,7 @@ queue_downloader_path = queue_path + bookmaker_title + '/' + download_type + '/'
 event_feeds = []
 
 print('-- Beginning events feed download...')
-events_feed_url = 'http://feeds.betway.com/sbeventsliveen' if is_live else 'http://feeds.betway.com/sbeventsen';
+events_feed_url = 'https://feeds.betway.com/sbeventsliveen' if is_live else 'https://feeds.betway.com/sbeventsen';
 events_feed_url += '?key=83594BE8&keywords=soccer,basketball,motor-sport,motor-racing,formula-1,esports,rugby-league,rugby-union,tennis,boxing,ufc---martial-arts,cycling,golf,american-football'
 
 print(events_feed_url)

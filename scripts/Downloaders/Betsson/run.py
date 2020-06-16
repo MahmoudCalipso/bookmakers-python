@@ -43,13 +43,12 @@ def download():
 		file.close()
 		event_feeds.append("events-" + str(current_page) + ".json")
 
-		tp = 1
-		for prefix, event, value in ijson.parse(open(queue_downloader_path + "events-" + str(current_page) + ".json", 'r')):
-			if prefix == 'tp':
-				tp = value;
-				break;
-
 		if total_pages == 0:
+			tp = 1
+			for prefix, event, value in ijson.parse(open(queue_downloader_path + "events-" + str(current_page) + ".json", 'r')):
+				if prefix == 'tp':
+					tp = value;
+					break;
 			total_pages = tp
 
 		print('Downloading page ' + str(current_page) + ' of ' + str(total_pages))
