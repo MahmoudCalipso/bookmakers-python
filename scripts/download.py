@@ -10,12 +10,15 @@ is_live = False
 if len(sys.argv) > 1 and sys.argv[1] == 'live':
 	is_live = True
 
+download_type = 'live' if is_live else 'prematch'
+
 # Loop bookmakers
 bookmakers = ijson.items(open('../bookmakers.json', 'r'), 'item');
 
 for bookmaker in bookmakers:
 	bookmaker_title = bookmaker.get('title')
-	update = bookmaker.get('update')
+	update_config = bookmaker.get('update')
+	update = update_config.get(download_type)
 
 	if update:
 		print('-------------------------------------------------------------------')
