@@ -1056,127 +1056,130 @@ if os.path.exists(queue_csv_path):
 							print('Processing ' + file)
 							events = ijson.items(open(file_path, 'r', encoding="utf-8"), 'item');
 							for event in events:
-								bookmaker_event = BookmakerEvent.BookmakerEvent()
-								event_sport = event.get('S')
-								event_tournament = event.get('C')
-								event_id = event.get('I')
-								event_name = event.get('H') + ' vs ' + event.get('A')
-								teams = []
-								odds = []
-								date = ''
-								#print(bookmaker_title + ' :: Processing API event: ' + event_name)
+								try:
+									bookmaker_event = BookmakerEvent.BookmakerEvent()
+									event_sport = event.get('S')
+									event_tournament = event.get('C')
+									event_id = event.get('I')
+									event_name = event.get('H') + ' vs ' + event.get('A')
+									teams = []
+									odds = []
+									date = ''
+									print(bookmaker_title + ' :: Processing API event: ' + event_name)
 
-								# Get teams
-								if event.get('A') and event.get('H'):
-									team1 = BookmakerEventTeam.BookmakerEventTeam()
-									team2 = BookmakerEventTeam.BookmakerEventTeam()
+									# Get teams
+									if event.get('A') and event.get('H'):
+										team1 = BookmakerEventTeam.BookmakerEventTeam()
+										team2 = BookmakerEventTeam.BookmakerEventTeam()
 
-									team1.title = event.get('H')
-									team1.local = True
+										team1.title = event.get('H')
+										team1.local = True
 
-									team2.title = event.get('A')
-									team2.local = False
+										team2.title = event.get('A')
+										team2.local = False
 
-									#checkTeamMembers(event_sport, team1)
-									#checkTeamMembers(event_sport, team2)
+										#checkTeamMembers(event_sport, team1)
+										#checkTeamMembers(event_sport, team2)
 
-									teams = [team1, team2]
+										teams = [team1, team2]
 
-								# Parse date
-								matches = re.search('\/Date\((\d+)\)\/', event.get('D'))
+									# Parse date
+									matches = re.search('\/Date\((\d+)\)\/', event.get('D'))
 
-								if matches:
-									timestamp_in_milliseconds = matches.group(1)
-									timestamp_in_seconds = int(timestamp_in_milliseconds) / 1000
-									datetime = datetime.fromtimestamp(timestamp_in_seconds)
+									if matches:
+										timestamp_in_milliseconds = matches.group(1)
+										timestamp_in_seconds = int(timestamp_in_milliseconds) / 1000
+										datetime = datetime.fromtimestamp(timestamp_in_seconds)
 
-									if datetime:
-										date = datetime.strftime('%Y-%m-%d %H:%M:%S')
+										if datetime:
+											date = datetime.strftime('%Y-%m-%d %H:%M:%S')
 
-								filterTeams(event_sport, teams)
+									filterTeams(event_sport, teams)
 
-								bookmaker_event.event_id = event_id
-								bookmaker_event.title = event_name
-								bookmaker_event.tournament = event_tournament
-								bookmaker_event.sport = event_sport
-								bookmaker_event.date = date
+									bookmaker_event.event_id = event_id
+									bookmaker_event.title = event_name
+									bookmaker_event.tournament = event_tournament
+									bookmaker_event.sport = event_sport
+									bookmaker_event.date = date
 
-								if event.get('EE'):
-									for outcome in event.get('EE'):
-										if outcome.get('T') and str(outcome.get('T')) in outcomes:
-											market = outcomes[str(outcome.get('T'))]['market']
-											found_at = -1
-											outcome_title = outcomes[str(outcome.get('T'))]['title']
+									if event.get('EE'):
+										for outcome in event.get('EE'):
+											if outcome.get('T') and str(outcome.get('T')) in outcomes:
+												market = outcomes[str(outcome.get('T'))]['market']
+												found_at = -1
+												outcome_title = outcomes[str(outcome.get('T'))]['title']
 
+												i = 0
+												for odd in odds:
+													if odd.title == market:
+														found_at = i
+													i += 1
+
+												replace1_pos = outcome_title.find('{replace1}')
+												replace2_pos = outcome_title.find('{replace2}')
+
+												if replace2_pos > -1:
+													parts = str(outcome.get('P')).split('.')
+													replace1 = parts[0]
+													replace2 = replace1
+
+													if len(parts) > 1:
+														right_pad_times = 3
+														final_replace2 = parts[1]
+
+														if right_pad_times >= len(final_replace2):
+															zeros_count = right_pad_times - len(final_replace2)
+															final_replace2 = final_replace2 + str_repeat('0', zeros_count)
+															final_replace2 = final_replace2.lstrip("0");
+														else:
+															left = final_replace2[0 : right_pad_times]
+															right = final_replace2[right_pad_times:]
+															final_replace2 = left + '.' + right
+
+														replace2 = final_replace2
+
+													outcome_title = outcome_title.replace('{replace1}', replace1)
+													outcome_title = outcome_title.replace('{replace2}', replace2)
+												elif replace1_pos > -1:
+													outcome_title = outcome_title.replace('{replace1}', str(outcome.get('P')))
+
+												bookmaker_odd_outcome = BookmakerOddOutcome.BookmakerOddOutcome()
+
+												bookmaker_odd_outcome.title = outcome.get('O') if outcome.get('O') else outcome_title
+												bookmaker_odd_outcome.decimal = outcome.get('C')
+
+												if found_at > -1:
+													odds[found_at].outcomes.append(bookmaker_odd_outcome)
+												else:
+													odd = BookmakerOdd.BookmakerOdd()
+
+													odd.title = market
+													odd.outcomes = [bookmaker_odd_outcome]
+
+													odds.append(odd)
+
+									bookmaker_event.odds = odds
+
+									# Get teams from markets if array is empty
+									if len(teams) == 0:
+										for odd in odds:
 											i = 0
-											for odd in odds:
-												if odd.title == market:
-													found_at = i
-												i += 1
+											for outcome in odd.outcomes:
+												team = BookmakerEventTeam.BookmakerEventTeam()
 
-											replace1_pos = outcome_title.find('{replace1}')
-											replace2_pos = outcome_title.find('{replace2}')
+												team.title = event.get('H')
+												team.local = i == 0
 
-											if replace2_pos > -1:
-												parts = str(outcome.get('P')).split('.')
-												replace1 = parts[0]
-												replace2 = replace1
+												#checkTeamMembers(event_sport, team)
 
-												if len(parts) > 1:
-													right_pad_times = 3
-													final_replace2 = parts[1]
+												teams.append(team)
+											break
 
-													if right_pad_times >= len(final_replace2):
-														zeros_count = right_pad_times - len(final_replace2)
-														final_replace2 = final_replace2 + str_repeat('0', zeros_count)
-														final_replace2 = final_replace2.lstrip("0");
-													else:
-														left = final_replace2[0 : right_pad_times]
-														right = final_replace2[right_pad_times:]
-														final_replace2 = left + '.' + right
+									bookmaker_event.teams = teams
 
-													replace2 = final_replace2
-
-												outcome_title = outcome_title.replace('{replace1}', replace1)
-												outcome_title = outcome_title.replace('{replace2}', replace2)
-											elif replace1_pos > -1:
-												outcome_title = outcome_title.replace('{replace1}', str(outcome.get('P')))
-
-											bookmaker_odd_outcome = BookmakerOddOutcome.BookmakerOddOutcome()
-
-											bookmaker_odd_outcome.title = outcome.get('O') if outcome.get('O') else outcome_title
-											bookmaker_odd_outcome.decimal = outcome.get('C')
-
-											if found_at > -1:
-												odds[found_at].outcomes.append(bookmaker_odd_outcome)
-											else:
-												odd = BookmakerOdd.BookmakerOdd()
-
-												odd.title = market
-												odd.outcomes = [bookmaker_odd_outcome]
-
-												odds.append(odd)
-
-								bookmaker_event.odds = odds
-
-								# Get teams from markets if array is empty
-								if len(teams) == 0:
-									for odd in odds:
-										i = 0
-										for outcome in odd.outcomes:
-											team = BookmakerEventTeam.BookmakerEventTeam()
-
-											team.title = event.get('H')
-											team.local = i == 0
-
-											#checkTeamMembers(event_sport, team)
-
-											teams.append(team)
-										break
-
-								bookmaker_event.teams = teams
-
-								bookmaker_updater.processEvent(bookmaker_event)
+									bookmaker_updater.processEvent(bookmaker_event)
+								except:
+									print(bookmaker_title + ' :: Could not process event')
 
 
 print("--- %s seconds ---" % (time.time() - start_time))
