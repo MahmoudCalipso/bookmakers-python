@@ -8,9 +8,10 @@ downloader = 'Generic'
 start_time = time.time()
 is_live = False
 
-if len(sys.argv) > 2:
+if len(sys.argv) > 1:
 	downloader = sys.argv[1]
-	if sys.argv[2] == 'live':
+
+if len(sys.argv) > 2 and sys.argv[2] == 'live':
 		is_live = True
 
 download_type = 'live' if is_live else 'prematch'

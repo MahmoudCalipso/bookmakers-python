@@ -16,7 +16,7 @@ download_type = 'live' if is_live else 'prematch';
 start_time = time.time()
 timestamp = str(int(time.time()));
 queue_path = '../../../queues/Downloaders/'
-queue_csv_path = queue_path + bookmaker_title + '/queue.csv';
+queue_csv_path = queue_path + 'queue_' + date.today().strftime("%d-%m-%Y") + '.csv';
 queue_downloader_path = queue_path + bookmaker_title + '/' + download_type + '/' + timestamp + '/';
 event_feeds = []
 
@@ -73,6 +73,6 @@ else:
 # Add to queue
 if len(event_feeds):
     with open(queue_csv_path, 'a') as fd:
-        fd.write(timestamp + ';All;' + download_type + ';' + ",".join(event_feeds) + "\n")
+        fd.write(bookmaker_title + ';' + timestamp + ';All;' + download_type + ';' + ",".join(event_feeds) + "\n")
 
 print("--- %s seconds ---" % (time.time() - start_time))
