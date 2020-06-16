@@ -6,8 +6,10 @@ import csv
 import sys
 import re
 from datetime import datetime, timedelta
+sys.path.append("../")
 sys.path.append("../../")
 from models import BookmakerEvent, BookmakerEventTeam, BookmakerEventTeamMember, BookmakerOdd, BookmakerOddOutcome
+import bookmaker_updater
 
 # Constants
 MARKET_1X2 = '1X2';
@@ -1089,10 +1091,15 @@ if os.path.exists(queue_csv_path):
 									datetime = datetime.fromtimestamp(timestamp_in_seconds)
 
 									if datetime:
-										datetime = datetime + timedelta(hours=1)
 										date = datetime.strftime('%Y-%m-%d %H:%M:%S')
 
 								filterTeams(event_sport, teams)
+
+								bookmaker_event.event_id = event_id
+								bookmaker_event.title = event_name
+								bookmaker_event.tournament = event_tournament
+								bookmaker_event.sport = event_sport
+								bookmaker_event.date = date
 
 								if event.get('EE'):
 									for outcome in event.get('EE'):
@@ -1169,7 +1176,7 @@ if os.path.exists(queue_csv_path):
 
 								bookmaker_event.teams = teams
 
-								# processEvent(bookmaker_event)
+								bookmaker_updater.processEvent(bookmaker_event)
 
 
 print("--- %s seconds ---" % (time.time() - start_time))
