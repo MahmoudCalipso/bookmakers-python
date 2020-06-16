@@ -3,12 +3,21 @@ import requests
 import time
 import os
 import json
+import sys
+
+is_live = False
+
+if len(sys.argv) > 1 and sys.argv[1] == 'live':
+    is_live = True
+
+bookmaker_title = 'Interwetten';
+download_type = 'live' if is_live else 'prematch';
 
 start_time = time.time()
 timestamp = str(int(time.time()));
 queue_path = '../../../queues/Downloaders/'
 queue_csv_path = queue_path + 'queue.csv';
-queue_downloader_path = queue_path + 'Interwetten/' + timestamp + '/';
+queue_downloader_path = queue_path + bookmaker_title + '/' + download_type + '/' + timestamp + '/';
 event_feeds = []
 
 # Auth
@@ -53,7 +62,8 @@ if token:
 		print("Looping sport " + name + " with ID " + str(id))
 		print('-- Beginning events feed download...')
 
-		events_feed_url = 'https://partner.odds.ws/api/sport/EN/' + str(id) + '?eventFilter=PreMatch&marketFilter=All'
+		events_feed_url = 'https://partner.odds.ws/api/sport/EN/' + str(id) + '?eventFilter=' + ('Live' if is_live else 'PreMatch') + '&marketFilter=All'
+		print(events_feed_url)
 		response = requests.get(events_feed_url, headers=headers)
 
 		if response.text:

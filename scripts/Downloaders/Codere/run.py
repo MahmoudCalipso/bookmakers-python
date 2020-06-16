@@ -2,12 +2,21 @@ import ijson
 import requests
 import time
 import os
+import sys
+
+is_live = False
+
+if len(sys.argv) > 1 and sys.argv[1] == 'live':
+    is_live = True
+
+bookmaker_title = 'Codere';
+download_type = 'live' if is_live else 'prematch';
 
 start_time = time.time()
 timestamp = str(int(time.time()));
 queue_path = '../../../queues/Downloaders/'
 queue_csv_path = queue_path + 'queue.csv';
-queue_downloader_path = queue_path + 'Codere/' + timestamp + '/';
+queue_downloader_path = queue_path + bookmaker_title + '/' + download_type + '/' + timestamp + '/';
 event_feeds = []
 
 # Download sports feed
@@ -48,7 +57,13 @@ for sport in sports:
                                 id = league.get('NodeId')
                                 print("---- Looping tournament " + name + " with ID " + id)
                                 print('------ Beginning events feed download...')
-                                events_feed_url = 'http://coderesbgonlinesbs.azurewebsites.net/api/feeds/leagues/' + id + '/nonLiveEvents'
+
+                                if is_live:
+                                    events_feed_url = 'http://coderesbgonlinesbs.azurewebsites.net/api/feeds/leagues/' + id + '/liveEvents';
+                                else:
+                                    events_feed_url = 'http://coderesbgonlinesbs.azurewebsites.net/api/feeds/leagues/' + id + '/nonLiveEvents'
+
+                                print(events_feed_url)
                                 response = requests.get(events_feed_url, headers=headers)
 
                                 if response.text:
@@ -72,6 +87,6 @@ for sport in sports:
 # Add to queue
 if len(event_feeds):
     with open(queue_csv_path, 'a') as fd:
-        fd.write('Codere;' + timestamp + ';All;prematch;' + ",".join(event_feeds) + "\n")
+        fd.write(bookmaker_title + ';' + timestamp + ';All;' + download_type + ';' + ",".join(event_feeds) + "\n")
 
 print("--- %s seconds ---" % (time.time() - start_time))
