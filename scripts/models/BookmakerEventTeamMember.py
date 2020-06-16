@@ -1,0 +1,3 @@
+class BookmakerEventTeamMember():
+    
+    title = ''

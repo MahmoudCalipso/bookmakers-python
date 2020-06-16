@@ -6,7 +6,8 @@
 			"prematch": true,
 			"live": true
 		},
-		"downloader": "downloader-1"
+		"downloader": "downloader-1",
+		"reader": "reader-1"
 	},
 	{
 		"id": 2,
@@ -15,7 +16,8 @@
 			"prematch": true,
 			"live": true
 		},
-		"downloader": "downloader-1"
+		"downloader": "downloader-1",
+		"reader": "reader-1"
 	},
 	{
 		"id": 3,
@@ -24,7 +26,8 @@
 			"prematch": true,
 			"live": true
 		},
-		"downloader": "downloader-1"
+		"downloader": "downloader-1",
+		"reader": "reader-1"
 	},
 	{
 		"id": 4,
@@ -33,7 +36,8 @@
 			"prematch": true,
 			"live": true
 		},
-		"downloader": "downloader-3"
+		"downloader": "downloader-3",
+		"reader": "reader-1"
 	},
 	{
 		"id": 5,
@@ -42,7 +46,8 @@
 			"prematch": true,
 			"live": true
 		},
-		"downloader": "downloader-1"
+		"downloader": "downloader-1",
+		"reader": "reader-2"
 	},
 	{
 		"id": 6,
@@ -51,7 +56,8 @@
 			"prematch": true,
 			"live": false
 		},
-		"downloader": "downloader-2"
+		"downloader": "downloader-2",
+		"reader": "reader-2"
 	},
 	{
 		"id": 8,
@@ -60,7 +66,8 @@
 			"prematch": true,
 			"live": false
 		},
-		"downloader": "downloader-2"
+		"downloader": "downloader-2",
+		"reader": "reader-2"
 	},
 	{
 		"id": 9,
@@ -69,7 +76,8 @@
 			"prematch": true,
 			"live": true
 		},
-		"downloader": "downloader-2"
+		"downloader": "downloader-2",
+		"reader": "reader-2"
 	},
 	{
 		"id": 11,
@@ -78,7 +86,8 @@
 			"prematch": true,
 			"live": true
 		},
-		"downloader": "downloader-3"
+		"downloader": "downloader-3",
+		"reader": "reader-2"
 	},
 	{
 		"id": 12,
@@ -87,7 +96,8 @@
 			"prematch": true,
 			"live": true
 		},
-		"downloader": "downloader-2"
+		"downloader": "downloader-2",
+		"reader": "reader-3"
 	},
 	{
 		"id": 13,
@@ -96,7 +106,8 @@
 			"prematch": true,
 			"live": false
 		},
-		"downloader": "downloader-2"
+		"downloader": "downloader-2",
+		"reader": "reader-3"
 	},
 	{
 		"id": 14,
@@ -105,7 +116,8 @@
 			"prematch": true,
 			"live": true
 		},
-		"downloader": "downloader-1"
+		"downloader": "downloader-1",
+		"reader": "reader-3"
 	},
 	{
 		"id": 15,
@@ -114,7 +126,8 @@
 			"prematch": true,
 			"live": true
 		},
-		"downloader": "downloader-1"
+		"downloader": "downloader-1",
+		"reader": "reader-3"
 	},
 	{
 		"id": 16,
@@ -123,7 +136,8 @@
 			"prematch": true,
 			"live": true
 		},
-		"downloader": "downloader-1"
+		"downloader": "downloader-1",
+		"reader": "reader-3"
 	},
 	{
 		"id": 17,
@@ -132,7 +146,8 @@
 			"prematch": true,
 			"live": true
 		},
-		"downloader": "downloader-1"
+		"downloader": "downloader-1",
+		"reader": "reader-1"
 	},
 	{
 		"id": 18,
@@ -141,6 +156,7 @@
 			"prematch": true,
 			"live": false
 		},
-		"downloader": "downloader-2"
+		"downloader": "downloader-2",
+		"reader": "reader-1"
 	}
 ]
