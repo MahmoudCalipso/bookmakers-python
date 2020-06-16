@@ -9,3 +9,4 @@ class BookmakerEvent():
     odds = []
     teams = []
     has_markets = False
+    live = False
