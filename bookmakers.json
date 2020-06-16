@@ -2,81 +2,129 @@
 	{
 		"id": 1,
 		"title": "Bethard",
-		"update": true
+		"update": {
+			"prematch": true,
+			"live": true
+		}
 	},
 	{
 		"id": 2,
 		"title": "Betsson",
-		"update": true
+		"update": {
+			"prematch": true,
+			"live": true
+		}
 	},
 	{
 		"id": 3,
 		"title": "Betway",
-		"update": true
+		"update": {
+			"prematch": true,
+			"live": true
+		}
 	},
 	{
 		"id": 4,
 		"title": "Codere",
-		"update": true
+		"update": {
+			"prematch": true,
+			"live": true
+		}
 	},
 	{
 		"id": 5,
 		"title": "Luckia",
-		"update": true
+		"update": {
+			"prematch": true,
+			"live": true
+		}
 	},
 	{
 		"id": 6,
 		"title": "Sportium",
-		"update": true
+		"update": {
+			"prematch": true,
+			"live": false
+		}
 	},
 	{
 		"id": 8,
 		"title": "LeoVegas",
-		"update": true
+		"update": {
+			"prematch": true,
+			"live": false
+		}
 	},
 	{
 		"id": 9,
 		"title": "888sport",
-		"update": true
+		"update": {
+			"prematch": true,
+			"live": true
+		}
 	},
 	{
 		"id": 11,
 		"title": "Bet365",
-		"update": true
+		"update": {
+			"prematch": true,
+			"live": true
+		}
 	},
 	{
 		"id": 12,
 		"title": "Interwetten",
-		"update": true
+		"update": {
+			"prematch": true,
+			"live": true
+		}
 	},
 	{
 		"id": 13,
 		"title": "MarathonBet",
-		"update": true
+		"update": {
+			"prematch": true,
+			"live": false
+		}
 	},
 	{
 		"id": 14,
 		"title": "1xbet",
-		"update": true
+		"update": {
+			"prematch": true,
+			"live": true
+		}
 	},
 	{
 		"id": 15,
 		"title": "Vbet",
-		"update": true
+		"update": {
+			"prematch": true,
+			"live": true
+		}
 	},
 	{
 		"id": 16,
 		"title": "Rivalo",
-		"update": true
+		"update": {
+			"prematch": true,
+			"live": true
+		}
 	},
 	{
 		"id": 17,
 		"title": "Betmotion",
-		"update": true
+		"update": {
+			"prematch": true,
+			"live": true
+		}
 	},
 	{
 		"id": 18,
 		"title": "Strendus",
-		"update": true
+		"update": {
+			"prematch": true,
+			"live": false
+		}
 	}
 ]
