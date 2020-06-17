@@ -1,3 +1,6 @@
+import os
+import csv
+
 # Constants
 BOOKMAKER_SPORTS_TABLE = 'bookmaker_sports'
 BOOKMAKER_TOURNAMENTS_TABLE = 'bookmaker_tournaments'
@@ -10,6 +13,7 @@ BOOKMAKER_EVENT_MARKETS_TABLE = 'bookmaker_event_markets'
 BOOKMAKER_EVENT_MARKET_OUTCOMES_TABLE = 'bookmaker_event_market_outcomes'
 
 # Variables
+entities = ['sports', 'tournaments', 'teams', 'markets']
 bookmaker_sports = {}
 bookmaker_tournaments = {}
 bookmaker_teams = {}
@@ -48,6 +52,113 @@ processed_event_teams = []
 
 events = []
 
+def init(title):
+	initBookmakerEntities(title)
+	initMappings(title)
+
+def initBookmakerEntities(title):
+	global bookmaker_sports
+	global bookmaker_tournaments
+	global bookmaker_teams
+	global bookmaker_markets
+	global bookmaker_sports_to_skip
+	global bookmaker_tournaments_to_skip
+	global entities
+
+	for entity in entities:
+		csv_path = '../../cache/entities/' + title + '/' + entity + '.csv'
+		if os.path.exists(csv_path):
+			with open(csv_path, 'r', encoding="utf-8") as file:
+				for line in file:
+					row = line.strip().split('@s.s@')
+					if entity == 'sports':
+						# id@s.s@title@s.s@skip
+						bookmaker_sports[row[1]] = {
+							'id': row[0],
+							'title': row[1]
+						}
+
+						if row[2] == '1':
+							bookmaker_sports_to_skip.append(row[1])
+					elif entity == 'tournaments':
+						# parent_id@s.s@parent_title@s.s@id@s.s@title@s.s@skip
+						bookmaker_tournaments[row[3]] = {
+							'id': row[2],
+							'bookmaker_sport_id': row[0],
+							'bookmaker_sport_title': row[1]
+						}
+
+						if row[4] == '1':
+							bookmaker_tournaments_to_skip.append(row[3])
+					elif entity == 'teams':
+						# parent_id@s.s@parent_title@s.s@id@s.s@title@s.s@skip
+						bookmaker_teams[row[3]] = {
+							'id': row[2],
+							'bookmaker_sport_id': row[0],
+							'bookmaker_sport_title': row[1]
+						}
+					elif entity == 'markets':
+						# parent_id@s.s@parent_title@s.s@id@s.s@title@s.s@skip
+						bookmaker_markets[row[3]] = {
+							'id': row[2],
+							'bookmaker_sport_id': row[0],
+							'bookmaker_sport_title': row[1]
+						}
+
+
+def initMappings(title):
+	global sports_maps
+	global tournaments_maps
+	global teams_maps
+	global markets_maps
+	global entities
+
+	for entity in entities:
+		csv_path = '../../cache/mappings/' + title + '/' + entity + '.csv'
+		if os.path.exists(csv_path):
+			with open(csv_path, 'r', encoding="utf-8") as file:
+				for line in file:
+					row = line.strip().split('@s.s@')
+					if entity == 'sports':
+						# entity_id@s.s@entity_title@s.s@entity_live_date_interval@s.s@bookmaker_entity_id@s.s@bookmaker_entity_title
+						sports_maps[row[3]] = {
+							'sport_id': row[0],
+							'sport_title': row[1],
+							'live_date_interval': row[2],
+							'bookmaker_sport_id': row[3],
+							'bookmaker_sport_title': row[4],
+						}
+					elif entity == 'tournaments':
+						# entity_id@s.s@entity_title@s.s@entity_parent_id@s.s@entity_parent_title@s.s@bookmaker_entity_id@s.s@bookmaker_entity_title
+						tournaments_maps[row[4]] = {
+							'sport_id': row[2],
+							'sport_title': row[3],
+							'tournament_id': row[0],
+							'tournament_title': row[1],
+							'bookmaker_tournament_id': row[4],
+							'bookmaker_tournament_title': row[5],
+						}
+					elif entity == 'teams':
+						# entity_id@s.s@entity_title@s.s@entity_parent_id@s.s@entity_parent_title@s.s@bookmaker_entity_id@s.s@bookmaker_entity_title
+						teams_maps[row[4]] = {
+							'sport_id': row[2],
+							'sport_title': row[3],
+							'team_id': row[0],
+							'team_title': row[1],
+							'bookmaker_team_id': row[4],
+							'bookmaker_team_title': row[5],
+						}
+					elif entity == 'markets':
+						# entity_id@s.s@entity_title@s.s@entity_parent_id@s.s@entity_parent_title@s.s@bookmaker_entity_id@s.s@bookmaker_entity_title
+						markets_maps[row[4]] = {
+							'sport_id': row[2],
+							'sport_title': row[3],
+							'market_id': row[0],
+							'market_title': row[1],
+							'bookmaker_market_id': row[4],
+							'bookmaker_market_title': row[5],
+						}
+
 def shouldSkipSport(sport):
 	return sport in bookmaker_sports_to_skip
 
@@ -63,6 +174,8 @@ def processEvent(bookmaker_event):
 		and (len(bookmaker_event.date) > 0 or bookmaker_event.live)
 		and not shouldSkipSport(bookmaker_event.sport)
 		and not shouldSkipTournament(bookmaker_event.tournament)):
+
+		print('Processing: ' + bookmaker_event.title)
 
 		buildBookmakerSport(bookmaker_event)
 		buildBookmakerTournament(bookmaker_event)

@@ -1039,6 +1039,8 @@ queue_csv_path = queue_path + 'queue.csv';
 queue_reader_path = queue_path + bookmaker_title + '/' + timestamp + '/';
 event_feeds = []
 
+bookmaker_updater.init(bookmaker_title)
+
 print('Reading CSV: ' + queue_csv_path)
 # Extract row from CSV and process it
 if os.path.exists(queue_csv_path):
