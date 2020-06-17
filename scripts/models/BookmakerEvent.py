@@ -6,6 +6,7 @@ class BookmakerEvent():
     sport = ''
     tournament = ''
     date = ''
+    replace_title = ''
     odds = []
     teams = []
     has_markets = False

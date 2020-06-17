@@ -1,9 +1,11 @@
 import os
 import csv
 import time
-import sys
 import json
-from datetime import date
+import re
+import datetime
+from datetime import date, timedelta
+from slugify import slugify
 
 # Constants
 BOOKMAKER_SPORTS_TABLE = 'bookmaker_sports'
@@ -15,15 +17,19 @@ BOOKMAKER_TEAMS_TABLE_COLUMNS = ['id', 'fk_bookmaker_id', 'fk_bookmaker_sport_id
 BOOKMAKER_MARKETS_TABLE = 'bookmaker_markets'
 BOOKMAKER_MARKETS_TABLE_COLUMNS = ['id', 'fk_bookmaker_id', 'fk_bookmaker_sport_id', 'title', 'skip', 'outcomes', 'mapped', 'created_at']
 EVENTS_TABLE = 'events'
+EVENTS_TABLE_COLUMNS = ['id','fk_tournament_id', 'inserted_by', 'title', 'date', 'live_until', 'slug', 'live', 'top', 'active', 'has_markets', 'teams_count', 'time', 'has_members', 'created_at', 'related_to_market']
 EVENT_TEAMS_TABLE = 'event_teams'
 BOOKMAKER_EVENTS_TABLE = 'bookmaker_events'
 BOOKMAKER_EVENT_MARKETS_TABLE = 'bookmaker_event_markets'
 BOOKMAKER_EVENT_MARKET_OUTCOMES_TABLE = 'bookmaker_event_market_outcomes'
 
+
+EVENT_CHAMPIONSHIP_WINNER = 'Winner'
 ACTIVE = 1
 INACTIVE = 0
-MYSQL_DATE_FORMAT = '%d-%m-%Y'
+MYSQL_DATE_FORMAT = '%Y-%m-%d'
 MYSQL_DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
+MYSQL_TIME_FORMAT = '%H:%M:%S'
 
 # Variables
 bookmaker_id = None
@@ -71,6 +77,7 @@ processed_events = {}
 processed_event_teams = {}
 
 events = {}
+outright_markets = {}
 
 def init(id, title):
 	global bookmaker_id
@@ -215,7 +222,7 @@ def addProcessToQueue():
 	global bookmaker_id
 
 	with open(queue_csv_path, 'a', encoding="utf-8") as fd:
-		fd.write(timestamp + ";" + str(processed_files) + ";" + date.today().strftime(MYSQL_DATETIME_FORMAT))
+		fd.write(timestamp + ";" + str(processed_files) + ";" + date.today().strftime(MYSQL_DATETIME_FORMAT) + "\n")
 
 def initBookmakerEntities(title):
 	global bookmaker_sports
@@ -551,7 +558,190 @@ def buildBookmakerMarkets(bookmaker_event):
 			processed_entities[BOOKMAKER_MARKETS_TABLE] += 1
 
 def buildEvent(bookmaker_event):
-	a = 1
+	global bookmaker_sports
+	global bookmaker_tournaments
+	global bookmaker_teams
+	global sports_maps
+	global tournaments_maps
+	global teams_maps
+	global processed_events
+	global events
+	global outright_markets
+	global processed_entities
+	global sql_files_path
+
+	if bookmaker_event.has_markets:
+		now = datetime.datetime.now()
+		today = now.strftime(MYSQL_DATE_FORMAT)
+		bookmaker_sport = bookmaker_sports[bookmaker_event.sport]
+		bookmaker_tournament = bookmaker_tournaments[bookmaker_event.sport][bookmaker_event.tournament]
+		sport_id = sports_maps[bookmaker_sport['id']]['sport_id']
+		sport_title = sports_maps[bookmaker_sport['id']]['sport_title']
+		sport_live_date_interval = sports_maps[bookmaker_sport['id']]['live_date_interval']
+
+		if bookmaker_tournament['id'] in tournaments_maps:
+			tournament = tournaments_maps[bookmaker_tournament['id']]
+			tournament_id = tournament['tournament_id']
+			tournament_title = tournament['tournament_title']
+
+			if sport_title not in processed_events:
+				processed_events[sport_title] = {}
+
+			if tournament_title not in processed_events[sport_title]:
+				processed_events[sport_title][tournament_title] = {}
+
+			# Get teams and build event name
+			event_between_two_teams = False
+			event_between_two_teams_with_members = False
+			has_members = False
+			event_name = bookmaker_event.title
+			teams_count = 0
+			teams_names = []
+			teams_ids = []
+
+			if len(bookmaker_event.teams) > 0 and bookmaker_event.replace_title != EVENT_CHAMPIONSHIP_WINNER:
+				for team in bookmaker_event.teams:
+					if len(team.members) > 0:
+						members_names = []
+						has_members = True
+						for member in team.members:
+							if (
+								bookmaker_event.sport in bookmaker_teams
+								and member.title in bookmaker_teams[bookmaker_event.sport]
+								and bookmaker_teams[bookmaker_event.sport][member.title]['id'] in teams_maps
+							):
+								members_names.append(teams_maps[bookmaker_teams[bookmaker_event.sport][member.title]['id']]['team_title'])
+
+						if len(members_names) == 2:
+							teams_names.append(members_names[0] + ' / ' + members_names[1])
+							teams_count += 1
+					elif (
+						bookmaker_event.sport in bookmaker_teams
+						and team.title in bookmaker_teams[bookmaker_event.sport]
+						and bookmaker_teams[bookmaker_event.sport][team.title]['id'] in teams_maps
+					):
+						teams_ids.append(teams_maps[bookmaker_teams[bookmaker_event.sport][team.title]['id']]['team_id'])
+						teams_names.append(teams_maps[bookmaker_teams[bookmaker_event.sport][team.title]['id']]['team_title'])
+						teams_count += 1
+
+				if has_members and len(teams_names) == 2 and len(bookmaker_event.teams) == 2:
+					event_between_two_teams_with_members = True
+					event_name = teams_names[0] + ' vs ' + teams_names[1]
+				elif not has_members and len(teams_names) == 2 and len(bookmaker_event.teams) == 2:
+					event_between_two_teams = True
+					event_name = teams_names[0] + ' vs ' + teams_names[1]
+
+			# If it's a live event and has no date, look for the matching event today
+			if len(bookmaker_event.date) == 0 and bookmaker_event.live and tournament_id in events and today in events[tournament_id]:
+				for event_id in events[tournament_id][today]:
+					event = events[tournament_id][date_part][event_id]
+					ids = event['teams']
+					if (
+						len(teams_ids) == 2 
+						and len(ids) == 2 
+						and (teams_ids[0] == ids[0] or teams_ids[0] == ids[1])
+						and (teams_ids[1] == ids[0] or teams_ids[1] == ids[1])
+					):
+						bookmaker_event.date = event['datetime']
+						break
+
+			if (
+				len(bookmaker_event.date) > 0
+				and len(event_name) > 0
+				and (
+					(not has_members and not event_between_two_teams and ((teams_count > 0 and len(bookmaker_event.teams) != 2) or bookmaker_event.replace_title == EVENT_CHAMPIONSHIP_WINNER)) # Outright
+					or (not has_members and event_between_two_teams and teams_count == 2) # 1 vs 1
+					or (has_members and event_between_two_teams_with_members and teams_count == 2) # 2 vs 2
+				)
+			):
+				date = datetime.datetime.strptime(bookmaker_event.date, MYSQL_DATETIME_FORMAT)
+				event_date = date.strftime(MYSQL_DATETIME_FORMAT)
+				related_market_id = None
+				insert_event = True
+
+				# Check if this event can be inserted
+				if len(bookmaker_event.replace_title) > 0 and bookmaker_event.replace_title == EVENT_CHAMPIONSHIP_WINNER and sport_id in outright_markets:
+					related_market_id = outright_markets[sport_id]
+				else:
+					# Check current, previous and next dates
+					two_days_ago_date = (date - timedelta(days=2)).strftime(MYSQL_DATE_FORMAT)
+					previous_date = (date - timedelta(days=1)).strftime(MYSQL_DATE_FORMAT)
+					next_date = (date + timedelta(days=1)).strftime(MYSQL_DATE_FORMAT)
+					two_days_after_date = (date + timedelta(days=2)).strftime(MYSQL_DATE_FORMAT)
+
+					dates_to_check = [today, previous_date, next_date, two_days_after_date, two_days_ago_date]
+
+					for date_part in dates_to_check:
+						# Check if this order of teams is the opposite of an existing event on DB
+						if tournament_id in events and date_part in events[tournament_id]:
+							for event_id in events[tournament_id][date_part]:
+								event = events[tournament_id][date_part][event_id]
+
+								ids = event['teams']
+								if (
+                                    len(teams_ids) == 2
+                                    and len(ids) == 2
+                                    and (teams_ids[0] == ids[0] or teams_ids[0] == ids[1])
+                                    and (teams_ids[1] == ids[0] or teams_ids[1] == ids[1])
+                                ):
+									existing_event_name = event['title']
+
+									if existing_event_name != event_name:
+										event_name = existing_event_name;
+
+									event_date = event['datetime']
+									insert_event = False
+									break
+
+                    # Replace parameters
+					event_name = event_name.replace("'", "´")
+
+				if insert_event and not bookmaker_event.live and event_name not in processed_events[sport_title][tournament_title]:
+					date = datetime.datetime.strptime(event_date, MYSQL_DATETIME_FORMAT)
+					event_date = date.strftime(MYSQL_DATETIME_FORMAT)
+					now = date.today().strftime(MYSQL_DATETIME_FORMAT)
+					live_date = getLiveDateBySport(sport_live_date_interval, event_date)
+					timestamp = int(datetime.datetime.timestamp(date))
+					slug = slugify(event_name) + '-' + str(timestamp)
+
+					if processed_entities[EVENTS_TABLE] == 0:
+						sql = "INSERT INTO " + EVENTS_TABLE + " (" + ', '.join(EVENTS_TABLE_COLUMNS) + ") VALUES \n";
+					else:
+						sql = "\n,"
+
+					sql += "(DEFAULT, " + str(tournament_id) + ", " + str(bookmaker_id) + ", '{event_title}', '" + date.strftime(MYSQL_DATE_FORMAT) + "', {live_date}, '{event_slug}', " + str(INACTIVE) + ", " + str(INACTIVE) + ", " + str(ACTIVE) + ", " + (str(ACTIVE) if bookmaker_event.has_markets else str(INACTIVE)) + ", {teams_count}, '" + date.strftime(MYSQL_TIME_FORMAT) + "', " + (str(ACTIVE) if event_between_two_teams_with_members else str(INACTIVE)) + ", '" + now + "', " + (related_market_id if related_market_id else 'NULL') + ")"
+					sql = sql.replace('{event_title}', event_name)
+					sql = sql.replace('{event_slug}', slug)
+					sql = sql.replace('{teams_count}', str(teams_count))
+					sql = sql.replace('{live_date}', "'" + live_date + "'" if live_date else 'NULL')
+
+					with open(sql_files_path + EVENTS_TABLE + '.sql', 'a', encoding="utf-8") as fd:
+						fd.write(sql)
+
+					processed_events[sport_title][tournament_title][event_name] = {
+						'date': event_date,
+						'title': event_name,
+						'tournament_id': tournament_id,
+						'tournament_title': tournament_title,
+						'sport_title': sport_title
+					}
+
+					buildEventTeams(bookmaker_event, event_name, event_date)
+					buildBookmakerEvent(bookmaker_event, event_name, event_date)
+					processed_entities[EVENTS_TABLE] += 1
+				elif event_name not in processed_events[sport_title][tournament_title]:
+					processed_events[sport_title][tournament_title][event_name] = {
+						'date': event_date,
+						'title': event_name,
+						'tournament_id': tournament_id,
+						'tournament_title': tournament_title,
+						'sport_title': sport_title
+					}
+
+					buildEventTeams(bookmaker_event, event_name, event_date)
+					buildBookmakerEvent(bookmaker_event, event_name, event_date)
+				else:
+					buildBookmakerEventMarkets(bookmaker_event, event_name, event_date);
 
 def buildEventTeams(bookmaker_event, event_title, event_date):
 	a = 1
@@ -566,4 +756,24 @@ def buildBookmakerEventMarkets(bookmaker_event, event_title, event_date):
 	a = 1
 
 def getLiveDateBySport(live_date_interval = None, date = None):
-	a = 1
+	output = None
+
+	try:
+		date = datetime.datetime.strptime(date, MYSQL_DATETIME_FORMAT)
+
+		if date and live_date_interval:
+			m = re.search('PT(\d+)H(\d*)[M]?', live_date_interval)
+			hours = int(m.group(1).strip())
+			minutes = m.group(2).strip()
+
+			if len(minutes) == 0:
+				minutes = 0
+			else:
+				minutes = int(minutes)
+
+			date = date + timedelta(hours=hours, minutes=minutes)
+			output = date.strftime(MYSQL_DATETIME_FORMAT)
+	except (Exception) as ex:
+		output = None
+
+	return output
