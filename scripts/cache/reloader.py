@@ -14,6 +14,17 @@ try:
 								  database = "scannerbet")
 
 	cursor = connection.cursor()
+
+	# Events
+	cursor.execute("SELECT e.id, e.date, e.time, e.title, e.fk_tournament_id, et.fk_team_id FROM event_teams et LEFT JOIN events e ON e.id = et.fk_event_id WHERE e.teams_count = 2 AND e.related_to_market IS NULL")
+	records = cursor.fetchall()
+	csv_rows = ''
+
+	for row in records:			
+		csv_rows += str(row[0]) + '@s.s@' + str(row[1]) + '@s.s@' + str(row[2]) + '@s.s@' + str(row[3]) + '@s.s@' + str(row[4]) + '@s.s@' + str(row[5]) + '\n'
+	
+	with open('events.csv', 'w', encoding="utf-8") as fd:
+		fd.write(csv_rows)
 	
 	# Bookmaker sports
 	cursor.execute("SELECT b.title as bookmaker_title, bs.id as entity_id, bs.title as entity_title, ignore as skip_entity FROM bookmaker_sports bs LEFT JOIN bookmakers b ON b.id = bs.fk_bookmaker_id order by b.title")

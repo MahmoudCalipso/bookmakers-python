@@ -50,11 +50,12 @@ processed_bookmaker_event_markets = [];
 processed_events = []
 processed_event_teams = []
 
-events = []
+events = {}
 
 def init(title):
 	initBookmakerEntities(title)
 	initMappings(title)
+	initEvents()
 
 def initBookmakerEntities(title):
 	global bookmaker_sports
@@ -159,6 +160,37 @@ def initMappings(title):
 							'bookmaker_market_title': row[5],
 						}
 
+def initEvents():
+	global events
+
+	csv_path = '../../cache/events.csv'
+	if os.path.exists(csv_path):
+		with open(csv_path, 'r', encoding="utf-8") as file:
+			for line in file:
+				row = line.strip().split('@s.s@')
+				print(row)
+				event_id = row[0]
+				event_date = row[1]
+				event_time = row[2]
+				event_title = row[3]
+				tournament_id = row[4]
+				event_team_id = row[5]
+				# id@s.s@date@s.s@time@s.s@title@s.s@tournament_id@s.s@team_id
+				if not tournament_id in events:
+					events[tournament_id] = {}
+
+				if not event_date in events[tournament_id]:
+					events[tournament_id][event_date] = {}
+
+				if not event_id in events[tournament_id][event_date]:
+					events[tournament_id][event_date][event_id] = {
+						'teams': [],
+						'datetime': event_date + ' ' + event_time,
+						'title': event_title
+					}
+
+				events[tournament_id][event_date][event_id]['teams'].append(event_team_id)
+
 def shouldSkipSport(sport):
 	return sport in bookmaker_sports_to_skip
 
@@ -175,7 +207,7 @@ def processEvent(bookmaker_event):
 		and not shouldSkipSport(bookmaker_event.sport)
 		and not shouldSkipTournament(bookmaker_event.tournament)):
 
-		print('Processing: ' + bookmaker_event.title)
+		#print('Processing: ' + bookmaker_event.title)
 
 		buildBookmakerSport(bookmaker_event)
 		buildBookmakerTournament(bookmaker_event)
