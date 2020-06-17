@@ -1062,7 +1062,7 @@ if os.path.exists(queue_csv_path):
 									bookmaker_event = BookmakerEvent.BookmakerEvent()
 									event_sport = event.get('S')
 									event_tournament = event.get('C')
-									event_id = event.get('I')
+									event_id = str(event.get('I'))
 									event_name = event.get('H') + ' vs ' + event.get('A')
 									teams = []
 									odds = []

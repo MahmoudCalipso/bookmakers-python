@@ -19,7 +19,9 @@ BOOKMAKER_MARKETS_TABLE_COLUMNS = ['id', 'fk_bookmaker_id', 'fk_bookmaker_sport_
 EVENTS_TABLE = 'events'
 EVENTS_TABLE_COLUMNS = ['id','fk_tournament_id', 'inserted_by', 'title', 'date', 'live_until', 'slug', 'live', 'top', 'active', 'has_markets', 'teams_count', 'time', 'has_members', 'created_at', 'related_to_market']
 EVENT_TEAMS_TABLE = 'event_teams'
+EVENT_TEAMS_TABLE_COLUMNS = ['id', 'fk_event_id', 'fk_team_id', 'local']
 BOOKMAKER_EVENTS_TABLE = 'bookmaker_events'
+BOOKMAKER_EVENTS_TABLE_COLUMNS = ['id', 'fk_bookmaker_id', 'fk_event_id', 'title', 'event_id', 'date']
 BOOKMAKER_EVENT_MARKETS_TABLE = 'bookmaker_event_markets'
 BOOKMAKER_EVENT_MARKET_OUTCOMES_TABLE = 'bookmaker_event_market_outcomes'
 
@@ -744,13 +746,98 @@ def buildEvent(bookmaker_event):
 					buildBookmakerEventMarkets(bookmaker_event, event_name, event_date);
 
 def buildEventTeams(bookmaker_event, event_title, event_date):
-	a = 1
+	global bookmaker_sports
+	global sports_maps
+	global bookmaker_tournaments
+	global tournaments_maps
+	global processed_event_teams
+
+	bookmaker_sport = bookmaker_sports[bookmaker_event.sport]
+	bookmaker_tournament = bookmaker_tournaments[bookmaker_event.sport][bookmaker_event.tournament]
+	sport_title = sports_maps[bookmaker_sport['id']]['sport_title']
+	tournament = tournaments_maps[bookmaker_tournament['id']]
+	tournament_title = tournament['tournament_title']
+
+	if sport_title not in processed_event_teams:
+		processed_event_teams[sport_title] = {}
+
+	if tournament_title not in processed_event_teams[sport_title]:
+		processed_event_teams[sport_title][tournament_title] = {}
+
+	if event_title not in processed_event_teams[sport_title][tournament_title]:
+		processed_event_teams[sport_title][tournament_title][event_title] = []
+
+	index = 0
+	for team in bookmaker_event.teams:
+		if len(team.members) > 0:
+			for member in team.members:
+				buildEventTeam(bookmaker_event, member, event_title, event_date, index)
+		else:
+			buildEventTeam(bookmaker_event, team, event_title, event_date, index)
+
+		index += 1
 
 def buildEventTeam(bookmaker_event, team, event_title, event_date, index):
-	a = 1
+	global bookmaker_sports
+	global sports_maps
+	global bookmaker_tournaments
+	global tournaments_maps
+	global bookmaker_teams
+	global teams_maps
+	global processed_event_teams
+	global processed_entities
+
+	bookmaker_sport = bookmaker_sports[bookmaker_event.sport]
+	bookmaker_tournament = bookmaker_tournaments[bookmaker_event.sport][bookmaker_event.tournament]
+	sport_title = sports_maps[bookmaker_sport['id']]['sport_title']
+	tournament = tournaments_maps[bookmaker_tournament['id']]
+	tournament_title = tournament['tournament_title']
+
+	if (
+		team.title not in processed_event_teams[sport_title][tournament_title][event_title]
+		and bookmaker_event.sport in bookmaker_teams
+		and team.title in bookmaker_teams[bookmaker_event.sport]
+		and bookmaker_teams[bookmaker_event.sport][team.title]['id'] in teams_maps
+	):
+		if processed_entities[EVENT_TEAMS_TABLE] == 0:
+			sql = "INSERT INTO " + EVENT_TEAMS_TABLE + " (" + ', '.join(EVENT_TEAMS_TABLE_COLUMNS) + ") values \n";
+		else:
+			sql = "\n,"
+
+		sql += "(DEFAULT, {sport=" + sport_title + "&tournament=" + tournament_title + "&event=" + event_title + "&date=" + event_date + "}, " + teams_maps[bookmaker_teams[bookmaker_event.sport][team.title]['id']]['team_id'] + ", " + (str(ACTIVE) if team.local and index == 0 else str(INACTIVE)) + ")"
+
+		with open(sql_files_path + EVENT_TEAMS_TABLE + '.sql', 'a', encoding="utf-8") as fd:
+			fd.write(sql)
+
+		processed_event_teams[sport_title][tournament_title][event_title].append(team.title)
+		processed_entities[EVENT_TEAMS_TABLE] += 1
+
 
 def buildBookmakerEvent(bookmaker_event, event_title, event_date):
-	a = 1
+	global bookmaker_id
+	global bookmaker_sports
+	global sports_maps
+	global bookmaker_tournaments
+	global tournaments_maps
+	global processed_entities
+
+	bookmaker_sport = bookmaker_sports[bookmaker_event.sport]
+	bookmaker_tournament = bookmaker_tournaments[bookmaker_event.sport][bookmaker_event.tournament]
+	sport_title = sports_maps[bookmaker_sport['id']]['sport_title']
+	tournament = tournaments_maps[bookmaker_tournament['id']]
+	tournament_title = tournament['tournament_title']
+
+	if processed_entities[BOOKMAKER_EVENTS_TABLE] == 0:
+		sql = "INSERT INTO " + BOOKMAKER_EVENTS_TABLE + " (" + ', '.join(BOOKMAKER_EVENTS_TABLE_COLUMNS) + ") values \n";
+	else:
+		sql = "\n,"
+
+	sql += "(DEFAULT, " + str(bookmaker_id) + " {sport=" + sport_title + "&tournament=" + tournament_title + "&event=" + event_title + "&date=" + event_date + "}, '" + event_title + "', " + ("'" + bookmaker_event.event_id + "'" if len(bookmaker_event.event_id) > 0 else "NULL") + ", " + ("'" + bookmaker_event.date + "'" if len(bookmaker_event.date) else "NULL") + ")"
+
+	with open(sql_files_path + BOOKMAKER_EVENTS_TABLE + '.sql', 'a', encoding="utf-8") as fd:
+		fd.write(sql)
+
+	processed_entities[BOOKMAKER_EVENTS_TABLE] += 1
 
 def buildBookmakerEventMarkets(bookmaker_event, event_title, event_date):
 	a = 1
