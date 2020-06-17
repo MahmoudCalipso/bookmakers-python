@@ -1033,15 +1033,15 @@ def filterTeams(sport, teams):
 
 start_time = time.time()
 timestamp = str(int(time.time()));
+bookmaker_id = 14
 bookmaker_title = '1xbet'
 queue_path = '../../../queues/Downloaders/' + bookmaker_title + '/'
 queue_csv_path = queue_path + 'queue.csv';
 queue_reader_path = queue_path + bookmaker_title + '/' + timestamp + '/';
 event_feeds = []
 
-bookmaker_updater.init(bookmaker_title)
+bookmaker_updater.init(bookmaker_id, bookmaker_title)
 
-print('Reading CSV: ' + queue_csv_path)
 # Extract row from CSV and process it
 if os.path.exists(queue_csv_path):
 	with open(queue_csv_path, 'r') as file:
@@ -1180,8 +1180,9 @@ if os.path.exists(queue_csv_path):
 									bookmaker_event.teams = teams
 
 									bookmaker_updater.processEvent(bookmaker_event)
-								except:
-									print(bookmaker_title + ' :: Could not process event')
+								except (Exception) as ex:
+									print(bookmaker_title + ' :: Could not process event: ' + str(ex))
 
+bookmaker_updater.finish()
 
 print("--- %s seconds ---" % (time.time() - start_time))
