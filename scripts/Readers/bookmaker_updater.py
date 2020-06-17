@@ -1,14 +1,19 @@
 import os
 import csv
 import time
+import sys
+import json
 from datetime import date
 
 # Constants
 BOOKMAKER_SPORTS_TABLE = 'bookmaker_sports'
 BOOKMAKER_SPORTS_TABLE_COLUMNS = ['id', 'fk_bookmaker_id', 'title', 'ignore', 'mapped', 'created_at']
 BOOKMAKER_TOURNAMENTS_TABLE = 'bookmaker_tournaments'
+BOOKMAKER_TOURNAMENTS_TABLE_COLUMNS = ['id', 'fk_bookmaker_id', 'fk_bookmaker_sport_id', 'title', 'skip', 'mapped', 'created_at', 'found_in']
 BOOKMAKER_TEAMS_TABLE = 'bookmaker_teams'
+BOOKMAKER_TEAMS_TABLE_COLUMNS = ['id', 'fk_bookmaker_id', 'fk_bookmaker_sport_id', 'title', 'found_in', 'ignore', 'mapped', 'created_at']
 BOOKMAKER_MARKETS_TABLE = 'bookmaker_markets'
+BOOKMAKER_MARKETS_TABLE_COLUMNS = ['id', 'fk_bookmaker_id', 'fk_bookmaker_sport_id', 'title', 'skip', 'outcomes', 'mapped', 'created_at']
 EVENTS_TABLE = 'events'
 EVENT_TEAMS_TABLE = 'event_teams'
 BOOKMAKER_EVENTS_TABLE = 'bookmaker_events'
@@ -58,12 +63,12 @@ sql_files_path = None
 timestamp = None
 
 processed_bookmaker_sports = []
-processed_bookmaker_tournaments = []
-processed_bookmaker_teams = []
-processed_bookmaker_markets = []
-processed_bookmaker_event_markets = [];
-processed_events = []
-processed_event_teams = []
+processed_bookmaker_tournaments = {}
+processed_bookmaker_teams = {}
+processed_bookmaker_markets = {}
+processed_bookmaker_event_markets = {}
+processed_events = {}
+processed_event_teams = {}
 
 events = {}
 
@@ -94,6 +99,7 @@ def finish():
 
 def initNextSqlFile(open_next = True):
 	global processed_entities
+	global processed_files
 
 	# Check if there is any entity left
 	add_to_queue = False
@@ -193,12 +199,12 @@ def resetCounters():
 	    BOOKMAKER_EVENT_MARKET_OUTCOMES_TABLE: 0
 	}
 	processed_bookmaker_sports = []
-	processed_bookmaker_tournaments = []
-	processed_bookmaker_teams = []
-	processed_bookmaker_markets = []
-	processed_bookmaker_event_markets = []
-	processed_events = []
-	processed_event_teams = []
+	processed_bookmaker_tournaments = {}
+	processed_bookmaker_teams = {}
+	processed_bookmaker_markets = {}
+	processed_bookmaker_event_markets = {}
+	processed_events = {}
+	processed_event_teams = {}
 
 def addProcessToQueue():
 	global queue_path
@@ -244,7 +250,10 @@ def initBookmakerEntities(title):
 							bookmaker_sports_to_skip.append(row[1])
 					elif entity == 'tournaments':
 						# parent_id@s.s@parent_title@s.s@id@s.s@title@s.s@skip
-						bookmaker_tournaments[row[3]] = {
+						if row[1] not in bookmaker_tournaments:
+							bookmaker_tournaments[row[1]] = {}
+
+						bookmaker_tournaments[row[1]][row[3]] = {
 							'id': row[2],
 							'bookmaker_sport_id': row[0],
 							'bookmaker_sport_title': row[1]
@@ -254,17 +263,26 @@ def initBookmakerEntities(title):
 							bookmaker_tournaments_to_skip.append(row[3])
 					elif entity == 'teams':
 						# parent_id@s.s@parent_title@s.s@id@s.s@title@s.s@skip
-						bookmaker_teams[row[3]] = {
+						if row[1] not in bookmaker_teams:
+							bookmaker_teams[row[1]] = {}
+
+						bookmaker_teams[row[1]][row[3]] = {
 							'id': row[2],
+							'title': row[3],
 							'bookmaker_sport_id': row[0],
 							'bookmaker_sport_title': row[1]
 						}
 					elif entity == 'markets':
-						# parent_id@s.s@parent_title@s.s@id@s.s@title@s.s@skip
-						bookmaker_markets[row[3]] = {
+						# parent_id@s.s@parent_title@s.s@id@s.s@title@s.s@skip@s.s@outcomes
+						if row[1] not in bookmaker_markets:
+							bookmaker_markets[row[1]] = {}
+
+						bookmaker_markets[row[1]][row[3]] = {
 							'id': row[2],
+							'title': row[3],
 							'bookmaker_sport_id': row[0],
-							'bookmaker_sport_title': row[1]
+							'bookmaker_sport_title': row[1],
+							'outcomes': None if row[5] == '[]' or len(row[5]) == 0 else row[5]
 						}
 
 
@@ -408,13 +426,129 @@ def buildBookmakerSport(bookmaker_event):
 		
 
 def buildBookmakerTournament(bookmaker_event):
-	a = 1
+	global processed_bookmaker_sports
+	global processed_bookmaker_tournaments
+	global bookmaker_tournaments
+	global processed_entities
+
+	if bookmaker_event.sport not in processed_bookmaker_tournaments:
+		processed_bookmaker_tournaments[bookmaker_event.sport] = []
+
+		if bookmaker_event.sport not in processed_bookmaker_sports:
+			processed_bookmaker_sports.append(bookmaker_event.sport)
+
+	if (
+		 (bookmaker_event.sport not in bookmaker_tournaments or bookmaker_event.tournament not in bookmaker_tournaments[bookmaker_event.sport])
+		 and bookmaker_event.tournament not in processed_bookmaker_tournaments[bookmaker_event.sport]
+		):
+		if processed_entities[BOOKMAKER_TOURNAMENTS_TABLE] == 0:
+			sql = 'INSERT INTO ' + BOOKMAKER_TOURNAMENTS_TABLE + ' (' + ', '.join(BOOKMAKER_TOURNAMENTS_TABLE_COLUMNS) + ') VALUES \n'
+		else:
+			sql = '\n,'
+
+		sql += "(DEFAULT, " + str(bookmaker_id) +", {sport=" + bookmaker_event.sport.replace("'", "´") + "}, '" + bookmaker_event.tournament.replace("'", "´") + "', " + str(INACTIVE) + ", " + str(INACTIVE) + ", '" + date.today().strftime(MYSQL_DATETIME_FORMAT) + "', '" + bookmaker_event.title.replace("'", "´")  + "')"
+		with open(sql_files_path + BOOKMAKER_TOURNAMENTS_TABLE + '.sql', 'a', encoding="utf-8") as fd:
+			fd.write(sql)
+		processed_bookmaker_tournaments[bookmaker_event.sport].append(bookmaker_event.tournament)
+		processed_entities[BOOKMAKER_TOURNAMENTS_TABLE] += 1
+
 
 def buildBookmakerTeams(bookmaker_event):
-	a = 1
+	global processed_bookmaker_sports
+	global processed_bookmaker_teams
+	global processed_entities
+	global bookmaker_teams
+
+	if bookmaker_event.sport not in processed_bookmaker_teams:
+		processed_bookmaker_teams[bookmaker_event.sport] = []
+
+		if bookmaker_event.sport not in processed_bookmaker_sports:
+			processed_bookmaker_sports.append(bookmaker_event.sport)
+
+	for team in bookmaker_event.teams:
+		if (
+				len(team.title)
+				and (bookmaker_event.sport not in bookmaker_teams or team.title not in bookmaker_teams[bookmaker_event.sport])
+				and team.title not in processed_bookmaker_teams[bookmaker_event.sport]
+			):
+			if processed_entities[BOOKMAKER_TEAMS_TABLE] == 0:
+				sql = 'INSERT INTO ' + BOOKMAKER_TEAMS_TABLE + ' (' + ', '.join(BOOKMAKER_TEAMS_TABLE_COLUMNS) + ') VALUES \n'
+			else:
+				sql = '\n,'
+
+			sql += "(DEFAULT, " + str(bookmaker_id) + ", {sport=" + bookmaker_event.sport.replace("'", "´") + "}, '" + team.title.replace("'", "´") + "', '" + bookmaker_event.title.replace("'", "´") + "', " + str(INACTIVE) + ", " + str(INACTIVE) + ", '" + date.today().strftime(MYSQL_DATETIME_FORMAT) + "')"
+			with open(sql_files_path + BOOKMAKER_TEAMS_TABLE + '.sql', 'a', encoding="utf-8") as fd:
+				fd.write(sql)
+			processed_bookmaker_teams[bookmaker_event.sport].append(team.title)
+			processed_entities[BOOKMAKER_TEAMS_TABLE] += 1
+
+		if len(team.members):
+			for member in team.members:
+				if (
+						len(member.title)
+						and (bookmaker_event.sport not in bookmaker_teams or member.title not in bookmaker_teams[bookmaker_event.sport])
+						and member.title not in processed_bookmaker_teams[bookmaker_event.sport]
+					):
+					if processed_entities[BOOKMAKER_TEAMS_TABLE] == 0:
+						sql = 'INSERT INTO ' + BOOKMAKER_TEAMS_TABLE + ' (' + ', '.join(BOOKMAKER_TEAMS_TABLE_COLUMNS) + ') VALUES \n'
+					else:
+						sql = '\n,'
+
+					sql += "(DEFAULT, " + str(bookmaker_id) + ", {sport=" + bookmaker_event.sport.replace("'", "´") + "}, '" + member.title.replace("'", "´") + "', '" + bookmaker_event.title.replace("'", "´") + "', " + str(INACTIVE) + ", " + str(INACTIVE) + ", '" + date.today().strftime(MYSQL_DATETIME_FORMAT) + "')"
+					with open(sql_files_path + BOOKMAKER_TEAMS_TABLE + '.sql', 'a', encoding="utf-8") as fd:
+						fd.write(sql)
+					processed_bookmaker_teams[bookmaker_event.sport].append(team.title)
+					processed_entities[BOOKMAKER_TEAMS_TABLE] += 1
 
 def buildBookmakerMarkets(bookmaker_event):
-	a = 1
+	global processed_bookmaker_sports
+	global processed_bookmaker_markets
+	global processed_entities
+	global bookmaker_markets
+	global bookmaker_tournaments
+	global tournaments_maps
+
+	if bookmaker_event.sport not in processed_bookmaker_markets:
+		processed_bookmaker_markets[bookmaker_event.sport] = []
+
+		if bookmaker_event.sport not in processed_bookmaker_sports:
+			processed_bookmaker_sports.append(bookmaker_event.sport)
+
+	for odd in bookmaker_event.odds:
+		outcomes_titles = []
+
+		# Bookmaker event market
+		if (
+				bookmaker_event.sport in bookmaker_markets
+				and odd.title in bookmaker_markets[bookmaker_event.sport]
+				and bookmaker_event.tournament in bookmaker_tournaments[bookmaker_event.sport]
+				and bookmaker_tournaments[bookmaker_event.sport][bookmaker_event.tournament]['id'] in tournaments_maps
+			):
+			if bookmaker_markets[bookmaker_event.sport][odd.title]['id'] in markets_maps:
+				bookmaker_event.has_markets = True
+				odd.is_mapped = True
+
+			# Check market rules
+
+		# Bookmaker market
+		if (
+				len(odd.title) > 0
+				and (bookmaker_event.sport not in bookmaker_markets or odd.title not in bookmaker_markets[bookmaker_event.sport] or len(bookmaker_markets[bookmaker_event.sport][odd.title]['outcomes']) == 0)
+				and odd.title not in processed_bookmaker_markets[bookmaker_event.sport]
+			):
+			if processed_entities[BOOKMAKER_MARKETS_TABLE] == 0:
+				sql = 'INSERT INTO ' + BOOKMAKER_MARKETS_TABLE + ' (' + ', '.join(BOOKMAKER_MARKETS_TABLE_COLUMNS) + ') VALUES \n'
+			else:
+				sql = '\n,'
+
+			for outcome in odd.outcomes:
+				outcomes_titles.append(outcome.title.replace("'", "´"))
+
+			sql += "(DEFAULT, " + str(bookmaker_id) + ", {sport=" + bookmaker_event.sport.replace("'", "´") + "}, '" + odd.title.replace("'", '´') + "', " + str(INACTIVE) + ", '" + json.dumps(outcomes_titles) + "', " + str(INACTIVE) + ", '" + date.today().strftime(MYSQL_DATETIME_FORMAT) + "')"
+			with open(sql_files_path + BOOKMAKER_MARKETS_TABLE + '.sql', 'a', encoding="utf-8") as fd:
+				fd.write(sql)
+			processed_bookmaker_markets[bookmaker_event.sport].append(odd.title)
+			processed_entities[BOOKMAKER_MARKETS_TABLE] += 1
 
 def buildEvent(bookmaker_event):
 	a = 1

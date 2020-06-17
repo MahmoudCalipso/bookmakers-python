@@ -201,7 +201,7 @@ try:
 		i += 1
 
 	# Bookmaker markets
-	cursor.execute("SELECT b.title as bookmaker_title, bs.id as entity_parent_id, bs.title as entity_parent_title, bt.id as entity_id, bt.title as entity_title, bt.skip as skip_entity FROM bookmaker_markets bt LEFT JOIN bookmaker_sports bs ON bs.id = bt.fk_bookmaker_sport_id LEFT JOIN bookmakers b ON b.id = bt.fk_bookmaker_id ORDER BY b.title, bt.fk_bookmaker_sport_id")
+	cursor.execute("SELECT b.title as bookmaker_title, bs.id as entity_parent_id, bs.title as entity_parent_title, bt.id as entity_id, bt.title as entity_title, bt.skip as skip_entity, bt.outcomes as entity_outcomes FROM bookmaker_markets bt LEFT JOIN bookmaker_sports bs ON bs.id = bt.fk_bookmaker_sport_id LEFT JOIN bookmakers b ON b.id = bt.fk_bookmaker_id ORDER BY b.title, bt.fk_bookmaker_sport_id")
 	records = cursor.fetchall()
 	csv_rows = '';
 	current_bookmaker = None
@@ -224,7 +224,7 @@ try:
 			current_bookmaker = bookmaker_title
 			csv_rows = ''
 
-		csv_rows += str(row[1]) + '@s.s@' + str(row[2]) + '@s.s@' + str(row[3]) + '@s.s@' + str(row[4]) + '@s.s@' + str(row[5]) + '\n'
+		csv_rows += str(row[1]) + '@s.s@' + str(row[2]) + '@s.s@' + str(row[3]) + '@s.s@' + str(row[4]) + '@s.s@' + str(row[5]) + '@s.s@' + str(row[6]) + '\n'
 		i += 1
 
 	# Markets mapping

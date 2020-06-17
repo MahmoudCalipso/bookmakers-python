@@ -1169,7 +1169,7 @@ if os.path.exists(queue_csv_path):
 											for outcome in odd.outcomes:
 												team = BookmakerEventTeam.BookmakerEventTeam()
 
-												team.title = event.get('H')
+												team.title = outcome.title
 												team.local = i == 0
 
 												#checkTeamMembers(event_sport, team)
