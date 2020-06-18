@@ -409,18 +409,26 @@ def seedEvents():
 
 def filterEvents(sql_path):
 	global events
-	final = ''
+
+	output = ""
+	last_line = ""
 
 	try:
 		events_lines_to_double_check = []
 		query = 'SELECT e.id, e.date, e.time, e.title, e.fk_tournament_id, et.fk_team_id FROM event_teams et LEFT JOIN events e ON e.id = et.fk_event_id WHERE e.teams_count = 2 AND e.related_to_market IS NULL'
-		
-		#cursor.execute("")
 
 		with open(sql_path) as file:
 			i = 0
 			for line in file:
 				found = False
+
+				if i == 0:
+					output += line
+					continue
+				elif line.starswith('ON CONFLICT'):
+					last_line = line
+					continue
+
 				m = re.search('{teams=(.*)}', line)
 
 				if m.group(0):
@@ -459,17 +467,34 @@ def filterEvents(sql_path):
 										break
 				
 				if not found:
-					query += " OR WHERE (e.fk_tournament_id =" + tournament_id + " AND et.fk_team_id IN (" + ", ".join(teams_ids) + "))"
-					events_lines_to_double_check.append(i)
+					query += " OR WHERE (e.fk_tournament_id = " + tournament_id + " AND et.fk_team_id IN (" + ", ".join(teams_ids) + "))"
+					events_lines_to_double_check[] = {
+						'tournament_id': tournament_id,
+						'title': title,
+						'date': event_data[4],
+						'teams_ids': teams_ids,
+						'line': line
+					}
 				else:
 					line = re.sub('{teams=(.*)}', '', line)
 
-				final += line
+				output += line
 				i += 1
 
 		# Double check
-		with open(sql_path) as file:
-			i = 0
-			for line in file:
+		if len(events_lines_to_double_check) > 0:
+			cursor.execute(query)
+			records = cursor.fetchall()
 
-	return final
+
+			with open(sql_path) as file:
+				i = 0
+				for line in file:
+					if i in events_lines_to_double_check:
+
+
+					i += 1
+
+		output += last_line
+
+	return output
