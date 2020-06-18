@@ -23,8 +23,9 @@ EVENT_TEAMS_TABLE_COLUMNS = ['id', 'fk_event_id', 'fk_team_id', 'local']
 BOOKMAKER_EVENTS_TABLE = 'bookmaker_events'
 BOOKMAKER_EVENTS_TABLE_COLUMNS = ['id', 'fk_bookmaker_id', 'fk_event_id', 'title', 'event_id', 'date']
 BOOKMAKER_EVENT_MARKETS_TABLE = 'bookmaker_event_markets'
+BOOKMAKER_EVENT_MARKETS_TABLE_COLUMNS = ['id', 'fk_bookmaker_event', 'fk_bookmaker_market', 'title', 'subtitle', 'market_id']
 BOOKMAKER_EVENT_MARKET_OUTCOMES_TABLE = 'bookmaker_event_market_outcomes'
-
+BOOKMAKER_EVENT_MARKET_OUTCOMES_TABLE_COLUMNS = ['id', 'fk_bookmaker_event_market_id', 'fk_team_id', 'outcome_id', 'title', 'decimal', 'old_decimal', 'created_at', 'updated_at', 'deep_link_json', 'outcome_rule_id']
 
 EVENT_CHAMPIONSHIP_WINNER = 'Winner'
 ACTIVE = 1
@@ -838,9 +839,77 @@ def buildBookmakerEvent(bookmaker_event, event_title, event_date):
 		fd.write(sql)
 
 	processed_entities[BOOKMAKER_EVENTS_TABLE] += 1
+	buildBookmakerEventMarkets(bookmaker_event, event_title, event_date)
 
 def buildBookmakerEventMarkets(bookmaker_event, event_title, event_date):
-	a = 1
+	global bookmaker_id
+	global bookmaker_sports
+	global sports_maps
+	global bookmaker_tournaments
+	global tournaments_maps
+	global processed_entities
+	global processed_bookmaker_event_markets
+	global bookmaker_markets
+	global markets_maps
+
+	bookmaker_sport = bookmaker_sports[bookmaker_event.sport]
+	bookmaker_tournament = bookmaker_tournaments[bookmaker_event.sport][bookmaker_event.tournament]
+	sport_title = sports_maps[bookmaker_sport['id']]['sport_title']
+	tournament = tournaments_maps[bookmaker_tournament['id']]
+	tournament_title = tournament['tournament_title']
+
+	for odd in bookmaker_event.odds:
+		if odd.is_mapped:
+			if not sport_title in processed_bookmaker_event_markets:
+				processed_bookmaker_event_markets[sport_title] = {}
+
+			if not tournament_title in processed_bookmaker_event_markets[sport_title]:
+				processed_bookmaker_event_markets[sport_title][tournament_title] = {}
+
+			if not event_title in processed_bookmaker_event_markets[sport_title][tournament_title]:
+				processed_bookmaker_event_markets[sport_title][tournament_title][event_title] = []
+
+			# Check whether this market has been already processed for this event or not
+			bookmaker_market_id = bookmaker_markets[bookmaker_event.sport][odd.title]['id']
+			market = markets_maps[bookmaker_markets[bookmaker_event.sport][odd.title]['id']]
+			market_title = market['market_title']
+
+			if not market_title in processed_bookmaker_event_markets[sport_title][tournament_title][event_title]:
+				# Bookmaker event market
+				if processed_entities[BOOKMAKER_EVENT_MARKETS_TABLE] == 0:
+					sql = "INSERT INTO " + BOOKMAKER_EVENT_MARKETS_TABLE + " (" + ", ".join(BOOKMAKER_EVENT_MARKETS_TABLE_COLUMNS) + ") VALUES \n"
+				else:
+					sql = "\n,"
+
+				sql += "(DEFAULT, {sport=" + sport_title + "&tournament=" + tournament_title + "&event=" + event_title + "&date=" + event_date + "}, " + str(bookmaker_market_id) + ", '" + market_title + "', '', '" + odd.id + "')"
+
+				with open(sql_files_path + BOOKMAKER_EVENT_MARKETS_TABLE + '.sql', 'a', encoding="utf-8") as fd:
+					fd.write(sql)
+
+				processed_entities[BOOKMAKER_EVENT_MARKETS_TABLE] += 1
+				processed_bookmaker_event_markets[sport_title][tournament_title][event_title].append(market_title)
+
+				# Outcomes
+				for outcome in odd.outcomes:
+					if outcome.decimal > 1:
+						# Bookmaker event market outcome
+						if processed_entities[BOOKMAKER_EVENT_MARKET_OUTCOMES_TABLE] == 0:
+							sql = "INSERT INTO " + BOOKMAKER_EVENT_MARKET_OUTCOMES_TABLE + " (" + ", ".join(BOOKMAKER_EVENT_MARKET_OUTCOMES_TABLE_COLUMNS) + ") VALUES \n"
+						else:
+							sql = "\n,"
+
+						teams_titles = []
+
+						for team in bookmaker_event.teams:
+							teams_titles.append(team.title)
+
+						sql += "(DEFAULT, {sport=" + bookmaker_event.sport + "&tournament=" + bookmaker_event.tournament + "&bookmaker_event=" + event_title + "&date=" + event_date + "&market_title=" + odd.title + "&teams=" + json.dumps(teams_titles) + "}, {team=" + outcome.title.strip() + "}, '" + outcome.outcome_id + "', {outcome_title=" + outcome.title.strip() + "}, " + str(round(outcome.decimal, 2)) + ", NULL, '{created_at}', '{updated_at}', " + ("'" + json_encode(outcome.deep_link) + "'" if outcome.deep_link else 'NULL') + ", {outcome_rule_id})"
+
+						with open(sql_files_path + BOOKMAKER_EVENT_MARKET_OUTCOMES_TABLE + '.sql', 'a', encoding="utf-8") as fd:
+							fd.write(sql)
+
+						processed_entities[BOOKMAKER_EVENT_MARKET_OUTCOMES_TABLE] += 1
+
 
 def getLiveDateBySport(live_date_interval = None, date = None):
 	output = None
