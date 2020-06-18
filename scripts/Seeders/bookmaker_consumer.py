@@ -4,6 +4,7 @@ import re
 import psycopg2
 import os
 import csv
+import datetime
 from datetime import date, timedelta
 sys.path.append("../")
 sys.path.append("../../")
@@ -401,9 +402,10 @@ def seedEvents():
 	global connection
 	global bookmaker_sports
 
-	sql_path = queue_path + 'bookmaker_markets.sql'
+	sql_path = queue_path + 'events.sql'
 	if os.path.exists(sql_path):
 		sql = filterEvents(sql_path)
+
 
 
 
@@ -424,8 +426,9 @@ def filterEvents(sql_path):
 
 				if i == 0:
 					output += line
+					i += 1
 					continue
-				elif line.starswith('ON CONFLICT'):
+				elif line.startswith('ON CONFLICT'):
 					last_line = line
 					continue
 
@@ -438,11 +441,14 @@ def filterEvents(sql_path):
 						_line = line.lstrip(',')
 						event_data = _line.split(',')
 						tournament_id = event_data[1]
-						title = event_data[3]
-						date = event_data[4]
+						title = event_data[3].replace("'", "")
+						date = event_data[4].replace("'", "")
+						title = title.strip()
+						date = date.strip()
 						date = datetime.datetime.strptime(date, MYSQL_DATE_FORMAT)
 
 						# Check current, previous and next dates
+						today = datetime.datetime.now().strftime(MYSQL_DATE_FORMAT)
 						two_days_ago_date = (date - timedelta(days=2)).strftime(MYSQL_DATE_FORMAT)
 						previous_date = (date - timedelta(days=1)).strftime(MYSQL_DATE_FORMAT)
 						next_date = (date + timedelta(days=1)).strftime(MYSQL_DATE_FORMAT)
@@ -465,36 +471,78 @@ def filterEvents(sql_path):
 	                                ):
 										found = True
 										break
+
+				line = re.sub('{teams=(.*)}', '', line)
 				
 				if not found:
 					query += " OR WHERE (e.fk_tournament_id = " + tournament_id + " AND et.fk_team_id IN (" + ", ".join(teams_ids) + "))"
-					events_lines_to_double_check[] = {
+					events_lines_to_double_check.append({
 						'tournament_id': tournament_id,
 						'title': title,
 						'date': event_data[4],
 						'teams_ids': teams_ids,
 						'line': line
-					}
-				else:
-					line = re.sub('{teams=(.*)}', '', line)
+					})
 
 				output += line
 				i += 1
 
 		# Double check
 		if len(events_lines_to_double_check) > 0:
+			cursor = connection.cursor()
 			cursor.execute(query)
 			records = cursor.fetchall()
 
+			if len(records) > 0:
+				for records in records:
+					event_id = row[0]
+					event_date = row[1]
+					event_time = row[2]
+					event_title = row[3]
+					tournament_id = row[4]
+					event_team_id = row[5]
 
-			with open(sql_path) as file:
-				i = 0
-				for line in file:
-					if i in events_lines_to_double_check:
+					if not tournament_id in events:
+						events[tournament_id] = {}
 
+					if not event_date in events[tournament_id]:
+						events[tournament_id][event_date] = {}
 
-					i += 1
+					if not event_id in events[tournament_id][event_date]:
+						events[tournament_id][event_date][event_id] = {
+							'teams': [],
+							'datetime': event_date + ' ' + event_time,
+							'title': event_title
+						}
+
+					events[tournament_id][event_date][event_id]['teams'].append(event_team_id)
+
+			for event_to_double_check in events_lines_to_double_check:
+				tournament_id = event_to_double_check['tournament_id']
+				teams_ids = event_to_double_check['teams_ids']
+				found = False
+
+				for date_part in dates_to_check:
+					# Check if this order of teams is the opposite of an existing event on DB
+					if tournament_id in events and date_part in events[tournament_id]:
+						for event_id in events[tournament_id][date_part]:
+							event = events[tournament_id][date_part][event_id]
+
+							ids = event['teams']
+							if (
+                                len(teams_ids) == 2
+                                and len(ids) == 2
+                                and (teams_ids[0] == ids[0] or teams_ids[0] == ids[1])
+                                and (teams_ids[1] == ids[0] or teams_ids[1] == ids[1])
+                            ):
+								found = True
+								break
+
+				if not found:
+					output += event_to_double_check['line']
 
 		output += last_line
+	except (Exception) as ex:
+		print(ex)
 
 	return output
