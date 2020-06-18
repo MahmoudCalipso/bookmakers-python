@@ -1,0 +1,18 @@
+INSERT INTO events (id, fk_tournament_id, inserted_by, title, date, live_until, slug, live, top, active, has_markets, teams_count, time, has_members, created_at, related_to_market) VALUES 
+(DEFAULT, 152, 14, 'Silkeborg vs SønderjyskE', '2020-06-21', '2020-06-21 17:00:00', 'silkeborg-vs-sonderjyske-1592740800', 0, 0, 1, 1, 2, '14:00:00', 0, '2020-06-18 11:37:41', NULL)
+,(DEFAULT, 169, 14, 'St. Pauli vs Jahn Regensburg', '2020-06-21', '2020-06-21 18:30:00', 'st-pauli-vs-jahn-regensburg-1592746200', 0, 0, 1, 1, 2, '15:30:00', 0, '2020-06-18 11:37:41', NULL)
+,(DEFAULT, 152, 14, 'AGF Aarhus vs Nordsjælland', '2020-06-17', '2020-06-17 21:00:00', 'agf-aarhus-vs-nordsjaelland-1592409600', 0, 0, 1, 1, 2, '18:00:00', 0, '2020-06-18 11:37:41', NULL)
+,(DEFAULT, 169, 14, 'Erzgebirge Aue vs Hannover', '2020-06-21', '2020-06-21 18:30:00', 'erzgebirge-aue-vs-hannover-1592746200', 0, 0, 1, 1, 2, '15:30:00', 0, '2020-06-18 11:37:41', NULL)
+,(DEFAULT, 169, 14, 'Osnabrück vs Holstein Kiel', '2020-06-21', '2020-06-21 18:30:00', 'osnabruck-vs-holstein-kiel-1592746200', 0, 0, 1, 1, 2, '15:30:00', 0, '2020-06-18 11:37:41', NULL)
+,(DEFAULT, 169, 14, 'Karlsruher SC vs Arminia Bielefeld', '2020-06-21', '2020-06-21 18:30:00', 'karlsruher-sc-vs-arminia-bielefeld-1592746200', 0, 0, 1, 1, 2, '15:30:00', 0, '2020-06-18 11:37:41', NULL)
+,(DEFAULT, 152, 14, 'Lyngby BK vs Silkeborg', '2020-06-18', '2020-06-18 21:00:00', 'lyngby-bk-vs-silkeborg-1592496000', 0, 0, 1, 1, 2, '18:00:00', 0, '2020-06-18 11:37:41', NULL)
+,(DEFAULT, 169, 14, 'Sandhausen vs Dynamo Dresden', '2020-06-21', '2020-06-21 18:30:00', 'sandhausen-vs-dynamo-dresden-1592746200', 0, 0, 1, 1, 2, '15:30:00', 0, '2020-06-18 11:37:41', NULL)
+,(DEFAULT, 152, 14, 'Odense BK vs SønderjyskE', '2020-06-18', '2020-06-18 21:00:00', 'odense-bk-vs-sonderjyske-1592496000', 0, 0, 1, 1, 2, '18:00:00', 0, '2020-06-18 11:37:41', NULL)
+,(DEFAULT, 152, 14, 'Midtjylland vs Brondby', '2020-06-18', '2020-06-18 23:00:00', 'midtjylland-vs-brondby-1592503200', 0, 0, 1, 1, 2, '20:00:00', 0, '2020-06-18 11:37:41', NULL)
+,(DEFAULT, 169, 14, 'Darmstadt 98 vs Wehen Wiesbaden', '2020-06-21', '2020-06-21 18:30:00', 'darmstadt-98-vs-wehen-wiesbaden-1592746200', 0, 0, 1, 1, 2, '15:30:00', 0, '2020-06-18 11:37:41', NULL)
+,(DEFAULT, 152, 14, 'Randers vs Hobro IK', '2020-06-16', '2020-06-16 23:00:00', 'randers-vs-hobro-ik-1592330400', 0, 0, 1, 1, 2, '20:00:00', 0, '2020-06-18 11:37:41', NULL)
+,(DEFAULT, 152, 14, 'AC Horsens vs Randers', '2020-06-20', '2020-06-20 16:00:00', 'ac-horsens-vs-randers-1592650800', 0, 0, 1, 1, 2, '13:00:00', 0, '2020-06-18 11:37:41', NULL)
+,(DEFAULT, 152, 14, 'Lyngby BK vs Odense BK', '2020-06-22', '2020-06-22 22:00:00', 'lyngby-bk-vs-odense-bk-1592845200', 0, 0, 1, 1, 2, '19:00:00', 0, '2020-06-18 11:37:41', NULL)
+,(DEFAULT, 169, 14, 'Heidenheim vs Hamburger SV', '2020-06-21', '2020-06-21 18:30:00', 'heidenheim-vs-hamburger-sv-1592746200', 0, 0, 1, 1, 2, '15:30:00', 0, '2020-06-18 11:37:41', NULL)
+,(DEFAULT, 179, 14, 'Haugesund vs Brann', '2020-06-17', '2020-06-17 23:30:00', 'haugesund-vs-brann-1592418600', 0, 0, 1, 1, 2, '20:30:00', 0, '2020-06-18 11:37:42', NULL)
+ON CONFLICT (fk_tournament_id, title, date) DO UPDATE SET time = EXCLUDED.time, has_markets = EXCLUDED.has_markets;

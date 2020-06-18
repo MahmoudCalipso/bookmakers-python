@@ -1,0 +1,21 @@
+198@s.s@Runs over/under@s.s@over @scannerbet.global.decimal@@s.s@None@s.s@Totals Over@s.s@Over @scannerbet.global.decimal@@s.s@Over @scannerbet.global.decimal@
+39@s.s@Winner 2 way@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+189@s.s@Points Over/Under@s.s@over @scannerbet.global.decimal@@s.s@None@s.s@Totals Over@s.s@Over @scannerbet.global.decimal@@s.s@Over @scannerbet.global.decimal@
+10@s.s@Both teams to score@s.s@no@s.s@None@s.s@No@s.s@No@s.s@No
+4@s.s@Totals@s.s@over @scannerbet.global.decimal@@s.s@None@s.s@Totals Over@s.s@Over @scannerbet.global.decimal@@s.s@Over @scannerbet.global.decimal@
+10@s.s@Both teams to score@s.s@yes@s.s@None@s.s@Yes@s.s@Yes@s.s@Yes
+196@s.s@Match Winner@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+188@s.s@Match Winner@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+16@s.s@Championship outright@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+189@s.s@Points Over/Under@s.s@under @scannerbet.global.decimal@@s.s@None@s.s@Totals Under@s.s@Under @scannerbet.global.decimal@@s.s@Under @scannerbet.global.decimal@
+198@s.s@Runs over/under@s.s@under @scannerbet.global.decimal@@s.s@None@s.s@Totals Under@s.s@Under @scannerbet.global.decimal@@s.s@Under @scannerbet.global.decimal@
+4@s.s@Totals@s.s@under @scannerbet.global.decimal@@s.s@None@s.s@Totals Under@s.s@Under @scannerbet.global.decimal@@s.s@Under @scannerbet.global.decimal@
+13@s.s@Handicap@s.s@@scannerbet.bookmaker.teams.any@ (@scannerbet.global.decimal@)@s.s@None@s.s@Handicap Plus@s.s@@scannerbet.teams.any@ +@scannerbet.global.decimal@@s.s@@scannerbet.teams.any@ +@scannerbet.global.decimal@
+2@s.s@3-way@s.s@draw@s.s@None@s.s@Draw@s.s@X@s.s@X
+3@s.s@2-way@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+21@s.s@Double bet chance@s.s@@scannerbet.bookmaker.teams.team1@ or @scannerbet.bookmaker.teams.team2@@s.s@{" or ": " / "}@s.s@Double bet chance 12@s.s@12@s.s@12
+21@s.s@Double bet chance@s.s@@scannerbet.bookmaker.teams.team1@ or @scannerbet.constants.draw@@s.s@{" or ": " / "}@s.s@Double bet chance 1X@s.s@1X@s.s@1X
+13@s.s@Handicap@s.s@@scannerbet.bookmaker.teams.any@ (-@scannerbet.global.decimal@)@s.s@None@s.s@Handicap Minus@s.s@@scannerbet.teams.any@ -@scannerbet.global.decimal@@s.s@@scannerbet.teams.any@ -@scannerbet.global.decimal@
+21@s.s@Double bet chance@s.s@@scannerbet.constants.draw@ or @scannerbet.bookmaker.teams.team2@@s.s@{" or ": " / "}@s.s@Double bet chance X2@s.s@X2@s.s@X2
+200@s.s@Championship outright@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+2@s.s@3-way@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@

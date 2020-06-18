@@ -1,0 +1,12 @@
+INSERT INTO bookmaker_events (id, fk_bookmaker_id, fk_event_id, title, event_id, date) values 
+(DEFAULT, 14 {sport=Football&tournament=Bundesliga&event=Freiburg vs Hertha BSC&date=2020-06-16 20:30:00}, 'Freiburg vs Hertha BSC', '241356723', '2020-06-16 20:30:00')
+,(DEFAULT, 14 {sport=Football&tournament=UEFA Nations League&event=Russia vs Serbia&date=2020-09-03 20:45:00}, 'Russia vs Serbia', '227966091', '2020-09-03 20:45:00')
+,(DEFAULT, 14 {sport=Football&tournament=UEFA Nations League&event=Turkey vs Hungary&date=2020-09-03 20:45:00}, 'Turkey vs Hungary', '227966555', '2020-09-03 20:45:00')
+,(DEFAULT, 14 {sport=Football&tournament=Bundesliga&event=Union Berlin vs Paderborn 07&date=2020-06-16 20:30:00}, 'Union Berlin vs Paderborn 07', '241350272', '2020-06-16 20:30:00')
+,(DEFAULT, 14 {sport=Football&tournament=UEFA Nations League&event=Italy vs Bosnia and Herzegovina&date=2020-09-04 20:45:00}, 'Italy vs Bosnia and Herzegovina', '227964438', '2020-09-04 20:45:00')
+,(DEFAULT, 14 {sport=Football&tournament=Bundesliga&event=W. Bremen vs Bayern&date=2020-06-16 20:30:00}, 'W. Bremen vs Bayern', '241335564', '2020-06-16 20:30:00')
+,(DEFAULT, 14 {sport=Football&tournament=UEFA Nations League&event=Iceland vs England&date=2020-09-05 18:00:00}, 'Iceland vs England', '227964686', '2020-09-05 18:00:00')
+,(DEFAULT, 14 {sport=Football&tournament=UEFA Nations League&event=Netherlands vs Poland&date=2020-09-04 20:45:00}, 'Netherlands vs Poland', '227964689', '2020-09-04 20:45:00')
+,(DEFAULT, 14 {sport=Football&tournament=UEFA Nations League&event=Germany vs Spain&date=2020-09-03 20:45:00}, 'Germany vs Spain', '227962844', '2020-09-03 20:45:00')
+,(DEFAULT, 14 {sport=Football&tournament=UEFA Nations League&event=Ukraine vs Switzerland&date=2020-09-03 20:45:00}, 'Ukraine vs Switzerland', '227964434', '2020-09-03 20:45:00')
+,(DEFAULT, 14 {sport=Football&tournament=Bundesliga&event=Leverkusen vs FC Köln&date=2020-06-17 20:30:00}, 'Leverkusen vs FC Köln', '241342883', '2020-06-17 20:30:00')

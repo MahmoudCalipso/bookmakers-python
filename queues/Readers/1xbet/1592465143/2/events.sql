@@ -1,0 +1,18 @@
+INSERT INTO events (id, fk_tournament_id, inserted_by, title, date, live_until, slug, live, top, active, has_markets, teams_count, time, has_members, created_at, related_to_market) VALUES 
+(DEFAULT, 1441, 14, 'Lithuania vs Kazakhstan', '2020-09-04', '2020-09-04 23:45:00', 'lithuania-vs-kazakhstan-1599245100', 0, 0, 1, 1, 2, '20:45:00', 0, '2020-06-18 09:25:46', NULL)
+,(DEFAULT, 151, 14, 'Paderborn 07 vs B. MGladbach', '2020-06-20', '2020-06-20 18:30:00', 'paderborn-07-vs-b-mgladbach-1592659800', 0, 0, 1, 1, 2, '15:30:00', 0, '2020-06-18 09:25:46', NULL)
+,(DEFAULT, 1441, 14, 'Estonia vs Georgia', '2020-09-05', '2020-09-05 21:00:00', 'estonia-vs-georgia-1599321600', 0, 0, 1, 1, 2, '18:00:00', 0, '2020-06-18 09:25:46', NULL)
+,(DEFAULT, 151, 14, 'Mainz 05 vs W. Bremen', '2020-06-20', '2020-06-20 18:30:00', 'mainz-05-vs-w-bremen-1592659800', 0, 0, 1, 1, 2, '15:30:00', 0, '2020-06-18 09:25:46', NULL)
+,(DEFAULT, 1441, 14, 'Macedonia vs Ararat-Armenia', '2020-09-05', '2020-09-05 18:00:00', 'macedonia-vs-ararat-armenia-1599310800', 0, 0, 1, 1, 2, '15:00:00', 0, '2020-06-18 09:25:46', NULL)
+,(DEFAULT, 151, 14, 'Hoffenheim vs Union Berlin', '2020-06-20', '2020-06-20 18:30:00', 'hoffenheim-vs-union-berlin-1592659800', 0, 0, 1, 1, 2, '15:30:00', 0, '2020-06-18 09:25:46', NULL)
+,(DEFAULT, 1441, 14, 'Slovenia vs Greece', '2020-09-03', '2020-09-03 23:45:00', 'slovenia-vs-greece-1599158700', 0, 0, 1, 1, 2, '20:45:00', 0, '2020-06-18 09:25:46', NULL)
+,(DEFAULT, 151, 14, 'Freiburg vs Hertha BSC', '2020-06-16', '2020-06-16 23:30:00', 'freiburg-vs-hertha-bsc-1592332200', 0, 0, 1, 1, 2, '20:30:00', 0, '2020-06-18 09:25:46', NULL)
+,(DEFAULT, 1441, 14, 'Cyprus vs Montenegro', '2020-09-05', '2020-09-05 21:00:00', 'cyprus-vs-montenegro-1599321600', 0, 0, 1, 1, 2, '18:00:00', 0, '2020-06-18 09:25:46', NULL)
+,(DEFAULT, 151, 14, 'Bayern vs Freiburg', '2020-06-20', '2020-06-20 18:30:00', 'bayern-vs-freiburg-1592659800', 0, 0, 1, 1, 2, '15:30:00', 0, '2020-06-18 09:25:46', NULL)
+,(DEFAULT, 1441, 14, 'Azerbaijan vs Luxembourg', '2020-09-05', '2020-09-05 21:00:00', 'azerbaijan-vs-luxembourg-1599321600', 0, 0, 1, 1, 2, '18:00:00', 0, '2020-06-18 09:25:46', NULL)
+,(DEFAULT, 1441, 14, 'Faroe Islands vs Malta', '2020-09-03', '2020-09-03 23:45:00', 'faroe-islands-vs-malta-1599158700', 0, 0, 1, 1, 2, '20:45:00', 0, '2020-06-18 09:25:46', NULL)
+,(DEFAULT, 151, 14, 'Union Berlin vs Paderborn 07', '2020-06-16', '2020-06-16 23:30:00', 'union-berlin-vs-paderborn-07-1592332200', 0, 0, 1, 1, 2, '20:30:00', 0, '2020-06-18 09:25:47', NULL)
+,(DEFAULT, 1441, 14, 'Latvia vs Andorra', '2020-09-03', '2020-09-03 23:45:00', 'latvia-vs-andorra-1599158700', 0, 0, 1, 1, 2, '20:45:00', 0, '2020-06-18 09:25:47', NULL)
+,(DEFAULT, 1441, 14, 'Moldova vs Kosovo', '2020-09-03', '2020-09-03 23:45:00', 'moldova-vs-kosovo-1599158700', 0, 0, 1, 1, 2, '20:45:00', 0, '2020-06-18 09:25:47', NULL)
+,(DEFAULT, 1441, 14, 'Belarus vs Albania', '2020-09-04', '2020-09-04 23:45:00', 'belarus-vs-albania-1599245100', 0, 0, 1, 1, 2, '20:45:00', 0, '2020-06-18 09:25:47', NULL)
+ON CONFLICT (fk_tournament_id, title, date) DO UPDATE SET time = EXCLUDED.time, has_markets = EXCLUDED.has_markets;

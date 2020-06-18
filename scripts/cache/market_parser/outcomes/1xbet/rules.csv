@@ -1,0 +1,120 @@
+21@s.s@Double bet chance@s.s@1X@s.s@None@s.s@Double bet chance 1X@s.s@1X@s.s@1X
+21@s.s@Double bet chance@s.s@12@s.s@None@s.s@Double bet chance 12@s.s@12@s.s@12
+13@s.s@Handicap@s.s@3 Way (@scannerbet.global.decimal@) X@s.s@{"3 Way ": ""}@s.s@Draw Handicap Plus@s.s@X +@scannerbet.global.decimal@@s.s@X +@scannerbet.global.decimal@
+2@s.s@3-way@s.s@W1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
+39@s.s@Winner 2 way@s.s@W1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
+48@s.s@3-way@s.s@W1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
+60@s.s@3-way@s.s@W1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
+2@s.s@3-way@s.s@W2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
+39@s.s@Winner 2 way@s.s@W2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
+48@s.s@3-way@s.s@W2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
+60@s.s@3-way@s.s@W2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
+1@s.s@Correct score@s.s@Correct Score (@scannerbet.global.integer@)-(@scannerbet.global.integer@)@s.s@None@s.s@Correct Score@s.s@@scannerbet.global.integer@:@scannerbet.global.integer@@s.s@@scannerbet.global.integer@:@scannerbet.global.integer@
+2@s.s@3-way@s.s@X@s.s@None@s.s@Draw@s.s@X@s.s@X
+4@s.s@Totals@s.s@Total Over (@scannerbet.global.decimal@)@s.s@None@s.s@Totals Over@s.s@Over @scannerbet.global.decimal@@s.s@Over @scannerbet.global.decimal@
+41@s.s@total spreads over/under@s.s@Total Over (@scannerbet.global.decimal@)@s.s@None@s.s@Totals Over@s.s@Over @scannerbet.global.decimal@@s.s@Over @scannerbet.global.decimal@
+40@s.s@Total points odd/even@s.s@Total Even - No@s.s@None@s.s@Odd@s.s@Odd@s.s@Odd
+4@s.s@Totals@s.s@Total Under (@scannerbet.global.decimal@)@s.s@None@s.s@Totals Under@s.s@Under @scannerbet.global.decimal@@s.s@Under @scannerbet.global.decimal@
+10@s.s@Both teams to score@s.s@Both Teams To Score - Yes@s.s@None@s.s@Yes@s.s@Yes@s.s@Yes
+20@s.s@Odd or even number of total goals@s.s@Total Even - Yes@s.s@None@s.s@Even@s.s@Even@s.s@Even
+40@s.s@Total points odd/even@s.s@Total Even - Yes@s.s@None@s.s@Even@s.s@Even@s.s@Even
+10@s.s@Both teams to score@s.s@Both Teams To Score - No@s.s@None@s.s@No@s.s@No@s.s@No
+162@s.s@Handicap (maps)@s.s@Handiсap 2 (@scannerbet.global.decimal@)@s.s@{"Handiсap 2": "Handicap"}@s.s@Away Handicap Plus@s.s@@scannerbet.teams.team2@ +@scannerbet.global.decimal@@s.s@@scannerbet.teams.team2@ +@scannerbet.global.decimal@
+176@s.s@Handicap@s.s@Handiсap 2 (@scannerbet.global.decimal@)@s.s@{"Handiсap 2": "Handicap"}@s.s@Away Handicap Plus@s.s@@scannerbet.teams.team2@ +@scannerbet.global.decimal@@s.s@@scannerbet.teams.team2@ +@scannerbet.global.decimal@
+74@s.s@Game Handicap@s.s@Handiсap 2 (@scannerbet.global.decimal@)@s.s@{"Handiсap 2": "Handicap"}@s.s@Away Handicap Plus@s.s@@scannerbet.teams.team2@ +@scannerbet.global.decimal@@s.s@@scannerbet.teams.team2@ +@scannerbet.global.decimal@
+13@s.s@Handicap@s.s@3 Way (@scannerbet.global.decimal@) W2@s.s@{"3 Way ": "", "W2": ""}@s.s@Away Handicap Plus@s.s@@scannerbet.teams.team2@ +@scannerbet.global.decimal@@s.s@@scannerbet.teams.team2@ +@scannerbet.global.decimal@
+14@s.s@Asian Handicap@s.s@Handiсap 2 (-@scannerbet.global.decimal@)@s.s@{"Handiсap 2": "Handicap"}@s.s@Away Handicap Minus@s.s@@scannerbet.teams.team2@ -@scannerbet.global.decimal@@s.s@@scannerbet.teams.team2@ -@scannerbet.global.decimal@
+162@s.s@Handicap (maps)@s.s@Handiсap 1 (@scannerbet.global.decimal@)@s.s@{"Handiсap 1": "Handicap"}@s.s@Local Handicap Plus@s.s@@scannerbet.teams.team1@ +@scannerbet.global.decimal@@s.s@@scannerbet.teams.team1@ +@scannerbet.global.decimal@
+176@s.s@Handicap@s.s@Handiсap 1 (@scannerbet.global.decimal@)@s.s@{"Handiсap 1": "Handicap"}@s.s@Local Handicap Plus@s.s@@scannerbet.teams.team1@ +@scannerbet.global.decimal@@s.s@@scannerbet.teams.team1@ +@scannerbet.global.decimal@
+109@s.s@Double bet chance@s.s@2X@s.s@None@s.s@Double bet chance 2X@s.s@2X@s.s@2X
+14@s.s@Asian Handicap@s.s@Handiсap 1 (-@scannerbet.global.decimal@)@s.s@{"Handiсap 1": "Handicap"}@s.s@Local Handicap Minus@s.s@@scannerbet.teams.team1@ -@scannerbet.global.decimal@@s.s@@scannerbet.teams.team1@ -@scannerbet.global.decimal@
+109@s.s@Double bet chance@s.s@1X@s.s@None@s.s@Double bet chance 1X@s.s@1X@s.s@1X
+74@s.s@Game Handicap@s.s@Handiсap 1 (@scannerbet.global.decimal@)@s.s@{"Handiсap 1": "Handicap"}@s.s@Local Handicap Plus@s.s@@scannerbet.teams.team1@ +@scannerbet.global.decimal@@s.s@@scannerbet.teams.team1@ +@scannerbet.global.decimal@
+61@s.s@Point spread (handicap)@s.s@Handiсap 1 (@scannerbet.global.decimal@)@s.s@{"Handiсap 1": "Handicap"}@s.s@Local Handicap Plus@s.s@@scannerbet.teams.team1@ +@scannerbet.global.decimal@@s.s@@scannerbet.teams.team1@ +@scannerbet.global.decimal@
+86@s.s@3-way@s.s@W1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
+78@s.s@Total games odd/even@s.s@Total Even - No@s.s@None@s.s@Odd@s.s@Odd@s.s@Odd
+92@s.s@2-way@s.s@W1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
+109@s.s@Double bet chance@s.s@12@s.s@None@s.s@Double bet chance 12@s.s@12@s.s@12
+102@s.s@Match winner@s.s@W1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
+150@s.s@Winner 2 way@s.s@W1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
+86@s.s@3-way@s.s@W2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
+90@s.s@Championship outright@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+92@s.s@2-way@s.s@W2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
+102@s.s@Match winner@s.s@W2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
+150@s.s@Winner 2 way@s.s@W2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
+76@s.s@Correct score@s.s@Correct Score (@scannerbet.global.integer@)-(@scannerbet.global.integer@)@s.s@None@s.s@Correct Score@s.s@@scannerbet.global.integer@:@scannerbet.global.integer@@s.s@@scannerbet.global.integer@:@scannerbet.global.integer@
+196@s.s@Match Winner@s.s@W1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
+147@s.s@Winner@s.s@W1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
+86@s.s@3-way@s.s@X@s.s@None@s.s@Draw@s.s@X@s.s@X
+92@s.s@2-way@s.s@X@s.s@None@s.s@Draw@s.s@X@s.s@X
+82@s.s@Total games over/under@s.s@Total Over (@scannerbet.global.decimal@)@s.s@None@s.s@Totals Over@s.s@Over @scannerbet.global.decimal@@s.s@Over @scannerbet.global.decimal@
+82@s.s@Total games over/under@s.s@Total Under (@scannerbet.global.decimal@)@s.s@None@s.s@Totals Under@s.s@Under @scannerbet.global.decimal@@s.s@Under @scannerbet.global.decimal@
+78@s.s@Total games odd/even@s.s@Total Even - Yes@s.s@None@s.s@Even@s.s@Even@s.s@Even
+149@s.s@Handicap@s.s@Handiсap 2 (@scannerbet.global.decimal@)@s.s@{"Handiсap 2": "Handicap"}@s.s@Away Handicap Plus@s.s@@scannerbet.teams.team2@ +@scannerbet.global.decimal@@s.s@@scannerbet.teams.team2@ +@scannerbet.global.decimal@
+149@s.s@Handicap@s.s@Handiсap 1 (@scannerbet.global.decimal@)@s.s@{"Handiсap 1": "Handicap"}@s.s@Local Handicap Plus@s.s@@scannerbet.teams.team1@ +@scannerbet.global.decimal@@s.s@@scannerbet.teams.team1@ +@scannerbet.global.decimal@
+160@s.s@Total Goals - odd/even@s.s@Total Even - Yes@s.s@None@s.s@Even@s.s@Even@s.s@Even
+183@s.s@Double chance@s.s@2X@s.s@None@s.s@Double bet chance 2X@s.s@2X@s.s@2X
+183@s.s@Double chance@s.s@1X@s.s@None@s.s@Double bet chance 1X@s.s@1X@s.s@1X
+183@s.s@Double chance@s.s@12@s.s@None@s.s@Double bet chance 12@s.s@12@s.s@12
+72@s.s@Winner@s.s@W1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
+147@s.s@Winner@s.s@X@s.s@None@s.s@Draw@s.s@X@s.s@X
+160@s.s@Total Goals - odd/even@s.s@Total Even - No@s.s@None@s.s@Odd@s.s@Odd@s.s@Odd
+146@s.s@Total Goals over/under@s.s@Total Under (@scannerbet.global.decimal@)@s.s@None@s.s@Totals Under@s.s@Under @scannerbet.global.decimal@@s.s@Under @scannerbet.global.decimal@
+197@s.s@Runs handicap@s.s@Handiсap 2 (@scannerbet.global.decimal@)@s.s@{"Handiсap 2": "Handicap"}@s.s@Away Handicap Plus@s.s@@scannerbet.teams.team2@ +@scannerbet.global.decimal@@s.s@@scannerbet.teams.team2@ +@scannerbet.global.decimal@
+188@s.s@Match Winner@s.s@W1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
+14@s.s@Asian Handicap@s.s@Handiсap 2 (@scannerbet.global.decimal@)@s.s@{"Handiсap 2": "Handicap"}@s.s@Away Handicap Plus@s.s@@scannerbet.teams.team2@ +@scannerbet.global.decimal@@s.s@@scannerbet.teams.team2@ +@scannerbet.global.decimal@
+188@s.s@Match Winner@s.s@W2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
+192@s.s@Correct Score@s.s@Correct Score (@scannerbet.global.integer@)-(@scannerbet.global.integer@)@s.s@None@s.s@Correct Score@s.s@@scannerbet.global.integer@:@scannerbet.global.integer@@s.s@@scannerbet.global.integer@:@scannerbet.global.integer@
+191@s.s@Points Odd/Even@s.s@Total Even - No@s.s@None@s.s@Odd@s.s@Odd@s.s@Odd
+199@s.s@Total runs odd/even@s.s@Total Even - No@s.s@None@s.s@Odd@s.s@Odd@s.s@Odd
+189@s.s@Points Over/Under@s.s@Total Under (@scannerbet.global.decimal@)@s.s@None@s.s@Totals Under@s.s@Under @scannerbet.global.decimal@@s.s@Under @scannerbet.global.decimal@
+191@s.s@Points Odd/Even@s.s@Total Even - Yes@s.s@None@s.s@Even@s.s@Even@s.s@Even
+199@s.s@Total runs odd/even@s.s@Total Even - Yes@s.s@None@s.s@Even@s.s@Even@s.s@Even
+197@s.s@Runs handicap@s.s@Handiсap 2 (-@scannerbet.global.decimal@)@s.s@{"Handiсap 2": "Handicap"}@s.s@Away Handicap Minus@s.s@@scannerbet.teams.team2@ -@scannerbet.global.decimal@@s.s@@scannerbet.teams.team2@ -@scannerbet.global.decimal@
+197@s.s@Runs handicap@s.s@Handiсap 1 (@scannerbet.global.decimal@)@s.s@{"Handiсap 1": "Handicap"}@s.s@Local Handicap Plus@s.s@@scannerbet.teams.team1@ +@scannerbet.global.decimal@@s.s@@scannerbet.teams.team1@ +@scannerbet.global.decimal@
+13@s.s@Handicap@s.s@3 Way (-@scannerbet.global.decimal@) X@s.s@{"3 Way ": ""}@s.s@Draw Handicap Minus@s.s@X -@scannerbet.global.decimal@@s.s@X -@scannerbet.global.decimal@
+197@s.s@Runs handicap@s.s@Handiсap 1 (+@scannerbet.global.decimal@)@s.s@{"Handiсap 1": "Handicap"}@s.s@Local Handicap Plus@s.s@@scannerbet.teams.team1@ +@scannerbet.global.decimal@@s.s@@scannerbet.teams.team1@ +@scannerbet.global.decimal@
+13@s.s@Handicap@s.s@3 Way (-@scannerbet.global.decimal@) W1@s.s@{"3 Way ": "", "W1": ""}@s.s@Local Handicap Minus@s.s@@scannerbet.teams.team1@ -@scannerbet.global.decimal@@s.s@@scannerbet.teams.team1@ -@scannerbet.global.decimal@
+197@s.s@Runs handicap@s.s@Handiсap 1 (-@scannerbet.global.decimal@)@s.s@{"Handiсap 1": "Handicap"}@s.s@Local Handicap Minus@s.s@@scannerbet.teams.team1@ -@scannerbet.global.decimal@@s.s@@scannerbet.teams.team1@ -@scannerbet.global.decimal@
+13@s.s@Handicap@s.s@3 Way (-@scannerbet.global.decimal@) W2@s.s@{"3 Way ": "", "W2": ""}@s.s@Away Handicap Minus@s.s@@scannerbet.teams.team2@ -@scannerbet.global.decimal@@s.s@@scannerbet.teams.team2@ -@scannerbet.global.decimal@
+197@s.s@Runs handicap@s.s@Handiсap 1 (-@scannerbet.global.decimal@)@s.s@{"Handiсap 1": "Handicap"}@s.s@Local Handicap Minus@s.s@@scannerbet.teams.team1@ -@scannerbet.global.decimal@@s.s@@scannerbet.teams.team1@ -@scannerbet.global.decimal@
+85@s.s@Championship outright@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+196@s.s@Match Winner@s.s@W2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
+198@s.s@Runs over/under@s.s@Total Over (@scannerbet.global.decimal@)@s.s@None@s.s@Totals Over@s.s@Over @scannerbet.global.decimal@@s.s@Over @scannerbet.global.decimal@
+198@s.s@Runs over/under@s.s@Total Under (@scannerbet.global.decimal@)@s.s@None@s.s@Totals Under@s.s@Under @scannerbet.global.decimal@@s.s@Under @scannerbet.global.decimal@
+49@s.s@Point spread (handicap)@s.s@Handiсap 2 (@scannerbet.global.decimal@)@s.s@{"Handiсap 2": "Handicap"}@s.s@Away Handicap Plus@s.s@@scannerbet.teams.team2@ +@scannerbet.global.decimal@@s.s@@scannerbet.teams.team2@ +@scannerbet.global.decimal@
+162@s.s@Handicap (maps)@s.s@Handiсap 1 (-@scannerbet.global.decimal@)@s.s@{"Handiсap 1": "Handicap"}@s.s@Local Handicap Minus@s.s@@scannerbet.teams.team1@ -@scannerbet.global.decimal@@s.s@@scannerbet.teams.team1@ -@scannerbet.global.decimal@
+176@s.s@Handicap@s.s@Handiсap 1 (-@scannerbet.global.decimal@)@s.s@None@s.s@Local Handicap Minus@s.s@@scannerbet.teams.team1@ -@scannerbet.global.decimal@@s.s@@scannerbet.teams.team1@ -@scannerbet.global.decimal@
+146@s.s@Total Goals over/under@s.s@Total Over (@scannerbet.global.decimal@)@s.s@None@s.s@Totals Over@s.s@Over @scannerbet.global.decimal@@s.s@Over @scannerbet.global.decimal@
+41@s.s@total spreads over/under@s.s@Total Under (@scannerbet.global.decimal@)@s.s@None@s.s@Totals Under@s.s@Under @scannerbet.global.decimal@@s.s@Under @scannerbet.global.decimal@
+71@s.s@Championship outright@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+16@s.s@Championship outright@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+46@s.s@Championship outright@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+59@s.s@Championship outright@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+91@s.s@Championship outright@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+94@s.s@Championship outright@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+179@s.s@Championship outright@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+100@s.s@Race winner (pilot)@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+104@s.s@Winner@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+182@s.s@Championship outright@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+176@s.s@Handicap@s.s@Handiсap 2 (-@scannerbet.global.decimal@)@s.s@None@s.s@Away Handicap Minus@s.s@@scannerbet.teams.team2@ -@scannerbet.global.decimal@@s.s@@scannerbet.teams.team2@ -@scannerbet.global.decimal@
+195@s.s@Winner@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+145@s.s@Winning Candidate@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+162@s.s@Handicap (maps)@s.s@Handiсap 2 (-@scannerbet.global.decimal@)@s.s@{"Handiсap 2": "Handicap"}@s.s@Away Handicap Minus@s.s@@scannerbet.teams.team2@ -@scannerbet.global.decimal@@s.s@@scannerbet.teams.team2@ -@scannerbet.global.decimal@
+200@s.s@Championship outright@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+189@s.s@Points Over/Under@s.s@Total Over (@scannerbet.global.decimal@)@s.s@None@s.s@Totals Over@s.s@Over @scannerbet.global.decimal@@s.s@Over @scannerbet.global.decimal@
+197@s.s@Runs handicap@s.s@Handiсap 2 (-@scannerbet.global.decimal@)@s.s@{"Handiсap 2": "Handicap"}@s.s@Away Handicap Minus@s.s@@scannerbet.teams.team2@ -@scannerbet.global.decimal@@s.s@@scannerbet.teams.team2@ -@scannerbet.global.decimal@
+197@s.s@Runs handicap@s.s@Handiсap 2 (@scannerbet.global.decimal@)@s.s@{"Handiсap 2": "Handicap"}@s.s@Away Handicap Plus@s.s@@scannerbet.teams.team2@ +@scannerbet.global.decimal@@s.s@@scannerbet.teams.team2@ +@scannerbet.global.decimal@
+147@s.s@Winner@s.s@W2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
+72@s.s@Winner@s.s@W2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
+20@s.s@Odd or even number of total goals@s.s@Total Even - No@s.s@None@s.s@Odd@s.s@Odd@s.s@Odd
+21@s.s@Double bet chance@s.s@2X@s.s@None@s.s@Double bet chance 2X@s.s@2X@s.s@2X
+61@s.s@Point spread (handicap)@s.s@Handiсap 2 (@scannerbet.global.decimal@)@s.s@{"Handiсap 2": "Handicap"}@s.s@Away Handicap Plus@s.s@@scannerbet.teams.team2@ +@scannerbet.global.decimal@@s.s@@scannerbet.teams.team2@ +@scannerbet.global.decimal@
+24@s.s@Minute interval the first goal is scored in@s.s@First Match Goal - In (@scannerbet.global.integer@) To (@scannerbet.global.integer@) Minute@s.s@None@s.s@Interval@s.s@@scannerbet.global.integer@-@scannerbet.global.integer@@s.s@@scannerbet.global.integer@-@scannerbet.global.integer@
+42@s.s@Point spread (handicap)@s.s@3 Way (-@scannerbet.global.decimal@) W1@s.s@{"3 Way ": "", "W1": ""}@s.s@Local Handicap Minus@s.s@@scannerbet.teams.team1@ -@scannerbet.global.decimal@@s.s@@scannerbet.teams.team1@ -@scannerbet.global.decimal@
+42@s.s@Point spread (handicap)@s.s@3 Way (-@scannerbet.global.decimal@) W2@s.s@{"3 Way ": "", "W2": ""}@s.s@Away Handicap Minus@s.s@@scannerbet.teams.team2@ -@scannerbet.global.decimal@@s.s@@scannerbet.teams.team2@ -@scannerbet.global.decimal@
+13@s.s@Handicap@s.s@3 Way (@scannerbet.global.decimal@) W1@s.s@{"3 Way ": "", "W1": ""}@s.s@Local Handicap Plus@s.s@@scannerbet.teams.team1@ +@scannerbet.global.decimal@@s.s@@scannerbet.teams.team1@ +@scannerbet.global.decimal@
+24@s.s@Minute interval the first goal is scored in@s.s@No First Goal@s.s@None@s.s@None@s.s@None@s.s@None
+42@s.s@Point spread (handicap)@s.s@3 Way (-@scannerbet.global.decimal@) X@s.s@{"3 Way ": ""}@s.s@Draw Handicap Minus@s.s@X -@scannerbet.global.decimal@@s.s@X -@scannerbet.global.decimal@
+49@s.s@Point spread (handicap)@s.s@Handiсap 1 (@scannerbet.global.decimal@)@s.s@{"Handiсap 1": "Handicap"}@s.s@Local Handicap Plus@s.s@@scannerbet.teams.team1@ +@scannerbet.global.decimal@@s.s@@scannerbet.teams.team1@ +@scannerbet.global.decimal@
+14@s.s@Asian Handicap@s.s@Handiсap 1 (@scannerbet.global.decimal@)@s.s@{"Handiсap 1": "Handicap"}@s.s@Local Handicap Plus@s.s@@scannerbet.teams.team1@ +@scannerbet.global.decimal@@s.s@@scannerbet.teams.team1@ +@scannerbet.global.decimal@

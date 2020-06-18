@@ -1,0 +1,18 @@
+INSERT INTO bookmaker_events (id, fk_bookmaker_id, fk_event_id, title, event_id, date) values 
+(DEFAULT, 14 {sport=Football&tournament=Denmark Super League&event=Silkeborg vs SønderjyskE&date=2020-06-21 14:00:00}, 'Silkeborg vs SønderjyskE', '241353033', '2020-06-21 14:00:00')
+,(DEFAULT, 14 {sport=Football&tournament=Bundesliga 2&event=St. Pauli vs Jahn Regensburg&date=2020-06-21 15:30:00}, 'St. Pauli vs Jahn Regensburg', '241204334', '2020-06-21 15:30:00')
+,(DEFAULT, 14 {sport=Football&tournament=Denmark Super League&event=AGF Aarhus vs Nordsjælland&date=2020-06-17 18:00:00}, 'AGF Aarhus vs Nordsjælland', '240749611', '2020-06-17 18:00:00')
+,(DEFAULT, 14 {sport=Football&tournament=Bundesliga 2&event=Erzgebirge Aue vs Hannover&date=2020-06-21 15:30:00}, 'Erzgebirge Aue vs Hannover', '241204674', '2020-06-21 15:30:00')
+,(DEFAULT, 14 {sport=Football&tournament=Bundesliga 2&event=Osnabrück vs Holstein Kiel&date=2020-06-21 15:30:00}, 'Osnabrück vs Holstein Kiel', '241204677', '2020-06-21 15:30:00')
+,(DEFAULT, 14 {sport=Football&tournament=Bundesliga 2&event=Karlsruher SC vs Arminia Bielefeld&date=2020-06-21 15:30:00}, 'Karlsruher SC vs Arminia Bielefeld', '241207567', '2020-06-21 15:30:00')
+,(DEFAULT, 14 {sport=Football&tournament=Denmark Super League&event=Lyngby BK vs Silkeborg&date=2020-06-18 18:00:00}, 'Lyngby BK vs Silkeborg', '240749949', '2020-06-18 18:00:00')
+,(DEFAULT, 14 {sport=Football&tournament=Bundesliga 2&event=Sandhausen vs Dynamo Dresden&date=2020-06-21 15:30:00}, 'Sandhausen vs Dynamo Dresden', '241222015', '2020-06-21 15:30:00')
+,(DEFAULT, 14 {sport=Football&tournament=Denmark Super League&event=Odense BK vs SønderjyskE&date=2020-06-18 18:00:00}, 'Odense BK vs SønderjyskE', '240749953', '2020-06-18 18:00:00')
+,(DEFAULT, 14 {sport=Football&tournament=Denmark Super League&event=Midtjylland vs Brondby&date=2020-06-18 20:00:00}, 'Midtjylland vs Brondby', '240749956', '2020-06-18 20:00:00')
+,(DEFAULT, 14 {sport=Football&tournament=Bundesliga 2&event=Darmstadt 98 vs Wehen Wiesbaden&date=2020-06-21 15:30:00}, 'Darmstadt 98 vs Wehen Wiesbaden', '241203728', '2020-06-21 15:30:00')
+,(DEFAULT, 14 {sport=Football&tournament=Denmark Super League&event=Randers vs Hobro IK&date=2020-06-16 20:00:00}, 'Randers vs Hobro IK', '240685290', '2020-06-16 20:00:00')
+,(DEFAULT, 14 {sport=Football&tournament=Denmark Super League&event=AC Horsens vs Randers&date=2020-06-20 13:00:00}, 'AC Horsens vs Randers', '241348458', '2020-06-20 13:00:00')
+,(DEFAULT, 14 {sport=Football&tournament=Denmark Super League&event=Lyngby BK vs Odense BK&date=2020-06-22 19:00:00}, 'Lyngby BK vs Odense BK', '241348929', '2020-06-22 19:00:00')
+,(DEFAULT, 14 {sport=Football&tournament=Bundesliga 2&event=Heidenheim vs Hamburger SV&date=2020-06-21 15:30:00}, 'Heidenheim vs Hamburger SV', '241203724', '2020-06-21 15:30:00')
+,(DEFAULT, 14 {sport=Football&tournament=Norway Eliteserien&event=Haugesund vs Brann&date=2020-06-17 20:30:00}, 'Haugesund vs Brann', '236910223', '2020-06-17 20:30:00')
+ON CONFLICT (fk_bookmaker_id, fk_event_id) DO NOTHING;

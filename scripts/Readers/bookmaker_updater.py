@@ -6,6 +6,10 @@ import re
 import datetime
 from datetime import date, timedelta
 from slugify import slugify
+import sys
+sys.path.append("../../../")
+from scripts import MarketParser
+from models import MarketRule
 
 # Constants
 BOOKMAKER_SPORTS_TABLE = 'bookmaker_sports'
@@ -82,6 +86,8 @@ processed_event_teams = {}
 events = {}
 outright_markets = {}
 
+market_parser = None
+
 def init(id, title):
 	global bookmaker_id
 	global bookmaker_title
@@ -101,6 +107,7 @@ def init(id, title):
 
 	initBookmakerEntities(title)
 	initMappings(title)
+	initMarketParser(title)
 	initEvents()
 	initNextSqlFile()
 
@@ -354,6 +361,52 @@ def initMappings(title):
 							'bookmaker_market_title': row[5],
 						}
 
+def initMarketParser(title):
+	global market_parser
+
+	# Initialize
+	market_parser = MarketParser.MarketParser()
+
+	# Set constants
+	csv_path = '../../cache/constants.csv'
+	constants = {}
+	if os.path.exists(csv_path):
+		with open(csv_path, 'r', encoding="utf-8") as file:
+			for line in file:
+				row = line.strip().split('@s.s@')
+				variable = row[1]
+				value = row[2]
+				# id@s.s@variable@s.s@value
+				variable = market_parser.CONSTANT.replace('{variable}', variable)
+				constants[variable] = value
+
+	market_parser.setConstantsVariables(constants)
+
+	# Get market rules belonging to the current bookmaker
+	csv_path = '../../cache/market_parser/markets/' + title + '/rules.csv'
+	rules = []
+	if os.path.exists(csv_path):
+		with open(csv_path, 'r', encoding="utf-8") as file:
+			for line in file:
+				row = line.strip().split('@s.s@')
+				# sport_id@s.s@sport_title@s.s@market_id@s.s@market_title@s.s@input@s.s@input_replace@s.s@outcome_output
+				rule = MarketRule.MarketRule()
+				input_replace = []
+				_input_replace = json.loads(row[5]) if row[5] != 'None' else []
+
+				rule.sport_id = row[0]
+				rule.sport_title = row[1]
+				rule.market_id = row[2]
+				rule.market_title = row[3]
+				rule.input = row[4]
+				rule.input_replace = input_replace
+				rule.outcome_output = row[6]
+				
+				rules.append(rule)
+
+	market_parser.setMarketsRules(rules)
+
+
 def initEvents():
 	global events
 
@@ -513,10 +566,14 @@ def buildBookmakerTeams(bookmaker_event):
 def buildBookmakerMarkets(bookmaker_event):
 	global processed_bookmaker_sports
 	global processed_bookmaker_markets
+	global bookmaker_sports
+	global sports_maps
 	global processed_entities
 	global bookmaker_markets
+	global markets_maps
 	global bookmaker_tournaments
 	global tournaments_maps
+	global market_parser
 
 	if bookmaker_event.sport not in processed_bookmaker_markets:
 		processed_bookmaker_markets[bookmaker_event.sport] = []
@@ -539,6 +596,25 @@ def buildBookmakerMarkets(bookmaker_event):
 				odd.is_mapped = True
 
 			# Check market rules
+			market_rule = market_parser.getMarketRule(odd.title, sports_maps[bookmaker_sports[bookmaker_event.sport]['id']]['sport_title'])
+
+			if odd.title in bookmaker_markets[bookmaker_event.sport] and market_rule:
+				bookmaker_market = bookmaker_markets[bookmaker_event.sport][odd.title]
+				market_map = {
+					'sport_id': market_rule.sport_id,
+					'sport_title': market_rule.sport_title,
+					'market_id': market_rule.market_id,
+					'market_title': market_rule.market_title,
+					'bookmaker_market_id': bookmaker_market['id'],
+					'bookmaker_market_title': bookmaker_market['title']
+				}
+
+				markets_maps[bookmaker_market['id']] = market_map
+
+				odd.outcomes = market_parser.filterMarketOutcomes(market_rule, odd.title, odd.outcomes, bookmaker_event.teams)
+				odd.is_mapped = True
+				odd.has_markets = True
+
 
 		# Bookmaker market
 		if (

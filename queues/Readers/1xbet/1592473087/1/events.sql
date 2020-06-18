@@ -1,0 +1,4 @@
+INSERT INTO events (id, fk_tournament_id, inserted_by, title, date, live_until, slug, live, top, active, has_markets, teams_count, time, has_members, created_at, related_to_market) VALUES 
+(DEFAULT, 151, 14, 'Freiburg vs Hertha BSC', '2020-06-16', '2020-06-16 23:30:00', 'freiburg-vs-hertha-bsc-1592332200', 0, 0, 1, 1, 2, '20:30:00', 0, '2020-06-18 11:38:09', NULL)
+,(DEFAULT, 1441, 14, 'Russia vs Serbia', '2020-09-03', '2020-09-03 23:45:00', 'russia-vs-serbia-1599158700', 0, 0, 1, 1, 2, '20:45:00', 0, '2020-06-18 11:38:09', NULL)
+,(DEFAULT, 1441, 14, 'Turkey vs Hungary', '2020-09-03', '2020-09-03 23:45:00', 'turkey-vs-hungary-1599158700', 0, 0, 1, 1, 2, '20:45:00', 0, '2020-06-18 11:38:09', NULL)

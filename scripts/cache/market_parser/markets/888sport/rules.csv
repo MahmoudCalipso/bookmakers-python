@@ -1,0 +1,4 @@
+1@s.s@Football@s.s@15@s.s@Matchbet + both teams to score@s.s@@scannerbet.bookmaker.teams.team2@ to win and both teams to score@s.s@{" to win and both teams to score":" /  to win and both teams to score"}@s.s@@scannerbet.constants.two@/@scannerbet.global.outcome@
+1@s.s@Football@s.s@15@s.s@Matchbet + both teams to score@s.s@Away Team to win and both teams to score@s.s@None@s.s@@scannerbet.constants.two@/@scannerbet.global.outcome@
+1@s.s@Football@s.s@15@s.s@Matchbet + both teams to score@s.s@Home Team to win and both teams to score@s.s@None@s.s@@scannerbet.constants.one@/@scannerbet.global.outcome@
+1@s.s@Football@s.s@15@s.s@Matchbet + both teams to score@s.s@Draw and both teams to score@s.s@None@s.s@@scannerbet.constants.x@/@scannerbet.global.outcome@
