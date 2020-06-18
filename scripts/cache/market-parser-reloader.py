@@ -58,7 +58,7 @@ try:
 		i += 1
 
 	# Outcome market rules
-	cursor.execute("select b.id as bookmaker_id, b.title as bookmaker_title, m.id as market_id, m.title as market_title, input, input_replace, mo.name as market_outcome_name, mo.save_pattern as market_outcome_save_pattern, mo.output as market_outcome_output from bookmaker_market_outcome_rules bmor LEFT JOIN bookmakers b ON b.id = bmor.fk_bookmaker_id LEFT JOIN markets m ON m.id = bmor.fk_market_id LEFT JOIN market_outcomes mo ON mo.id = bmor.fk_market_outcome_id where b.id is not null and m.id is not null order by b.id")
+	cursor.execute("select b.id as bookmaker_id, b.title as bookmaker_title, m.id as market_id, m.title as market_title, s.id as sport_id, s.title as sport_title, bmor.id, bmor.input, bmor.input_replace, mo.name as market_outcome_name, mo.save_pattern as market_outcome_save_pattern, mo.output as market_outcome_output from bookmaker_market_outcome_rules bmor LEFT JOIN bookmakers b ON b.id = bmor.fk_bookmaker_id LEFT JOIN markets m ON m.id = bmor.fk_market_id LEFT JOIN sports s ON s.id = m.fk_sport_id LEFT JOIN market_outcomes mo ON mo.id = bmor.fk_market_outcome_id where b.id is not null and m.id is not null order by b.id")
 	records = cursor.fetchall()
 	current_bookmaker = None
 	csv_rows = ''
@@ -84,7 +84,7 @@ try:
 			current_bookmaker = bookmaker_title
 			csv_rows = ''
 
-		csv_rows += str(row[2]) + '@s.s@' + row[3] + '@s.s@' + row[4] + '@s.s@' + (row[5] if row[5] else 'None') + '@s.s@' + row[6] + '@s.s@' + row[7] + '@s.s@' + row[8] + '\n'
+		csv_rows += str(row[2]) + '@s.s@' + row[3] + '@s.s@' + str(row[4]) + '@s.s@' + row[5]  + '@s.s@' + str(row[6]) + '@s.s@' + row[7] + '@s.s@' + (row[8] if row[8] else 'None') + '@s.s@' + row[9] + '@s.s@' + row[10] + '@s.s@' + row[11] + '\n'
 		i += 1
 
 except (Exception, psycopg2.Error) as error :

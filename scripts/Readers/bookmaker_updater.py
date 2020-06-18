@@ -406,7 +406,6 @@ def initMarketParser(title):
 
 	market_parser.setMarketsRules(rules)
 
-
 def initEvents():
 	global events
 
@@ -689,6 +688,7 @@ def buildEvent(bookmaker_event):
 								and member.title in bookmaker_teams[bookmaker_event.sport]
 								and bookmaker_teams[bookmaker_event.sport][member.title]['id'] in teams_maps
 							):
+								teams_ids.append(teams_maps[bookmaker_teams[bookmaker_event.sport][member.title]['id']]['team_id'])
 								members_names.append(teams_maps[bookmaker_teams[bookmaker_event.sport][member.title]['id']]['team_title'])
 
 						if len(members_names) == 2:
@@ -788,7 +788,7 @@ def buildEvent(bookmaker_event):
 					else:
 						sql = "\n,"
 
-					sql += "(DEFAULT, " + str(tournament_id) + ", " + str(bookmaker_id) + ", '{event_title}', '" + date.strftime(MYSQL_DATE_FORMAT) + "', {live_date}, '{event_slug}', " + str(INACTIVE) + ", " + str(INACTIVE) + ", " + str(ACTIVE) + ", " + (str(ACTIVE) if bookmaker_event.has_markets else str(INACTIVE)) + ", {teams_count}, '" + date.strftime(MYSQL_TIME_FORMAT) + "', " + (str(ACTIVE) if event_between_two_teams_with_members else str(INACTIVE)) + ", '" + now + "', " + (related_market_id if related_market_id else 'NULL') + ")"
+					sql += "(DEFAULT, " + str(tournament_id) + ", " + str(bookmaker_id) + ", '{event_title}', '" + date.strftime(MYSQL_DATE_FORMAT) + "', {live_date}, '{event_slug}', " + str(INACTIVE) + ", " + str(INACTIVE) + ", " + str(ACTIVE) + ", " + (str(ACTIVE) if bookmaker_event.has_markets else str(INACTIVE)) + ", {teams_count}, '" + date.strftime(MYSQL_TIME_FORMAT) + "', " + (str(ACTIVE) if event_between_two_teams_with_members else str(INACTIVE)) + ", '" + now + "', " + (related_market_id if related_market_id else 'NULL') + "){teams=" + ",".join(teams_ids) + "}"
 					sql = sql.replace('{event_title}', event_name)
 					sql = sql.replace('{event_slug}', slug)
 					sql = sql.replace('{teams_count}', str(teams_count))

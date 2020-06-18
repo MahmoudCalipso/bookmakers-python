@@ -304,10 +304,10 @@ class MarketParser():
                             and (_match not in constants_values or variable == VARIABLE_DECIMAL or variable == VARIABLE_INTEGER)
                         ):
                             if variable == VARIABLE_DECIMAL:
-                                output_rule = re.sub(variable + '(?!\{key)', variable . '{key=' . _match .'}', output_rule, 1)
+                                output_rule = re.sub(variable + '(?!\{key)', variable + '{key=' + _match + '}', output_rule, 1)
                                 output_rule = output_rule.replace(',', '.')
                             elif variable == VARIABLE_INTEGER:
-                                output_rule = re.sub(variable + '(?!\{key)', variable . '{key=' . _match .'}', output_rule, 1)
+                                output_rule = re.sub(variable + '(?!\{key)', variable + '{key=' + _match + '}', output_rule, 1)
                             elif variable == VARIABLE_TEAM_ANY or variable == VARIABLE_TEAM_1 or variable == VARIABLE_TEAM_2:
                                 if _match.endswith('-') and (output_rule.endswith(VARIABLE_INTEGER) or output_rule.endswith(VARIABLE_DECIMAL)):
                                     _match = _match.rstrip('-')
@@ -376,7 +376,7 @@ class MarketParser():
                 self.missing_bookmaker_teams.append(outcome_title)
             else:
                 _team = teams_maps[bookmaker_teams[team_title]['id']]
-                output = output_rule.replace(output_rule, VARIABLE_TEAM_ANY + '{key=' . _team['team_id'] . '}')
+                output = output_rule.replace(output_rule, VARIABLE_TEAM_ANY + '{key=' + _team['team_id'] + '}')
         else:
             output = output_rule
 

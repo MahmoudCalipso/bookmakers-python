@@ -1,9 +1,0 @@
-INSERT INTO events (id, fk_tournament_id, inserted_by, title, date, live_until, slug, live, top, active, has_markets, teams_count, time, has_members, created_at, related_to_market) VALUES 
-(DEFAULT, 1441, 14, 'Belarus vs Albania', '2020-09-04', '2020-09-04 23:45:00', 'belarus-vs-albania-1599245100', 0, 0, 1, 1, 2, '20:45:00', 0, '2020-06-18 09:25:47', NULL)
-,(DEFAULT, 151, 14, 'W. Bremen vs Bayern', '2020-06-16', '2020-06-16 23:30:00', 'w-bremen-vs-bayern-1592332200', 0, 0, 1, 1, 2, '20:30:00', 0, '2020-06-18 09:25:47', NULL)
-,(DEFAULT, 151, 14, 'Union Berlin vs Paderborn 07', '2020-06-16', '2020-06-16 23:30:00', 'union-berlin-vs-paderborn-07-1592332200', 0, 0, 1, 1, 2, '20:30:00', 0, '2020-06-18 09:25:47', NULL)
-,(DEFAULT, 151, 14, 'Freiburg vs Hertha BSC', '2020-06-16', '2020-06-16 23:30:00', 'freiburg-vs-hertha-bsc-1592332200', 0, 0, 1, 1, 2, '20:30:00', 0, '2020-06-18 09:25:47', NULL)
-,(DEFAULT, 151, 14, 'B. Dortmund vs Mainz 05', '2020-06-17', '2020-06-17 23:30:00', 'b-dortmund-vs-mainz-05-1592418600', 0, 0, 1, 1, 2, '20:30:00', 0, '2020-06-18 09:25:47', NULL)
-,(DEFAULT, 151, 14, 'Eintracht Frankfurt vs Schalke 04', '2020-06-17', '2020-06-17 21:30:00', 'eintracht-frankfurt-vs-schalke-04-1592411400', 0, 0, 1, 1, 2, '18:30:00', 0, '2020-06-18 09:25:47', NULL)
-,(DEFAULT, 151, 14, 'Leverkusen vs FC Köln', '2020-06-17', '2020-06-17 23:30:00', 'leverkusen-vs-fc-koln-1592418600', 0, 0, 1, 1, 2, '20:30:00', 0, '2020-06-18 09:25:47', NULL)
-,(DEFAULT, 151, 14, 'Augsburg vs Hoffenheim', '2020-06-17', '2020-06-17 23:30:00', 'augsburg-vs-hoffenheim-1592418600', 0, 0, 1, 1, 2, '20:30:00', 0, '2020-06-18 09:25:47', NULL)
