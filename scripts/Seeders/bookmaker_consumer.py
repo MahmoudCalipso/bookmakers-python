@@ -42,6 +42,7 @@ bookmaker_title = None
 connection = None
 
 events = {}
+processed_events = []
 
 def run(id, title):
 	global bookmaker_id
@@ -321,6 +322,7 @@ def seedBookmakerSports():
 			cursor.execute(sql)
 			connection.commit()
 			print('Bookmaker sports inserted successfully')
+			sql = ''
 		except (Exception, psycopg2.DatabaseError) as error:
 			print('Could not insert bookmaker sports: ' + str(error))
 			connection.rollback()
@@ -345,6 +347,7 @@ def seedBookmakerTournaments():
 			cursor = connection.cursor()
 			cursor.execute(sql)
 			connection.commit()
+			sql = ''
 		except (Exception, psycopg2.DatabaseError) as error:
 			print('Could not insert bookmaker tournaments: ' + str(error))
 			connection.rollback()
@@ -369,6 +372,7 @@ def seedBookmakerTeams():
 			cursor = connection.cursor()
 			cursor.execute(sql)
 			connection.commit()
+			sql = ''
 		except (Exception, psycopg2.DatabaseError) as error:
 			print('Could not insert bookmaker teams: ' + str(error))
 			connection.rollback()
@@ -393,6 +397,7 @@ def seedBookmakerMarkets():
 			cursor = connection.cursor()
 			cursor.execute(sql)
 			connection.commit()
+			sql = ''
 		except (Exception, psycopg2.DatabaseError) as error:
 			print('Could not insert bookmaker markets: ' + str(error))
 			connection.rollback()
@@ -401,25 +406,195 @@ def seedEvents():
 	global queue_path
 	global connection
 	global bookmaker_sports
+	global processed_events
 
 	sql_path = queue_path + 'events.sql'
 	if os.path.exists(sql_path):
 		sql = filterEvents(sql_path)
 
+		if len(sql) > 0:
+			try:
+				cursor = connection.cursor()
+				cursor.execute(sql)
+				connection.commit()
+			except (Exception, psycopg2.DatabaseError) as error:
+				print('Could not insert events: ' + str(error))
+				connection.rollback()
+
+		sql = ''
+
+		# Get inserted events
+		if len(processed_events) > 0:
+			query = 'SELECT s.title as sport_title, e.id as event_id, t.title as tournament_title, e.title as event_title, e.date as event_date, e.time as event_time FROM events e LEFT JOIN tournaments t ON t.id = e.fk_tournament_id LEFT JOIN sports s ON s.id = t.fk_sport_id WHERE '
+			i = 0
+
+			for event in processed_events:
+				if i > 0:
+					query += ' OR '
+
+				if event['outrights']:
+					query += '(e.fk_tournament_id = ' + event['tournament_id'] + ' and e.title = \'' + event['title'] + '\')'
+				else:
+					query += '(e.fk_tournament_id = ' + event['tournament_id'] + ' and e.title = \'' + event['title'] + '\' and e.date = \'' + event['date'] + '\')'
+				
+				i += 1
+			
+			records = []
+			try:
+				cursor = connection.cursor()
+				cursor.execute(query)
+				records = cursor.fetchall()
+			except:
+				pass
+
+			if len(records) > 0:
+				# Process event teams + bookmaker events
+				event_teams_sql = ''
+				bookmaker_events_sql = ''
+				ids = []
+
+				if os.path.exists(queue_path + 'event_teams.sql'):
+					file = open(queue_path + 'event_teams.sql', 'r', encoding="utf-8")
+					event_teams_sql = file.read()
+
+				if os.path.exists(queue_path + 'bookmaker_events.sql'):
+					file = open(queue_path + 'bookmaker_events.sql', 'r', encoding="utf-8")
+					bookmaker_events_sql = file.read()
+
+				processed_events = {}
+				for row in records:
+					event_id = str(row[1])
+					date = str(row[4])
+					time = str(row[5])
+					datetime = date + ' ' + time
+
+					ids.append(event_id)
+					processed_events[row[1]] = {
+						'sport_title': row[0],
+						'tournament_title': row[2],
+						'title': row[3],
+						'date': date,
+						'time': time
+					}
+
+					event_teams_sql = event_teams_sql.replace('{sport=' + row[0] + '&tournament=' + row[2] + '&event=' + row[3] + '&date=' + datetime + '}', event_id)
+					bookmaker_events_sql = bookmaker_events_sql.replace('{sport=' + row[0] + '&tournament=' + row[2] + '&event=' + row[3] + '&date=' + datetime + '}', event_id)
+
+				# Remove all lines that haven't been replaced
+				event_teams_sql = re.sub('\n?,?\(DEFAULT, {sport=.*&tournament=.*&event=.*&date=.*},.*\)', '', event_teams_sql)
+				bookmaker_events_sql = re.sub('\n?,?\(DEFAULT, \d+, {sport=.*&tournament=.*&event=.*&date=.*},.*\)', '', bookmaker_events_sql)
+
+				# Seed event teams
+				try:
+					cursor.execute(event_teams_sql)
+					connection.commit()
+				except (Exception, psycopg2.DatabaseError) as error:
+					print('Could not insert event teams: ' + str(error))
+					connection.rollback()
+
+				# Seed bookmaker events
+				insert_bookmaker_event_markets = False
+				try:
+					cursor.execute(bookmaker_events_sql)
+					connection.commit()
+					insert_bookmaker_event_markets = True
+				except (Exception, psycopg2.DatabaseError) as error:
+					print('Could not insert bookmaker events: ' + str(error))
+					connection.rollback()
+
+				event_teams_sql = ''
+				bookmaker_events_sql = ''
+
+				if insert_bookmaker_event_markets:
+					seedBookmakerEventMarkets(ids)
+
+def seedBookmakerEventMarkets(ids):
+	if os.path.exists(queue_path + 'bookmaker_event_markets.sql'):
+		file = open(queue_path + 'bookmaker_event_markets.sql', 'r', encoding="utf-8")
+		sql = file.read()
+
+		# Get inserted bookmaker events
+		query = "SELECT be.id as bookmaker_event_id, e.title as event_title, e.date as event_date, t.title as tournament_title, s.title as sport_title FROM bookmaker_events be LEFT JOIN events e ON e.id = be.fk_event_id LEFT JOIN tournaments t ON t.id = e.fk_tournament_id LEFT JOIN sports s ON s.id = t.fk_sport_id WHERE fk_bookmaker_id = " + bookmaker_id + " AND fk_event_id IN (" + ", ".join(ids) + ")"
+		records = []
+		try:
+			cursor = connection.cursor()
+			cursor.execute(query)
+			records = cursor.fetchall()
+		except:
+			pass
+
+		if len(records) > 0:
+			for row in records:
+				sql = sql.replace('{sport=' + row[4] + '&tournament=' + row[3] + '&event=' + row[1] + '&date=' + row[2] + '}', row[0])
+
+			# Remove all lines that haven't been replaced
+			sql = re.sub('\n?\,?\(DEFAULT\, \{sport=(.*)&tournament=(.*)&event=(.*)&date=(.*)\}\,.*\)', '', sql)
+
+			# Seed bookmaker event markets
+			insert_bookmaker_event_market_outcomes = False
+			try:
+				cursor.execute(sql)
+				connection.commit()
+				insert_bookmaker_event_market_outcomes = True
+			except:
+				print('Could not insert bookmaker event markets: ' + str(error))
+				connection.rollback()
+
+			sql = ''
+
+			if insert_bookmaker_event_market_outcomes:
+				seedBookmakerEventMarketOutcomes(ids)
+
+def seedBookmakerEventMarketOutcomes(ids):
+	if os.path.exists(queue_path + 'bookmaker_event_market_outcomes.sql'):
+		final = ''
+		last_line = ''
+		i = 0
+
+		# Get inserted bookmaker event markets
+		query = "SELECT bem.id as bookmaker_event_market_id, bem.title as bookmaker_event_market_title, be.title as bookmaker_event_title, e.date as event_date, e.time as event_time, e.fk_tournament_id as tournament_id, e.id as event_id FROM bookmaker_event_markets bem LEFT JOIN bookmaker_events be ON be.id = bem.fk_bookmaker_event LEFT JOIN events e ON e.id = be.fk_event_id WHERE be.fk_bookmaker_id = " + bookmaker_id + " AND e.id IN (" + ", ".join(ids) + ")"
+		records = []
+		try:
+			cursor = connection.cursor()
+			cursor.execute(query)
+			records = cursor.fetchall()
+		except:
+			pass
+
+		if len(records) > 0:
+			with open(queue_path + 'bookmaker_event_market_outcomes.sql') as file:
+				i = 0
+				for line in file:
+					found = False
+
+					if i == 0:
+						final += line
+						i += 1
+						continue
+					elif line.startswith('ON CONFLICT'):
+						last_line = line
+						continue
+
+					match = re.findall('\n?\,?\(DEFAULT\, \{sport=(.*)&tournament=(.*)&event=(.*)&date=(.*)&market_title=(.*)&teams=(.*)\}\, \{team=(.*)\}\,.*\{outcome_title=(.*)\}\,.*\)', line)
+
+					print(match)
+					os.die()
 
 
 
 def filterEvents(sql_path):
 	global events
+	global processed_events
 
 	output = ""
 	last_line = ""
+	processed_events = []
 
 	try:
 		events_lines_to_double_check = []
 		query = 'SELECT e.id, e.date, e.time, e.title, e.fk_tournament_id, et.fk_team_id FROM event_teams et LEFT JOIN events e ON e.id = et.fk_event_id WHERE e.teams_count = 2 AND e.related_to_market IS NULL'
 
-		with open(sql_path) as file:
+		with open(sql_path, encoding="utf-8") as file:
 			i = 0
 			for line in file:
 				found = False
@@ -433,20 +608,21 @@ def filterEvents(sql_path):
 					continue
 
 				m = re.search('{teams=(.*)}', line)
+				teams_ids = []
 
 				if m.group(0):
 					teams_ids = m.group(1).strip().split(',')
+					_line = line.lstrip(',')
+					event_data = _line.split(',')
+					tournament_id = event_data[1].strip()
+					title = event_data[3].replace("'", "")
+					date = event_data[4].replace("'", "")
+					time = event_data[12].replace("'", "")
+					date = date.strip()
+					time = time.strip()
+					date = datetime.datetime.strptime(date, MYSQL_DATE_FORMAT)
 
-					if teams_ids and len(teams_ids) == 2:
-						_line = line.lstrip(',')
-						event_data = _line.split(',')
-						tournament_id = event_data[1]
-						title = event_data[3].replace("'", "")
-						date = event_data[4].replace("'", "")
-						title = title.strip()
-						date = date.strip()
-						date = datetime.datetime.strptime(date, MYSQL_DATE_FORMAT)
-
+					if len(teams_ids) == 2:
 						# Check current, previous and next dates
 						today = datetime.datetime.now().strftime(MYSQL_DATE_FORMAT)
 						two_days_ago_date = (date - timedelta(days=2)).strftime(MYSQL_DATE_FORMAT)
@@ -473,18 +649,32 @@ def filterEvents(sql_path):
 										break
 
 				line = re.sub('{teams=(.*)}', '', line)
-				
-				if not found:
-					query += " OR WHERE (e.fk_tournament_id = " + tournament_id + " AND et.fk_team_id IN (" + ", ".join(teams_ids) + "))"
+
+				if not found and len(teams_ids) == 2:
+					query += " OR (e.fk_tournament_id = " + tournament_id + " AND et.fk_team_id IN (" + ", ".join(teams_ids) + "))"
 					events_lines_to_double_check.append({
 						'tournament_id': tournament_id,
 						'title': title,
-						'date': event_data[4],
+						'date': date.strftime(MYSQL_DATE_FORMAT),
+						'time': time,
 						'teams_ids': teams_ids,
 						'line': line
 					})
+				elif len(teams_ids) > 2: # Outrights
+					if not line.startswith(',') and len(processed_events) > 0:
+						line = ',' + line
+					elif line.startswith(',') and len(processed_events) == 0:
+						line = line.lstrip(',')
 
-				output += line
+					output += line
+					processed_events.append({
+						'tournament_id': tournament_id,
+						'title': title.lstrip(),
+						'date': date.strftime(MYSQL_DATE_FORMAT),
+						'time': time,
+						'outrights': True
+					})
+
 				i += 1
 
 		# Double check
@@ -494,10 +684,10 @@ def filterEvents(sql_path):
 			records = cursor.fetchall()
 
 			if len(records) > 0:
-				for records in records:
+				for row in records:
 					event_id = row[0]
-					event_date = row[1]
-					event_time = row[2]
+					event_date = str(row[1])
+					event_time = str(row[2])
 					event_title = row[3]
 					tournament_id = row[4]
 					event_team_id = row[5]
@@ -539,10 +729,22 @@ def filterEvents(sql_path):
 								break
 
 				if not found:
-					output += event_to_double_check['line']
+					line = event_to_double_check['line']
+
+					if not line.startswith(',') and len(processed_events) > 0:
+						line = ',' + line
+
+					output += line
+					processed_events.append({
+						'tournament_id': tournament_id,
+						'title': event_to_double_check['title'].strip(),
+						'date': event_to_double_check['date'],
+						'time': event_to_double_check['time'],
+						'outrights': False
+					})
 
 		output += last_line
 	except (Exception) as ex:
-		print(ex)
+		pass
 
 	return output

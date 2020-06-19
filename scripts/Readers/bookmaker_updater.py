@@ -651,6 +651,7 @@ def buildEvent(bookmaker_event):
 	if bookmaker_event.has_markets:
 		now = datetime.datetime.now()
 		today = now.strftime(MYSQL_DATE_FORMAT)
+		today_full = now.strftime(MYSQL_DATETIME_FORMAT)
 		bookmaker_sport = bookmaker_sports[bookmaker_event.sport]
 		bookmaker_tournament = bookmaker_tournaments[bookmaker_event.sport][bookmaker_event.tournament]
 		sport_id = sports_maps[bookmaker_sport['id']]['sport_id']
@@ -778,7 +779,6 @@ def buildEvent(bookmaker_event):
 				if insert_event and not bookmaker_event.live and event_name not in processed_events[sport_title][tournament_title]:
 					date = datetime.datetime.strptime(event_date, MYSQL_DATETIME_FORMAT)
 					event_date = date.strftime(MYSQL_DATETIME_FORMAT)
-					now = date.today().strftime(MYSQL_DATETIME_FORMAT)
 					live_date = getLiveDateBySport(sport_live_date_interval, event_date)
 					timestamp = int(datetime.datetime.timestamp(date))
 					slug = slugify(event_name) + '-' + str(timestamp)
@@ -788,7 +788,7 @@ def buildEvent(bookmaker_event):
 					else:
 						sql = "\n,"
 
-					sql += "(DEFAULT, " + str(tournament_id) + ", " + str(bookmaker_id) + ", '{event_title}', '" + date.strftime(MYSQL_DATE_FORMAT) + "', {live_date}, '{event_slug}', " + str(INACTIVE) + ", " + str(INACTIVE) + ", " + str(ACTIVE) + ", " + (str(ACTIVE) if bookmaker_event.has_markets else str(INACTIVE)) + ", {teams_count}, '" + date.strftime(MYSQL_TIME_FORMAT) + "', " + (str(ACTIVE) if event_between_two_teams_with_members else str(INACTIVE)) + ", '" + now + "', " + (related_market_id if related_market_id else 'NULL') + "){teams=" + ",".join(teams_ids) + "}"
+					sql += "(DEFAULT, " + str(tournament_id) + ", " + str(bookmaker_id) + ", '{event_title}', '" + date.strftime(MYSQL_DATE_FORMAT) + "', {live_date}, '{event_slug}', " + str(INACTIVE) + ", " + str(INACTIVE) + ", " + str(ACTIVE) + ", " + (str(ACTIVE) if bookmaker_event.has_markets else str(INACTIVE)) + ", {teams_count}, '" + date.strftime(MYSQL_TIME_FORMAT) + "', " + (str(ACTIVE) if event_between_two_teams_with_members else str(INACTIVE)) + ", '" + today_full + "', " + (related_market_id if related_market_id else 'NULL') + "){teams=" + ",".join(teams_ids) + "}"
 					sql = sql.replace('{event_title}', event_name)
 					sql = sql.replace('{event_slug}', slug)
 					sql = sql.replace('{teams_count}', str(teams_count))
@@ -909,7 +909,7 @@ def buildBookmakerEvent(bookmaker_event, event_title, event_date):
 	else:
 		sql = "\n,"
 
-	sql += "(DEFAULT, " + str(bookmaker_id) + " {sport=" + sport_title + "&tournament=" + tournament_title + "&event=" + event_title + "&date=" + event_date + "}, '" + event_title + "', " + ("'" + bookmaker_event.event_id + "'" if len(bookmaker_event.event_id) > 0 else "NULL") + ", " + ("'" + bookmaker_event.date + "'" if len(bookmaker_event.date) else "NULL") + ")"
+	sql += "(DEFAULT, " + str(bookmaker_id) + ", {sport=" + sport_title + "&tournament=" + tournament_title + "&event=" + event_title + "&date=" + event_date + "}, '" + event_title + "', " + ("'" + bookmaker_event.event_id + "'" if len(bookmaker_event.event_id) > 0 else "NULL") + ", " + ("'" + bookmaker_event.date + "'" if len(bookmaker_event.date) else "NULL") + ")"
 
 	with open(sql_files_path + BOOKMAKER_EVENTS_TABLE + '.sql', 'a', encoding="utf-8") as fd:
 		fd.write(sql)
