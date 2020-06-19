@@ -514,7 +514,7 @@ def seedBookmakerEventMarkets(ids):
 		sql = file.read()
 
 		# Get inserted bookmaker events
-		query = "SELECT be.id as bookmaker_event_id, e.title as event_title, e.date as event_date, t.title as tournament_title, s.title as sport_title FROM bookmaker_events be LEFT JOIN events e ON e.id = be.fk_event_id LEFT JOIN tournaments t ON t.id = e.fk_tournament_id LEFT JOIN sports s ON s.id = t.fk_sport_id WHERE fk_bookmaker_id = " + bookmaker_id + " AND fk_event_id IN (" + ", ".join(ids) + ")"
+		query = "SELECT be.id as bookmaker_event_id, e.title as event_title, e.date as event_date, e.time as event_time, t.title as tournament_title, s.title as sport_title FROM bookmaker_events be LEFT JOIN events e ON e.id = be.fk_event_id LEFT JOIN tournaments t ON t.id = e.fk_tournament_id LEFT JOIN sports s ON s.id = t.fk_sport_id WHERE fk_bookmaker_id = " + str(bookmaker_id) + " AND fk_event_id IN (" + ", ".join(ids) + ")"
 		records = []
 		try:
 			cursor = connection.cursor()
@@ -525,7 +525,8 @@ def seedBookmakerEventMarkets(ids):
 
 		if len(records) > 0:
 			for row in records:
-				sql = sql.replace('{sport=' + row[4] + '&tournament=' + row[3] + '&event=' + row[1] + '&date=' + row[2] + '}', row[0])
+				datetime = str(row[2]) + ' ' + str(row[3])
+				sql = sql.replace('{sport=' + row[5] + '&tournament=' + row[4] + '&event=' + row[1] + '&date=' + datetime + '}', str(row[0]))
 
 			# Remove all lines that haven't been replaced
 			sql = re.sub('\n?\,?\(DEFAULT\, \{sport=(.*)&tournament=(.*)&event=(.*)&date=(.*)\}\,.*\)', '', sql)
@@ -536,7 +537,7 @@ def seedBookmakerEventMarkets(ids):
 				cursor.execute(sql)
 				connection.commit()
 				insert_bookmaker_event_market_outcomes = True
-			except:
+			except (Exception, psycopg2.DatabaseError) as error:
 				print('Could not insert bookmaker event markets: ' + str(error))
 				connection.rollback()
 
@@ -552,7 +553,7 @@ def seedBookmakerEventMarketOutcomes(ids):
 		i = 0
 
 		# Get inserted bookmaker event markets
-		query = "SELECT bem.id as bookmaker_event_market_id, bem.title as bookmaker_event_market_title, be.title as bookmaker_event_title, e.date as event_date, e.time as event_time, e.fk_tournament_id as tournament_id, e.id as event_id FROM bookmaker_event_markets bem LEFT JOIN bookmaker_events be ON be.id = bem.fk_bookmaker_event LEFT JOIN events e ON e.id = be.fk_event_id WHERE be.fk_bookmaker_id = " + bookmaker_id + " AND e.id IN (" + ", ".join(ids) + ")"
+		query = "SELECT bem.id as bookmaker_event_market_id, bem.title as bookmaker_event_market_title, be.title as bookmaker_event_title, e.date as event_date, e.time as event_time, e.fk_tournament_id as tournament_id, e.id as event_id FROM bookmaker_event_markets bem LEFT JOIN bookmaker_events be ON be.id = bem.fk_bookmaker_event LEFT JOIN events e ON e.id = be.fk_event_id WHERE be.fk_bookmaker_id = " + str(bookmaker_id) + " AND e.id IN (" + ", ".join(ids) + ")"
 		records = []
 		try:
 			cursor = connection.cursor()
@@ -562,7 +563,7 @@ def seedBookmakerEventMarketOutcomes(ids):
 			pass
 
 		if len(records) > 0:
-			with open(queue_path + 'bookmaker_event_market_outcomes.sql') as file:
+			with open(queue_path + 'bookmaker_event_market_outcomes.sql', encoding="utf-8") as file:
 				i = 0
 				for line in file:
 					found = False
@@ -578,7 +579,6 @@ def seedBookmakerEventMarketOutcomes(ids):
 					match = re.findall('\n?\,?\(DEFAULT\, \{sport=(.*)&tournament=(.*)&event=(.*)&date=(.*)&market_title=(.*)&teams=(.*)\}\, \{team=(.*)\}\,.*\{outcome_title=(.*)\}\,.*\)', line)
 
 					print(match)
-					os.die()
 
 
 
