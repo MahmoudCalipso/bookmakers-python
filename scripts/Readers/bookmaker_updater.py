@@ -256,51 +256,54 @@ def initBookmakerEntities(title):
 			with open(csv_path, 'r', encoding="utf-8") as file:
 				for line in file:
 					row = line.strip().split('@s.s@')
-					if entity == 'sports':
-						# id@s.s@title@s.s@skip
-						bookmaker_sports[row[1]] = {
-							'id': row[0],
-							'title': row[1]
-						}
+					try:
+						if entity == 'sports':
+							# id@s.s@title@s.s@skip
+							bookmaker_sports[row[1]] = {
+								'id': row[0],
+								'title': row[1]
+							}
 
-						if row[2] == '1':
-							bookmaker_sports_to_skip.append(row[1])
-					elif entity == 'tournaments':
-						# parent_id@s.s@parent_title@s.s@id@s.s@title@s.s@skip
-						if row[1] not in bookmaker_tournaments:
-							bookmaker_tournaments[row[1]] = {}
+							if row[2] == '1':
+								bookmaker_sports_to_skip.append(row[1])
+						elif entity == 'tournaments':
+							# parent_id@s.s@parent_title@s.s@id@s.s@title@s.s@skip
+							if row[1] not in bookmaker_tournaments:
+								bookmaker_tournaments[row[1]] = {}
 
-						bookmaker_tournaments[row[1]][row[3]] = {
-							'id': row[2],
-							'bookmaker_sport_id': row[0],
-							'bookmaker_sport_title': row[1]
-						}
+							bookmaker_tournaments[row[1]][row[3]] = {
+								'id': row[2],
+								'bookmaker_sport_id': row[0],
+								'bookmaker_sport_title': row[1]
+							}
 
-						if row[4] == '1':
-							bookmaker_tournaments_to_skip.append(row[3])
-					elif entity == 'teams':
-						# parent_id@s.s@parent_title@s.s@id@s.s@title@s.s@skip
-						if row[1] not in bookmaker_teams:
-							bookmaker_teams[row[1]] = {}
+							if len(row) == 5 and row[4] == '1':
+								bookmaker_tournaments_to_skip.append(row[3])
+						elif entity == 'teams':
+							# parent_id@s.s@parent_title@s.s@id@s.s@title@s.s@skip
+							if row[1] not in bookmaker_teams:
+								bookmaker_teams[row[1]] = {}
 
-						bookmaker_teams[row[1]][row[3]] = {
-							'id': row[2],
-							'title': row[3],
-							'bookmaker_sport_id': row[0],
-							'bookmaker_sport_title': row[1]
-						}
-					elif entity == 'markets':
-						# parent_id@s.s@parent_title@s.s@id@s.s@title@s.s@skip@s.s@outcomes
-						if row[1] not in bookmaker_markets:
-							bookmaker_markets[row[1]] = {}
+							bookmaker_teams[row[1]][row[3]] = {
+								'id': row[2],
+								'title': row[3],
+								'bookmaker_sport_id': row[0],
+								'bookmaker_sport_title': row[1]
+							}
+						elif entity == 'markets':
+							# parent_id@s.s@parent_title@s.s@id@s.s@title@s.s@skip@s.s@outcomes
+							if row[1] not in bookmaker_markets:
+								bookmaker_markets[row[1]] = {}
 
-						bookmaker_markets[row[1]][row[3]] = {
-							'id': row[2],
-							'title': row[3],
-							'bookmaker_sport_id': row[0],
-							'bookmaker_sport_title': row[1],
-							'outcomes': None if row[5] == '[]' or len(row[5]) == 0 else row[5]
-						}
+							bookmaker_markets[row[1]][row[3]] = {
+								'id': row[2],
+								'title': row[3],
+								'bookmaker_sport_id': row[0],
+								'bookmaker_sport_title': row[1],
+								'outcomes': None if row[5] == '[]' or len(row[5]) == 0 else row[5]
+							}
+					except:
+						pass
 
 
 def initMappings(title):
@@ -321,45 +324,48 @@ def initMappings(title):
 			with open(csv_path, 'r', encoding="utf-8") as file:
 				for line in file:
 					row = line.strip().split('@s.s@')
-					if entity == 'sports':
-						# entity_id@s.s@entity_title@s.s@entity_live_date_interval@s.s@bookmaker_entity_id@s.s@bookmaker_entity_title
-						sports_maps[row[3]] = {
-							'sport_id': row[0],
-							'sport_title': row[1],
-							'live_date_interval': row[2],
-							'bookmaker_sport_id': row[3],
-							'bookmaker_sport_title': row[4],
-						}
-					elif entity == 'tournaments':
-						# entity_id@s.s@entity_title@s.s@entity_parent_id@s.s@entity_parent_title@s.s@bookmaker_entity_id@s.s@bookmaker_entity_title
-						tournaments_maps[row[4]] = {
-							'sport_id': row[2],
-							'sport_title': row[3],
-							'tournament_id': row[0],
-							'tournament_title': row[1],
-							'bookmaker_tournament_id': row[4],
-							'bookmaker_tournament_title': row[5],
-						}
-					elif entity == 'teams':
-						# entity_id@s.s@entity_title@s.s@entity_parent_id@s.s@entity_parent_title@s.s@bookmaker_entity_id@s.s@bookmaker_entity_title
-						teams_maps[row[4]] = {
-							'sport_id': row[2],
-							'sport_title': row[3],
-							'team_id': row[0],
-							'team_title': row[1],
-							'bookmaker_team_id': row[4],
-							'bookmaker_team_title': row[5],
-						}
-					elif entity == 'markets':
-						# entity_id@s.s@entity_title@s.s@entity_parent_id@s.s@entity_parent_title@s.s@bookmaker_entity_id@s.s@bookmaker_entity_title
-						markets_maps[row[4]] = {
-							'sport_id': row[2],
-							'sport_title': row[3],
-							'market_id': row[0],
-							'market_title': row[1],
-							'bookmaker_market_id': row[4],
-							'bookmaker_market_title': row[5],
-						}
+					try:
+						if entity == 'sports':
+							# entity_id@s.s@entity_title@s.s@entity_live_date_interval@s.s@bookmaker_entity_id@s.s@bookmaker_entity_title
+							sports_maps[row[3]] = {
+								'sport_id': row[0],
+								'sport_title': row[1],
+								'live_date_interval': row[2],
+								'bookmaker_sport_id': row[3],
+								'bookmaker_sport_title': row[4],
+							}
+						elif entity == 'tournaments':
+							# entity_id@s.s@entity_title@s.s@entity_parent_id@s.s@entity_parent_title@s.s@bookmaker_entity_id@s.s@bookmaker_entity_title
+							tournaments_maps[row[4]] = {
+								'sport_id': row[2],
+								'sport_title': row[3],
+								'tournament_id': row[0],
+								'tournament_title': row[1],
+								'bookmaker_tournament_id': row[4],
+								'bookmaker_tournament_title': row[5],
+							}
+						elif entity == 'teams':
+							# entity_id@s.s@entity_title@s.s@entity_parent_id@s.s@entity_parent_title@s.s@bookmaker_entity_id@s.s@bookmaker_entity_title
+							teams_maps[row[4]] = {
+								'sport_id': row[2],
+								'sport_title': row[3],
+								'team_id': row[0],
+								'team_title': row[1],
+								'bookmaker_team_id': row[4],
+								'bookmaker_team_title': row[5],
+							}
+						elif entity == 'markets':
+							# entity_id@s.s@entity_title@s.s@entity_parent_id@s.s@entity_parent_title@s.s@bookmaker_entity_id@s.s@bookmaker_entity_title
+							markets_maps[row[4]] = {
+								'sport_id': row[2],
+								'sport_title': row[3],
+								'market_id': row[0],
+								'market_title': row[1],
+								'bookmaker_market_id': row[4],
+								'bookmaker_market_title': row[5],
+							}
+					except:
+						pass
 
 def initMarketParser(title):
 	global market_parser

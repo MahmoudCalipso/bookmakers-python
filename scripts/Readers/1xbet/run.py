@@ -1203,7 +1203,7 @@ if os.path.exists(queue_csv_path):
 												team.title = outcome.title
 												team.local = i == 0
 
-												#checkTeamMembers(event_sport, team)
+												checkTeamMembers(event_sport, team)
 
 												teams.append(team)
 											break

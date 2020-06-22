@@ -51,7 +51,7 @@ def checkTeamMembers(sport, team):
 
 start_time = time.time()
 timestamp = str(int(time.time()));
-bookmaker_id = 14
+bookmaker_id = 9
 bookmaker_title = '888sport'
 queue_path = '../../../queues/Downloaders/' + bookmaker_title + '/'
 queue_csv_path = queue_path + 'queue.csv';
