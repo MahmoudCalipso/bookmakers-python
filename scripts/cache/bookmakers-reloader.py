@@ -228,7 +228,7 @@ try:
 		i += 1
 
 	# Markets mapping
-	cursor.execute("SELECT m.id as entity_id, m.title as entity_title, s.id as entity_parent_id, s.title as entity_parent_title, bm.id as bookmaker_entity_id, bm.title as bookmaker_entity_title, b.id as bookmaker_id, b.title as bookmaker_title FROM markets_map mm LEFT JOIN markets m ON m.id = mm.fk_market_id LEFT JOIN bookmaker_markets bm ON bm.id = mm.fk_bookmaker_market LEFT JOIN bookmakers b ON b.id = bm.fk_bookmaker_id LEFT JOIN sports s ON s.id = m.fk_sport_id order by b.id")
+	cursor.execute("SELECT m.id as entity_id, m.title as entity_title, m.display_title as entity_display_title, s.id as entity_parent_id, s.title as entity_parent_title, bm.id as bookmaker_entity_id, bm.title as bookmaker_entity_title, b.id as bookmaker_id, b.title as bookmaker_title FROM markets_map mm LEFT JOIN markets m ON m.id = mm.fk_market_id LEFT JOIN bookmaker_markets bm ON bm.id = mm.fk_bookmaker_market LEFT JOIN bookmakers b ON b.id = bm.fk_bookmaker_id LEFT JOIN sports s ON s.id = m.fk_sport_id order by b.id")
 	records = cursor.fetchall()
 	current_bookmaker = None
 	csv_rows = '';
@@ -236,7 +236,7 @@ try:
 	total = cursor.rowcount
 	
 	for row in records:
-		bookmaker_title = row[7]
+		bookmaker_title = row[8]
 		if not os.path.exists('mappings/' + bookmaker_title):
 			os.makedirs('mappings/' + bookmaker_title)
 			
@@ -254,7 +254,7 @@ try:
 			current_bookmaker = bookmaker_title
 			csv_rows = ''
 
-		csv_rows += str(row[0]) + '@s.s@' + str(row[1]) + '@s.s@' + str(row[2]) + '@s.s@' + str(row[3]) + '@s.s@' + str(row[4]) + '@s.s@' + str(row[5]) + '\n'
+		csv_rows += str(row[0]) + '@s.s@' + str(row[1]) + '@s.s@' + str(row[2]) + '@s.s@' + str(row[3]) + '@s.s@' + str(row[4]) + '@s.s@' + str(row[5]) + '@s.s@' + str(row[6]) + '\n'
 		i += 1
 
 except (Exception, psycopg2.Error) as error :

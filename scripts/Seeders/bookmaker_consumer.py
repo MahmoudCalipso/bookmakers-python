@@ -196,14 +196,15 @@ def initMappings(title):
 								'bookmaker_team_title': row[5],
 							}
 						elif entity == 'markets':
-							# entity_id@s.s@entity_title@s.s@entity_parent_id@s.s@entity_parent_title@s.s@bookmaker_entity_id@s.s@bookmaker_entity_title
-							markets_maps[row[4]] = {
-								'sport_id': row[2],
-								'sport_title': row[3],
+							# entity_id@s.s@entity_title@s.s@entity_display_title@s.s@entity_parent_id@s.s@entity_parent_title@s.s@bookmaker_entity_id@s.s@bookmaker_entity_title
+							markets_maps[row[5]] = {
+								'sport_id': row[3],
+								'sport_title': row[4],
 								'market_id': row[0],
 								'market_title': row[1],
-								'bookmaker_market_id': row[4],
-								'bookmaker_market_title': row[5],
+								'market_display_title': row[2]
+								'bookmaker_market_id': row[5],
+								'bookmaker_market_title': row[6],
 							}
 					except:
 						pass
@@ -618,7 +619,7 @@ def seedBookmakerEventMarketOutcomes(ids):
 					not_mapped = True
 					replaced = False
 
-					print('Preg replace ' + event_title + ' => ' + bookmaker_market_title + ' // ' + outcome_title)
+					#print('Preg replace ' + event_title + ' => ' + bookmaker_market_title + ' // ' + outcome_title)
 
 					teams = json.loads(teams_titles)
 					event_teams = []
@@ -662,7 +663,7 @@ def seedBookmakerEventMarketOutcomes(ids):
 
 						market = markets_maps[bookmaker_market['id']]
 						market_title = market['market_title']
-						market_display_title = market['market_title']
+						market_display_title = market['market_display_title']
 						for event_id in processed_events:
 							processed_event = processed_events[event_id]
 							_datetime = processed_event['date'] + ' ' + processed_event['time']
