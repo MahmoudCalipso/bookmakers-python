@@ -103,7 +103,7 @@ if os.path.exists(queue_csv_path):
                                             team2 = teams[1]
 
                                     if len(event_name) > 0:
-                                        print(bookmaker_title + ' :: Processing API event: ' + event_name)
+                                        #print(bookmaker_title + ' :: Processing API event: ' + event_name)
                                         bookmaker_event = BookmakerEvent.BookmakerEvent()
                                         teams = []
 
