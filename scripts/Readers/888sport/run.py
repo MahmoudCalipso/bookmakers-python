@@ -122,7 +122,6 @@ if os.path.exists(queue_csv_path):
                                                     checkTeamMembers(sport, _team)
 
                                                     teams.append(_team)
-
                                                     i += 1
 
                                             filterTeams(sport, teams)

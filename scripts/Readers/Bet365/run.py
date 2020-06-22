@@ -56,8 +56,6 @@ bookmaker_title = 'Bet365'
 queue_path = '../../../queues/Downloaders/' + bookmaker_title + '/'
 queue_csv_path = queue_path + 'queue.csv';
 queue_reader_path = queue_path + bookmaker_title + '/' + timestamp + '/';
-event_feeds = []
-event_feed_url = None
 
 bookmaker_updater.init(bookmaker_id, bookmaker_title)
 
@@ -188,6 +186,7 @@ if os.path.exists(queue_csv_path):
 													checkTeamMembers(sport_title, team)
 
 													teams.append(team)
+													i += 1
 												break
 
 										bookmaker_event.teams = teams

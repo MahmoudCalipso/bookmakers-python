@@ -1206,6 +1206,7 @@ if os.path.exists(queue_csv_path):
 												checkTeamMembers(event_sport, team)
 
 												teams.append(team)
+                                                i += 1
 											break
 
 									bookmaker_event.teams = teams
