@@ -16,6 +16,7 @@ from models import MarketRule, OutcomeRule, BookmakerEventTeam
 NOT_PROCESSED_STRUCTURE = {'mapped': {}, 'not_mapped': {}, 'error': {}}
 MYSQL_DATE_FORMAT = '%Y-%m-%d'
 MYSQL_DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
+INACTIVE = 0
 
 entities = ['sports', 'tournaments', 'teams', 'markets']
 
@@ -29,9 +30,7 @@ tournaments_maps = {}
 teams_maps = {}
 markets_maps = {}
 
-not_processed_outcomes = NOT_PROCESSED_STRUCTURE
-
-saved_outcomes = {}
+saved_outcomes = []
 queue_path = None
 queue_csv_path = None
 
@@ -44,6 +43,7 @@ connection = None
 
 events = {}
 processed_events = []
+not_processed_outcomes = NOT_PROCESSED_STRUCTURE
 
 def run(id, title):
 	global bookmaker_id
@@ -62,6 +62,8 @@ def run(id, title):
 	bookmaker_id = id
 	bookmaker_title = title
 	queue_csv_path = '../../queues/Readers/' + bookmaker_title + '/queue.csv'
+	saved_outcomes = []
+	not_processed_outcomes = NOT_PROCESSED_STRUCTURE
 
 	# Init bookmaker entities
 	initBookmakerEntities(title)
@@ -101,45 +103,48 @@ def initBookmakerEntities(title):
 			with open(csv_path, 'r', encoding="utf-8") as file:
 				for line in file:
 					row = line.strip().split('@s.s@')
-					if entity == 'sports':
-						# id@s.s@title@s.s@skip
-						bookmaker_sports[row[1]] = {
-							'id': row[0],
-							'title': row[1]
-						}
-					elif entity == 'tournaments':
-						# parent_id@s.s@parent_title@s.s@id@s.s@title@s.s@skip
-						if row[1] not in bookmaker_tournaments:
-							bookmaker_tournaments[row[1]] = {}
+					try:
+						if entity == 'sports':
+							# id@s.s@title@s.s@skip
+							bookmaker_sports[row[1]] = {
+								'id': row[0],
+								'title': row[1]
+							}
+						elif entity == 'tournaments':
+							# parent_id@s.s@parent_title@s.s@id@s.s@title@s.s@skip
+							if row[1] not in bookmaker_tournaments:
+								bookmaker_tournaments[row[1]] = {}
 
-						bookmaker_tournaments[row[1]][row[3]] = {
-							'id': row[2],
-							'bookmaker_sport_id': row[0],
-							'bookmaker_sport_title': row[1]
-						}
-					elif entity == 'teams':
-						# parent_id@s.s@parent_title@s.s@id@s.s@title@s.s@skip
-						if row[1] not in bookmaker_teams:
-							bookmaker_teams[row[1]] = {}
+							bookmaker_tournaments[row[1]][row[3]] = {
+								'id': row[2],
+								'bookmaker_sport_id': row[0],
+								'bookmaker_sport_title': row[1]
+							}
+						elif entity == 'teams':
+							# parent_id@s.s@parent_title@s.s@id@s.s@title@s.s@skip
+							if row[1] not in bookmaker_teams:
+								bookmaker_teams[row[1]] = {}
 
-						bookmaker_teams[row[1]][row[3]] = {
-							'id': row[2],
-							'title': row[3],
-							'bookmaker_sport_id': row[0],
-							'bookmaker_sport_title': row[1]
-						}
-					elif entity == 'markets':
-						# parent_id@s.s@parent_title@s.s@id@s.s@title@s.s@skip@s.s@outcomes
-						if row[1] not in bookmaker_markets:
-							bookmaker_markets[row[1]] = {}
+							bookmaker_teams[row[1]][row[3]] = {
+								'id': row[2],
+								'title': row[3],
+								'bookmaker_sport_id': row[0],
+								'bookmaker_sport_title': row[1]
+							}
+						elif entity == 'markets':
+							# parent_id@s.s@parent_title@s.s@id@s.s@title@s.s@skip@s.s@outcomes
+							if row[1] not in bookmaker_markets:
+								bookmaker_markets[row[1]] = {}
 
-						bookmaker_markets[row[1]][row[3]] = {
-							'id': row[2],
-							'title': row[3],
-							'bookmaker_sport_id': row[0],
-							'bookmaker_sport_title': row[1],
-							'outcomes': None if row[5] == '[]' or len(row[5]) == 0 else row[5]
-						}
+							bookmaker_markets[row[1]][row[3]] = {
+								'id': row[2],
+								'title': row[3],
+								'bookmaker_sport_id': row[0],
+								'bookmaker_sport_title': row[1],
+								'outcomes': None if row[5] == '[]' or len(row[5]) == 0 else row[5]
+							}
+					except:
+						pass
 
 
 def initMappings(title):
@@ -160,46 +165,48 @@ def initMappings(title):
 			with open(csv_path, 'r', encoding="utf-8") as file:
 				for line in file:
 					row = line.strip().split('@s.s@')
-					if entity == 'sports':
-						print(row)
-						# entity_id@s.s@entity_title@s.s@entity_live_date_interval@s.s@bookmaker_entity_id@s.s@bookmaker_entity_title
-						sports_maps[row[3]] = {
-							'sport_id': row[0],
-							'sport_title': row[1],
-							'live_date_interval': row[2],
-							'bookmaker_sport_id': row[3],
-							'bookmaker_sport_title': row[4],
-						}
-					elif entity == 'tournaments':
-						# entity_id@s.s@entity_title@s.s@entity_parent_id@s.s@entity_parent_title@s.s@bookmaker_entity_id@s.s@bookmaker_entity_title
-						tournaments_maps[row[4]] = {
-							'sport_id': row[2],
-							'sport_title': row[3],
-							'tournament_id': row[0],
-							'tournament_title': row[1],
-							'bookmaker_tournament_id': row[4],
-							'bookmaker_tournament_title': row[5],
-						}
-					elif entity == 'teams':
-						# entity_id@s.s@entity_title@s.s@entity_parent_id@s.s@entity_parent_title@s.s@bookmaker_entity_id@s.s@bookmaker_entity_title
-						teams_maps[row[4]] = {
-							'sport_id': row[2],
-							'sport_title': row[3],
-							'team_id': row[0],
-							'team_title': row[1],
-							'bookmaker_team_id': row[4],
-							'bookmaker_team_title': row[5],
-						}
-					elif entity == 'markets':
-						# entity_id@s.s@entity_title@s.s@entity_parent_id@s.s@entity_parent_title@s.s@bookmaker_entity_id@s.s@bookmaker_entity_title
-						markets_maps[row[4]] = {
-							'sport_id': row[2],
-							'sport_title': row[3],
-							'market_id': row[0],
-							'market_title': row[1],
-							'bookmaker_market_id': row[4],
-							'bookmaker_market_title': row[5],
-						}
+					try:
+						if entity == 'sports':
+							# entity_id@s.s@entity_title@s.s@entity_live_date_interval@s.s@bookmaker_entity_id@s.s@bookmaker_entity_title
+							sports_maps[row[3]] = {
+								'sport_id': row[0],
+								'sport_title': row[1],
+								'live_date_interval': row[2],
+								'bookmaker_sport_id': row[3],
+								'bookmaker_sport_title': row[4],
+							}
+						elif entity == 'tournaments':
+							# entity_id@s.s@entity_title@s.s@entity_parent_id@s.s@entity_parent_title@s.s@bookmaker_entity_id@s.s@bookmaker_entity_title
+							tournaments_maps[row[4]] = {
+								'sport_id': row[2],
+								'sport_title': row[3],
+								'tournament_id': row[0],
+								'tournament_title': row[1],
+								'bookmaker_tournament_id': row[4],
+								'bookmaker_tournament_title': row[5],
+							}
+						elif entity == 'teams':
+							# entity_id@s.s@entity_title@s.s@entity_parent_id@s.s@entity_parent_title@s.s@bookmaker_entity_id@s.s@bookmaker_entity_title
+							teams_maps[row[4]] = {
+								'sport_id': row[2],
+								'sport_title': row[3],
+								'team_id': row[0],
+								'team_title': row[1],
+								'bookmaker_team_id': row[4],
+								'bookmaker_team_title': row[5],
+							}
+						elif entity == 'markets':
+							# entity_id@s.s@entity_title@s.s@entity_parent_id@s.s@entity_parent_title@s.s@bookmaker_entity_id@s.s@bookmaker_entity_title
+							markets_maps[row[4]] = {
+								'sport_id': row[2],
+								'sport_title': row[3],
+								'market_id': row[0],
+								'market_title': row[1],
+								'bookmaker_market_id': row[4],
+								'bookmaker_market_title': row[5],
+							}
+					except:
+						pass
 
 def initMarketParser(title):
 	global market_parser
@@ -227,49 +234,56 @@ def initMarketParser(title):
 	market_parser.setConstantsVariables(constants)
 
 	# Get market rules belonging to the current bookmaker
-	csv_path = '../../cache/market_parser/markets/' + title + '/rules.csv'
+	csv_path = '../cache/market_parser/markets/' + title + '/rules.csv'
 	rules = []
 	if os.path.exists(csv_path):
 		with open(csv_path, 'r', encoding="utf-8") as file:
 			for line in file:
-				row = line.strip().split('@s.s@')
-				# sport_id@s.s@sport_title@s.s@market_id@s.s@market_title@s.s@input@s.s@input_replace@s.s@outcome_output
-				rule = MarketRule.MarketRule()
-				input_replace = []
-				_input_replace = json.loads(row[5]) if row[5] != 'None' else []
+				try:
+					row = line.strip().split('@s.s@')
+					# sport_id@s.s@sport_title@s.s@market_id@s.s@market_title@s.s@input@s.s@input_replace@s.s@outcome_output
+					rule = MarketRule.MarketRule()
+					input_replace = []
+					_input_replace = json.loads(row[5]) if row[5] != 'None' else []
 
-				rule.sport_id = row[0]
-				rule.sport_title = row[1]
-				rule.market_id = row[2]
-				rule.market_title = row[3]
-				rule.input = row[4]
-				rule.input_replace = input_replace
-				rule.outcome_output = row[6]
-				
-				rules.append(rule)
+					rule.sport_id = row[0]
+					rule.sport_title = row[1]
+					rule.market_id = row[2]
+					rule.market_title = row[3]
+					rule.input = row[4]
+					rule.input_replace = input_replace
+					rule.outcome_output = row[6]
+					
+					rules.append(rule)
+
+				except:
+					pass
 
 	market_parser.setMarketsRules(rules)
 
 	# Get outcome rules belonging to the current bookmaker
-	csv_path = '../../cache/market_parser/outcomes/' + title + '/rules.csv'
+	csv_path = '../cache/market_parser/outcomes/' + title + '/rules.csv'
 	rules = []
 	if os.path.exists(csv_path):
 		with open(csv_path, 'r', encoding="utf-8") as file:
 			for line in file:
-				row = line.strip().split('@s.s@')
-				# market_id@s.s@market_title@s.s@sport_id@s.s@sport_title@s.s@id@s.s@input@s.s@input_replace@s.s@outcome_name@s.s@outcome_save_patter@s.s@outcome_output
-				rule = OutcomeRule.OutcomeRule()
-				input_replace = []
-				_input_replace = json.loads(row[3]) if row[3] != 'None' else []
+				try:
+					row = line.strip().split('@s.s@')
+					# market_id@s.s@market_title@s.s@sport_id@s.s@sport_title@s.s@id@s.s@input@s.s@input_replace@s.s@outcome_name@s.s@outcome_save_patter@s.s@outcome_output
+					rule = OutcomeRule.OutcomeRule()
+					input_replace = []
+					_input_replace = json.loads(row[6]) if row[6] != 'None' else []
 
-				rule.id = row[4]
-				rule.sport_title = row[2]
-				rule.market_title = row[1]
-				rule.input = row[5]
-				rule.input_replace = _input_replace
-				rule.output = row[8]
+					rule.id = row[4]
+					rule.sport_title = row[3]
+					rule.market_title = row[1]
+					rule.input = row[5]
+					rule.input_replace = _input_replace
+					rule.output = row[8]
 
-				rules.append(rule)
+					rules.append(rule)
+				except:
+					pass
 
 	market_parser.setOutcomesRules(rules)
 
@@ -559,13 +573,17 @@ def seedBookmakerEventMarketOutcomes(ids):
 	global market_parser
 
 	if os.path.exists(queue_path + 'bookmaker_event_market_outcomes.sql'):
-		final = ''
+		sql = ''
 		last_line = ''
 		i = 0
 
 		# Get inserted bookmaker event markets
 		query = "SELECT bem.id as bookmaker_event_market_id, bem.title as bookmaker_event_market_title, be.title as bookmaker_event_title, e.date as event_date, e.time as event_time, e.fk_tournament_id as tournament_id, e.id as event_id FROM bookmaker_event_markets bem LEFT JOIN bookmaker_events be ON be.id = bem.fk_bookmaker_event LEFT JOIN events e ON e.id = be.fk_event_id WHERE be.fk_bookmaker_id = " + str(bookmaker_id) + " AND e.id IN (" + ", ".join(ids) + ")"
 		records = []
+		new_bookmaker_teams = []
+		outcomes = {}
+		not_processed = NOT_PROCESSED_STRUCTURE
+
 		try:
 			cursor = connection.cursor()
 			cursor.execute(query)
@@ -576,26 +594,27 @@ def seedBookmakerEventMarketOutcomes(ids):
 		if len(records) > 0:
 			with open(queue_path + 'bookmaker_event_market_outcomes.sql', encoding="utf-8") as file:
 				i = 0
+				regex = '\n?\,?\(DEFAULT\, \{sport=(.*)&tournament=(.*)&event=(.*)&date=(.*)&market_title=(.*)&teams=(.*)\}\, \{team_id\}\,.*\{outcome_title=(.*)\}\,.*\)'
 				for line in file:
 					found = False
 
 					if i == 0:
-						final += line
+						sql += line.rstrip('\n')
 						i += 1
 						continue
 					elif line.startswith('ON CONFLICT'):
 						last_line = line
 						continue
 
-					match = re.search('\n?\,?\(DEFAULT\, \{sport=(.*)&tournament=(.*)&event=(.*)&date=(.*)&market_title=(.*)&teams=(.*)\}\, \{team=(.*)\}\,.*\{outcome_title=(.*)\}\,.*\)', line)
+					match = re.search(regex, line)
+					output = match.group(0)
 					bookmaker_sport_title = match.group(1)
 					bookmaker_tournament_title = match.group(2)
 					event_title = match.group(3)
 					event_date = match.group(4)
 					bookmaker_market_title = match.group(5)
 					teams_titles = match.group(6)
-					team_title = match.group(7)
-					outcome_title = match.group(8)
+					outcome_title = match.group(7)
 					not_mapped = True
 					replaced = False
 
@@ -606,14 +625,15 @@ def seedBookmakerEventMarketOutcomes(ids):
 
 					if len(teams) > 0:
 						i = 0
-						for team_title in teams:
+						for _team_title in teams:
 							team = BookmakerEventTeam.BookmakerEventTeam()
 
-							team.title = team_title
+							team.title = _team_title
 							team.local = i == 0
 
 							event_teams.append(team)
 							i += 1
+
 					if (
 						bookmaker_sport_title in bookmaker_sports
 						and bookmaker_sport_title in bookmaker_tournaments
@@ -621,12 +641,10 @@ def seedBookmakerEventMarketOutcomes(ids):
 						and bookmaker_sport_title in bookmaker_markets
 						and bookmaker_market_title in bookmaker_markets[bookmaker_sport_title]
 					):
-						print('ENTER')
 						bookmaker_sport_id = bookmaker_sports[bookmaker_sport_title]['id']
-						sport_title = sports_maps[bookmaker_sports[bookmaker_sport_title]['id']]['sport_title']
-						tournament_id = tournaments_maps[bookmaker_tournaments[bookmaker_sport_title]['id']]['tournament_id']
-						tournament_title = tournaments_maps[bookmaker_tournaments[bookmaker_sport_title]['id']]['tournament_title']
-						# event_id = 
+						sport_title = sports_maps[bookmaker_sport_id]['sport_title']
+						tournament_id = tournaments_maps[bookmaker_tournaments[bookmaker_sport_title][bookmaker_tournament_title]['id']]['tournament_id']
+						tournament_title = tournaments_maps[bookmaker_tournaments[bookmaker_sport_title][bookmaker_tournament_title]['id']]['tournament_title']
 						bookmaker_market = bookmaker_markets[bookmaker_sport_title][bookmaker_market_title]
 
 						market_rule = market_parser.getMarketRule(bookmaker_market_title, sport_title)
@@ -644,16 +662,16 @@ def seedBookmakerEventMarketOutcomes(ids):
 
 						market = markets_maps[bookmaker_market['id']]
 						market_title = market['market_title']
-						#market_display_title = market['market_display_title']
+						market_display_title = market['market_title']
 						for event_id in processed_events:
 							processed_event = processed_events[event_id]
-							datetime = processed_events['date'] + ' ' + processed_events['time']
+							_datetime = processed_event['date'] + ' ' + processed_event['time']
 
 							if (
 								processed_event['sport_title'] == sport_title
 								and processed_event['tournament_title'] == tournament_title
 								and processed_event['title'] == event_title
-								and datetime == event_date
+								and _datetime == event_date
 							):
 								# Find corresponding bookmaker event market
 								for row in records:
@@ -663,27 +681,150 @@ def seedBookmakerEventMarketOutcomes(ids):
 									):
 										# Parse outcome
 										try:
-											print('EE')
 											team_id = 'NULL'
 											market_parser.setBookmakerTeams(bookmaker_teams[bookmaker_sport_title])
 											outcome = market_parser.getMarketOutcome(outcome_title, sport_title, market_title, event_teams)
 											missing_bookmaker_teams = market_parser.getMissingBookmakerTeams()
 
-											if len(outcome) > 0:
-												print('Parsing result for outcome' + outcome)
-											else:
-												print('Empty parsing result!')
+											if len(outcome) == 0 and len(missing_bookmaker_teams) > 0:
+												for missing_bookmaker_team in missing_bookmaker_teams:
+													new_bookmaker_teams.append({
+														'fk_bookmaker_id': bookmaker_id,
+														'fk_bookmaker_sport_id': bookmaker_sport_id,
+														'title': missing_bookmaker_team,
+														'found_in': event_title	
+													})
+											elif (
+												outcome_title in bookmaker_teams[bookmaker_sport_title]
+												and bookmaker_teams[bookmaker_sport_title]['outcome_title']['id'] in teams_maps
+											):
+												team_id = teams_maps[bookmaker_teams[bookmaker_sport_title]['outcome_title']['id']]['team_id']
 
+											bookmaker_event_market_id = row[0]
+											if bookmaker_event_market_id not in outcomes:
+												outcomes[bookmaker_event_market_id] = []
 
-										except:
+											if (
+												(len(outcome) > 0 or outcome.isnumeric())
+												and outcome not in outcomes[bookmaker_event_market_id]
+											):
+												if output.find('{sport=' + bookmaker_sport_title + '&tournament=' + bookmaker_tournament_title + '&event=' + event_title + '&date=' + event_date + '&market_title=' + bookmaker_market_title + '&teams=' + teams_titles + '}') > -1:
+													matching_outcome_rule = market_parser.getMatchingOutcomeRule()
+													now = datetime.datetime.now().strftime(MYSQL_DATETIME_FORMAT)
+													output = output.replace('{sport=' + bookmaker_sport_title + '&tournament=' + bookmaker_tournament_title + '&event=' + event_title + '&date=' + event_date + '&market_title=' + bookmaker_market_title + '&teams=' + teams_titles + '}', str(bookmaker_event_market_id))
+													output = output.replace('{team_id}', team_id)
+													output = output.replace('{outcome_title=' + outcome_title + '}', "'" + outcome + "'")
+													output = output.replace('{outcome_rule_id}', matching_outcome_rule.id)
+													output = output.replace('{created_at}', now)
+													output = output.replace('{updated_at}', now)
+													sql += '\n' + output.lstrip(',') + ','
+													outcomes[bookmaker_event_market_id].append(outcome)
+													not_mapped = False
+													replaced = True
+
+													saved_outcomes.append({
+														'market': market_display_title,
+														'bookmaker_market': bookmaker_market_title,
+														'outcome': outcome_title,
+														'sport': sport_title,
+														'tournament': bookmaker_tournament_title,
+														'teams': event_teams,
+														'event': event_title,
+														'output': outcome,
+														'rule': matching_outcome_rule,
+														'datetime': now
+													})
+											if not replaced and len(missing_bookmaker_teams) == 0 and outcome not in outcomes[bookmaker_event_market_id]:
+												not_mapped = False
+
+												if bookmaker_market_title not in not_processed['mapped']:
+													not_processed['mapped'][bookmaker_market_title] = {}
+
+												if bookmaker_event_market_id not in not_processed['mapped'][bookmaker_market_title]:
+													not_processed['mapped'][bookmaker_market_title][bookmaker_event_market_id] = []
+
+												not_processed['mapped'][bookmaker_market_title][bookmaker_event_market_id].append({
+													'market': market_display_title,
+													'bookmaker_market': bookmaker_market_title,
+													'outcome': outcome_title,
+													'sport': sport_title,
+													'tournament': bookmaker_tournament_title,
+													'teams': event_teams,
+													'event': event_title,
+													'output': outcome,
+													'final_outcomes': outcomes[bookmaker_event_market_id],
+													'datetime': datetime.datetime.now().strftime(MYSQL_DATETIME_FORMAT)
+												})
+
+										except (Exception) as error:
+											if bookmaker_event_market_id not in not_processed['error']:
+												not_processed['error'][bookmaker_event_market_id] = []
+
+											not_mapped = False
+											now = datetime.datetime.now().strftime(MYSQL_DATETIME_FORMAT)
+											not_processed['error'][bookmaker_event_market_id].append({
+												'market': market_display_title,
+												'bookmaker_market': bookmaker_market_title,
+												'outcome': outcome_title,
+												'sport': sport_title,
+												'tournament': bookmaker_tournament_title,
+												'teams': event_teams,
+												'event': event_title,
+												'error': str(error),
+												'datetime': datetime.datetime.now().strftime(MYSQL_DATETIME_FORMAT)
+											})
 											pass
 										break
 								break
 
+					if not_mapped:
+						if bookmaker_market_title not in not_processed['not_mapped']:
+							not_processed['not_mapped'][bookmaker_market_title] = {}
 
+						if event_title not in not_processed['not_mapped'][bookmaker_market_title]:
+							not_processed['not_mapped'][bookmaker_market_title][event_title] = []
 
+						not_processed['not_mapped'][bookmaker_market_title][event_title].append({
+							'outcome': outcome_title,
+							'sport': bookmaker_sport_title,
+							'tournament': bookmaker_tournament_title,
+							'teams': event_teams,
+							'datetime': datetime.datetime.now().strftime(MYSQL_DATETIME_FORMAT)	
+						})
 
+				not_processed_outcomes = not_processed
+				sql = sql.rstrip(',')
+				sql += '\n' + last_line
 
+				try:
+					cursor.execute(sql)
+					connection.commit()
+				except (Exception, psycopg2.DatabaseError) as error:
+					print('Could not insert bookmaker event market outcomes: ' + str(error))
+					connection.rollback()
+
+				sql = ''
+
+				# Insert new bookmaker teams
+				if len(new_bookmaker_teams) > 0:
+					sql = 'INSERT INTO bookmaker_teams VALUES \n'
+					i = 0
+
+					for team in new_bookmaker_teams:
+						if i > 0:
+							sql += '\n,'
+
+						sql += "(DEFAULT, " + str(team['fk_bookmaker_id']) + ", " + team['fk_bookmaker_sport_id'] + ", '" + team['title'].replace("'", "´") + "', '" + team['found_in'].replace("'", "´") + "', " + str(INACTIVE) + ", " + str(INACTIVE) + ", '" + date.today().strftime(MYSQL_DATETIME_FORMAT) + "')"
+						i += 1
+
+					sql += '\nON CONFLICT (fk_bookmaker_id, fk_bookmaker_sport_id, title) DO NOTHING;'
+
+					try:
+						cursor.execute(sql)
+						connection.commit()
+					except (Exception, psycopg2.DatabaseError) as error:
+						print('Could not insert new bookmaker teams: ' + str(error))
+						connection.rollback()
 
 def filterEvents(sql_path):
 	global events
