@@ -1029,7 +1029,39 @@ def str_repeat(str, multiplier):
     return str * multiplier
 
 def filterTeams(sport, teams):
-	a = 1
+    if sport.find('esport') > -1 or sport == 'Football':
+        for team in teams:
+            matches = []
+
+            # Check if this team belongs to a E-sport category. It should match this pattern: Title (Nickname)
+            if sport == 'Football':
+                matches = re.search('(?![\s.]+$)([0-9a-zA-ZÀ-ÖØ-öø-ÿ\-\_\,\s.]*)\((?![\s.]+$)[0-9a-zA-ZÀ-ÖØ-öø-ÿ\-\_\,\s.]*\) Esports', team.title)
+
+                if matches and not matches.group(1):
+                    matches = re.search('(?![\s.]+$)([0-9a-zA-ZÀ-ÖØ-öø-ÿ\-\_\,\s.]*)\((?![\s.]+$)[0-9a-zA-ZÀ-ÖØ-öø-ÿ\-\_\,\s.]*\)', team.title)
+            else:
+                matches = re.search('(?![\s.]+$)([0-9a-zA-ZÀ-ÖØ-öø-ÿ\-\_\,\s.]*)\((?![\s.]+$)[0-9a-zA-ZÀ-ÖØ-öø-ÿ\-\_\,\s.]*\)', team.title)
+
+            if matches and matches.group(1):
+                team.title = matches.group(1).strip() + ' eSports'
+
+def checkTeamMembers(sport, team):
+    if sport == 'Tennis':
+        matches = re.search('(.*)\/(.*)', team.title)
+
+        if matches and matches.group(1) and matches.group(2) and matches.group(1) != matches.group(2):
+            members = []
+            
+            member = BookmakerEventTeamMember.BookmakerEventTeamMember()
+            member.title = matches.group(1)
+            members.append(member)
+
+            member = BookmakerEventTeamMember.BookmakerEventTeamMember()
+            member.title = matches.group(2)
+            members.append(member)
+
+            team.members = members
+
 
 start_time = time.time()
 timestamp = str(int(time.time()));
@@ -1080,8 +1112,8 @@ if os.path.exists(queue_csv_path):
 										team2.title = event.get('A')
 										team2.local = False
 
-										#checkTeamMembers(event_sport, team1)
-										#checkTeamMembers(event_sport, team2)
+										checkTeamMembers(event_sport, team1)
+										checkTeamMembers(event_sport, team2)
 
 										teams = [team1, team2]
 
