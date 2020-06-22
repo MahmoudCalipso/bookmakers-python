@@ -1062,7 +1062,6 @@ def checkTeamMembers(sport, team):
 
             team.members = members
 
-
 start_time = time.time()
 timestamp = str(int(time.time()));
 bookmaker_id = 14
