@@ -45,13 +45,6 @@ def checkTeamMembers(sport, team):
 
             team.members = members
 
-def representsInt(s):
-    try: 
-        int(s)
-        return True
-    except ValueError:
-        return False
-
 start_time = time.time()
 timestamp = str(int(time.time()));
 bookmaker_id = 16

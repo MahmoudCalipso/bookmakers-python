@@ -90,7 +90,7 @@ for sport in sports:
 		for name in feeds:
 			feed_url = 'https://services.sportium.es/feed/xml/' + name
 			print('Beginning feed download for ' + feed_url)
-			response = requests.get(feed_url, verify=False)
+			response = requests.get(feed_url)
 
 			if response.text:
 				if not os.path.exists(queue_downloader_path):

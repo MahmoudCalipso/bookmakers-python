@@ -78,7 +78,7 @@ if os.path.exists(queue_csv_path):
                                                 _datetime = _datetime + timedelta(hours=2)
                                                 date = _datetime.strftime(MYSQL_DATETIME_FORMAT)
 
-                                            print(bookmaker_title + ' :: Processing API event: ' + event_name)
+                                            #print(bookmaker_title + ' :: Processing API event: ' + event_name)
 
                                             teams = []
                                             members = event.findall('members')
