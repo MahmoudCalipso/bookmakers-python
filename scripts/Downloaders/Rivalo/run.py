@@ -44,7 +44,7 @@ if response.text:
 				if not os.path.exists(queue_downloader_path):
 					os.makedirs(queue_downloader_path)
 
-				file = open(queue_downloader_path + "events" + str(index) + ".xml", "wb")
+				file = open(queue_downloader_path + "events-" + str(index) + ".xml", "wb")
 				file.write(response.text.encode('utf-8'))
 				file.close()
 
