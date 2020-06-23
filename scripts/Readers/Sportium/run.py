@@ -75,7 +75,7 @@ if os.path.exists(queue_csv_path):
                                             event_name_teams = []
                                             event_name = event.findall('Match')[0].text
 
-                                            print(bookmaker_title + ' :: Processing API event: ' + event_name)
+                                            #print(bookmaker_title + ' :: Processing API event: ' + event_name)
 
                                             if event_name.find('vs') > -1:
                                                 event_name_teams = event_name.split(' vs ')

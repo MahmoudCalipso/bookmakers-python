@@ -2,107 +2,144 @@ import ijson
 import requests
 import time
 import os
+import csv
 import sys
-from datetime import date
+import re
+from datetime import datetime, timedelta
+sys.path.append("../")
+sys.path.append("../../")
+from models import BookmakerEvent, BookmakerEventTeam, BookmakerEventTeamMember, BookmakerOdd, BookmakerOddOutcome
+import bookmaker_updater
 
-is_live = False
+EVENT_CHAMPIONSHIP_WINNER = 'Winner'
+MYSQL_DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
-if len(sys.argv) > 1 and sys.argv[1] == 'live':
-    is_live = True
+def checkTeamMembers(sport, team):
+    if sport == 'Tennis':
+        matches = re.search('(.*)\/(.*)', team.title)
 
-bookmaker_title = 'Strendus';
-download_type = 'live' if is_live else 'prematch';
+        if matches and matches.group(1) and matches.group(2) and matches.group(1) != matches.group(2):
+            members = []
+            
+            member = BookmakerEventTeamMember.BookmakerEventTeamMember()
+            member.title = matches.group(1)
+            members.append(member)
 
-current_page = 0
-records_per_page = 500
+            member = BookmakerEventTeamMember.BookmakerEventTeamMember()
+            member.title = matches.group(2)
+            members.append(member)
 
-def download(id):
-    global current_page
-    global pages
-    global records_per_page
-
-    print('Downloading page ' + str(current_page + 1))
-
-    offset = current_page * records_per_page;
-    feed_url = 'https://sports.strendus.com.mx/rest/FEMobile/GetPagedMatches?Culture=en&affi=49&DateFilterType=0&WidgetType=2&StartRecord=' + str(offset) + '&EndRecord=' + str(offset + records_per_page) + '&SportID=' + str(id)
-    print(feed_url)
-    response = requests.get(feed_url)
-
-    if response.text:
-        if not os.path.exists(queue_downloader_path):
-            os.makedirs(queue_downloader_path)
-
-        file = open(queue_downloader_path + "events-" + str(id) + "-" + str(current_page) + ".json", "wb")
-        file.write(response.text.encode('utf-8'))
-        file.close()
-        event_feeds.append("events-" + str(id) + "-" + str(current_page) + ".json")
-
-        items = ijson.items(open(queue_downloader_path + "events-" + str(id) + "-" + str(current_page) + ".json", 'r'), 'd.m.item');
-
-        print(items)
-        has_items = False;
-        try:
-            for item in items:
-                has_items = True;
-                break;
-        except:
-            has_items = False
-
-        if has_items:
-            current_page += 1
-            download(id)
+            team.members = members
 
 start_time = time.time()
 timestamp = str(int(time.time()));
-queue_path = '../../../queues/Downloaders/'
-queue_csv_path = queue_path + 'queue_' + date.today().strftime("%d-%m-%Y") + '.csv';
-queue_downloader_path = queue_path + bookmaker_title + '/' + download_type + '/' + timestamp + '/';
-event_feeds = []
+bookmaker_id = 18
+bookmaker_title = 'Strendus'
+queue_path = '../../../queues/Downloaders/' + bookmaker_title + '/'
+queue_csv_path = queue_path + 'queue.csv';
+queue_reader_path = queue_path + bookmaker_title + '/' + timestamp + '/';
 
-if is_live:
-    events_feed_url = 'https://sports.strendus.com.mx/rest/FEMobile/GetLiveMatchesMetaData?LanguageID=en&affi=49&IncludeOdds=true'
-    print(events_feed_url)
-    response = requests.get(events_feed_url)
+bookmaker_updater.init(bookmaker_id, bookmaker_title)
 
-    if response.text:
-        if not os.path.exists(queue_downloader_path):
-            os.makedirs(queue_downloader_path)
+# Extract row from CSV and process it
+if os.path.exists(queue_csv_path):
+    with open(queue_csv_path, 'r') as file:
+        reader = csv.reader(file, delimiter=';')
+        for row in reader:
+            # timestamp;sports;type;files(separated by comma)
+            live = row[2] == 'live'
+            folder_path = queue_path + row[2] + '/' + row[0] + '/'
+            if os.path.exists(folder_path):
+                files = row[3].split(',')
+                if len(files) > 0:
+                    for file in files:
+                        file_path = folder_path + file
+                        if os.path.exists(file_path):
+                            print('Processing ' + file)
+                            events = ijson.items(open(file_path, 'r', encoding="utf-8"), 'd.m.item');
+                            for event in events:
+                                try:
+                                    sport = event.get('sn')
+                                    tournament = event.get('ltn') if live else event.get('tn')
+                                    event_name = event.get('ht') + ' vs ' + event.get('at')
 
-    file = open(queue_downloader_path + "events.json", "wb")
-    file.write(response.text.encode('utf-8'))
-    file.close()
+                                    print(bookmaker_title + ' :: Processing API event: ' + event_name)
+                                    bookmaker_event = BookmakerEvent.BookmakerEvent()
+                                    teams = []
 
-    event_feeds.append("events-.json")
-else:
-    # Download sports feed
-    print('Beginning sports feed download...')
-    sports_feed_url = 'https://sports.strendus.com.mx/rest/FEMobile/GetFixturesMenu?Culture=en&affid=49&LoadPeriod=0'
-    response = requests.get(sports_feed_url)
-    file = open("sports.json", "wb")
-    file.write(response.text.encode('utf-8'))
-    file.close()
+                                    _teams = [event.get('ht'), event.get('at')]
 
-    # Loop sports
-    sports = ijson.items(open('sports.json', 'r'), 's.item');
-    for sport in sports:
-            name = sport.get('n')
-            id = sport.get('id')
-            current_page = 0
-            print("Looping sport " + name + " with ID " + str(id))
-            # Download events feed
-            print('Beginning events feed download...')
-            download(id)
+                                    team_local = BookmakerEventTeam.BookmakerEventTeam()
+                                    team_local.title = _teams[0].strip()
+                                    team_local.local = True
+                                    checkTeamMembers(sport, team_local)
 
-# Delete temporary files that have been downloaded
-#if os.path.exists("sports.json"):
-#  os.remove("sports.json")
+                                    team_away = BookmakerEventTeam.BookmakerEventTeam()
+                                    team_away.title = _teams[1].strip()
+                                    team_away.local = False
+                                    checkTeamMembers(sport, team_away)
 
-#if os.path.exists("tournaments.json"):
-#  os.remove("tournaments.json")
+                                    teams = [team_local, team_away]
 
-# Add to queue
-if len(event_feeds) > 0:
-    with open(queue_csv_path, 'a') as fd:
-        fd.write(bookmaker_title + ';' + timestamp + ';All;' + download_type + ';' + ",".join(event_feeds) + "\n")
+                                    date = ''
+                                    _datetime = datetime.strptime(event.get('d'), '%Y-%m-%d %H:%M')
+                                    if _datetime:
+                                        _datetime = _datetime + timedelta(hours=2)
+                                        date = _datetime.strftime(MYSQL_DATETIME_FORMAT)
+
+                                    bookmaker_event.event_id = event.get('mid')
+                                    bookmaker_event.title = event_name
+                                    bookmaker_event.tournament = tournament
+                                    bookmaker_event.sport = sport
+                                    bookmaker_event.date = date
+
+                                    odds = []
+
+                                    # Get odds from API
+                                    event_feed_url = 'https://sports.strendus.com.mx/rest/FEMobile/GetMatchOdds?Culture=en&affi=49&MatchID=' + str(event.get('mid'))
+                                    # Get JSON file from API URL
+                                    response = requests.get(event_feed_url, timeout=30)
+
+                                    if response.text:
+                                        event_json_path = bookmaker_title + "-event.json"
+                                        file = open(event_json_path, "wb")
+                                        file.write(response.text.encode('utf-8'))
+                                        file.close()
+
+                                        odds = []
+                                        tabs = ijson.items(open(event_json_path, 'r', encoding="utf-8"), 't.item')
+
+                                        for tab in tabs:
+                                            markets = tab.get('o')
+
+                                            for market in markets:
+                                                odd = BookmakerOdd.BookmakerOdd()
+                                                outcomes = []
+                                                selections = market.get('m')
+
+                                                if selections:
+                                                    for selection in selections:
+                                                        bookmaker_odd_outcome = BookmakerOddOutcome.BookmakerOddOutcome()
+
+                                                        bookmaker_odd_outcome.outcome_id = selection.get('id')
+                                                        bookmaker_odd_outcome.title = selection.get('n')
+                                                        bookmaker_odd_outcome.decimal = selection.get('o')
+
+                                                        outcomes.append(bookmaker_odd_outcome)
+
+                                                odd.title = market.get('n')
+                                                odd.outcomes = outcomes
+
+                                                odds.append(odd)
+
+                                    bookmaker_event.odds = odds
+                                    bookmaker_event.teams = teams
+
+                                    bookmaker_updater.processEvent(bookmaker_event)
+
+                                except (Exception) as ex:
+                                    print(bookmaker_title + ' :: Could not process event: ' + str(ex))
+
+bookmaker_updater.finish()
 
 print("--- %s seconds ---" % (time.time() - start_time))
