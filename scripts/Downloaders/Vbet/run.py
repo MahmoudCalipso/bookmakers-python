@@ -28,9 +28,17 @@ if response.text:
     if not os.path.exists(queue_downloader_path):
         os.makedirs(queue_downloader_path)
 
-    file = open(queue_downloader_path + "events.json", "wb")
+    path = queue_downloader_path + "events.json"
+
+    with open(path, 'a') as file:
+    	file.write("{\"items\": [")
+
+    file = open(path, "ab")    	
     file.write(response.text.encode('utf-8'))
     file.close()
+
+    with open(path, 'a') as file:
+    	file.write("]}")
 
     event_feeds.append("events.json")
 
