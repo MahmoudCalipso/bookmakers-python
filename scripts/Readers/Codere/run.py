@@ -2,92 +2,151 @@ import ijson
 import requests
 import time
 import os
+import csv
 import sys
-from datetime import date
+import re
+from datetime import datetime, timedelta
+sys.path.append("../")
+sys.path.append("../../")
+from models import BookmakerEvent, BookmakerEventTeam, BookmakerEventTeamMember, BookmakerOdd, BookmakerOddOutcome
+import bookmaker_updater
 
-is_live = False
+EVENT_CHAMPIONSHIP_WINNER = 'Winner'
+MYSQL_DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
-if len(sys.argv) > 1 and sys.argv[1] == 'live':
-    is_live = True
+def checkTeamMembers(sport, team):
+    if sport == 'Tennis':
+        matches = re.search('(.*)\/(.*)', team.title)
 
-bookmaker_title = 'Codere';
-download_type = 'live' if is_live else 'prematch';
+        if matches and matches.group(1) and matches.group(2) and matches.group(1) != matches.group(2):
+            members = []
+            
+            member = BookmakerEventTeamMember.BookmakerEventTeamMember()
+            member.title = matches.group(1)
+            members.append(member)
+
+            member = BookmakerEventTeamMember.BookmakerEventTeamMember()
+            member.title = matches.group(2)
+            members.append(member)
+
+            team.members = members
 
 start_time = time.time()
 timestamp = str(int(time.time()));
-queue_path = '../../../queues/Downloaders/'
-queue_csv_path = queue_path + 'queue_' + date.today().strftime("%d-%m-%Y") + '.csv';
-queue_downloader_path = queue_path + bookmaker_title + '/' + download_type + '/' + timestamp + '/';
-event_feeds = []
+bookmaker_id = 4
+bookmaker_title = 'Codere'
+queue_path = '../../../queues/Downloaders/' + bookmaker_title + '/'
+queue_csv_path = queue_path + 'queue.csv';
+queue_reader_path = queue_path + bookmaker_title + '/' + timestamp + '/';
+events_to_process = {}
 
-# Download sports feed
-print('Beginning sports feed download...')
-headers = {
-        'CodereAffiliateApiKey': 'idbmob_API',
-        'CodereAffiliateApiSecret': '8d2577601b4c38200522322c69d3c22a'
-}
-sports_feed_url = 'http://coderesbgonlinesbs.azurewebsites.net/api/feeds/sports'
-response = requests.get(sports_feed_url, headers=headers)
-file = open("sports.json", "wb")
-file.write(response.text.encode('utf-8'))
-file.close()
+bookmaker_updater.init(bookmaker_id, bookmaker_title)
 
-# Loop sports
-sports = ijson.items(open('sports.json', 'r'), 'item');
-for sport in sports:
-        name = sport.get('Name')
-        id = sport.get('NodeId')
-        print("Looping sport " + name + " with ID " + id)
-        # Download tournaments feed
-        print('-- Beginning tournaments feed download...')
-        leagues_feed_url = 'http://coderesbgonlinesbs.azurewebsites.net/api/feeds/sports/' + id + '/leagues'
-        response = requests.get(leagues_feed_url, headers=headers)
-        file = open("tournaments.json", "wb")
+# Extract row from CSV and process it
+if os.path.exists(queue_csv_path):
+    with open(queue_csv_path, 'r') as file:
+        reader = csv.reader(file, delimiter=';')
+        for row in reader:
+            # timestamp;sports;type;files(separated by comma)
+            folder_path = queue_path + row[2] + '/' + row[0] + '/'
+            if os.path.exists(folder_path):
+                files = row[3].split(',')
+                if len(files) > 0:
+                    for file in files:
+                        file_path = folder_path + file
+                        if os.path.exists(file_path):
+                            print('Processing ' + file)
+                            items = ijson.items(open(file_path, 'r', encoding="utf-8"), 'item');
+                            for item in items:
+                                try:
+                                    key = item.get('Key')
+                                    event = item.get('Value')
+                                    event_name = event.get('NodeName')
+                                    sport = event.get('Parent3NodeName')
+                                    tournament = event.get('ParentNodeName')
+                                    participants = event.get('Participants')
+                                    date = ''
 
-        if response.text:
-                file.write(response.text.encode('utf-8'))
-                file.close()
+                                    if key not in events_to_process and participants and len(participants) > 0:
+                                        #print(bookmaker_title + ' :: Processing API event: ' + event_name)
+                                        teams = []
+                                        local_team = None
 
-                # Loop tournaments and get events feed
-                tournaments = ijson.items(open('tournaments.json', 'r'), 'item')
-                for tournament in tournaments:
-                        leagues = tournament.get('Leagues')
-                        for league in leagues:
-                                # Download events feed
-                                name = league.get('Name')
-                                id = league.get('NodeId')
-                                print("---- Looping tournament " + name + " with ID " + id)
-                                print('------ Beginning events feed download...')
+                                        for participant in participants:
+                                            _team = BookmakerEventTeam.BookmakerEventTeam()
 
-                                if is_live:
-                                    events_feed_url = 'http://coderesbgonlinesbs.azurewebsites.net/api/feeds/leagues/' + id + '/liveEvents';
-                                else:
-                                    events_feed_url = 'http://coderesbgonlinesbs.azurewebsites.net/api/feeds/leagues/' + id + '/nonLiveEvents'
+                                            _team.title = participant.get('LocalizedNames')['LocalizedValues'][0]['Value']
+                                            _team.local = participant.get('IsHome')
 
-                                print(events_feed_url)
-                                response = requests.get(events_feed_url, headers=headers)
+                                            checkTeamMembers(sport, _team)
 
-                                if response.text:
-                                    if not os.path.exists(queue_downloader_path):
-                                        os.makedirs(queue_downloader_path)
+                                            if participant.get('IsHome'):
+                                                local_team = _team
+                                            else:
+                                                teams.append(_team)
 
-                                    file = open(queue_downloader_path + "events-" + id + ".json", "wb")
-                                    file.write(response.text.encode('utf-8'))
-                                    file.close()
+                                        if local_team:
+                                            # Local team must be always at the beginning of the list
+                                            teams.insert(0, local_team)
 
-                                    event_feeds.append("events-" + id + ".json")
+                                        bookmaker_event = BookmakerEvent.BookmakerEvent()
+                                        start_date = event.get('StartDate')
 
+                                        # UTC Time
+                                        _datetime = datetime.strptime(start_date, '%Y-%m-%dT%H:%M:%SZ')
+                                        if _datetime:
+                                            _datetime = _datetime + timedelta(hours=2)
+                                            date = _datetime.strftime(MYSQL_DATETIME_FORMAT)
 
-# Delete temporary files that have been downloaded
-#if os.path.exists("sports.json"):
-#  os.remove("sports.json")
+                                        bookmaker_event.event_id = key
+                                        bookmaker_event.title = event_name
+                                        bookmaker_event.tournament = tournament
+                                        bookmaker_event.sport = sport
+                                        bookmaker_event.date = date
+                                        bookmaker_event.teams = teams
 
-#if os.path.exists("tournaments.json"):
-#  os.remove("tournaments.json")
+                                        # Check if this event is referring to the championship winner
+                                        if event_name.find(' - ') == -1 and len(teams) > 2:
+                                            bookmaker_event.replace_title = EVENT_CHAMPIONSHIP_WINNER
 
-# Add to queue
-if len(event_feeds):
-    with open(queue_csv_path, 'a') as fd:
-        fd.write(bookmaker_title + ';' + timestamp + ';All;' + download_type + ';' + ",".join(event_feeds) + "\n")
+                                        events_to_process[key] = bookmaker_event
+                                    elif event.get('Odd') and event.get('Parent2NodeId') in events_to_process:
+                                        #print(bookmaker_title + ' :: Processing API event: ' + event.get('Parent2NodeName'))
+                                        bookmaker_event = events_to_process[event.get('Parent2NodeId')]
+                                        odd_index = -1
+                                        i = 0
+
+                                        for odd in bookmaker_event.odds:
+                                            if odd.title == event.get('ParentNodeName'):
+                                                odd_index = i
+                                                break
+                                            i += 1
+
+                                        outcome = BookmakerOddOutcome.BookmakerOddOutcome()
+
+                                        outcome.outcome_id = event.get('NodeId')
+                                        outcome.title = event.get('NodeName')
+                                        outcome.decimal = event.get('Odd')
+
+                                        if odd_index == -1:
+                                            odd = BookmakerOdd.BookmakerOdd()
+
+                                            odd.title = event.get('ParentNodeName')
+                                            odd.outcomes.append(outcome)
+
+                                            bookmaker_event.odds.append(odd)
+                                        else:
+                                            bookmaker_event.odds[odd_index].outcomes.append(outcome)
+                                except (Exception) as ex:
+                                    print(bookmaker_title + ' :: Could not process event: ' + str(ex))
+
+for key in events_to_process:
+    try:
+        print(bookmaker_title + ' :: Processing API event: ' + events_to_process[key].title)
+        bookmaker_updater.processEvent(events_to_process[key])
+    except (Exception) as ex:
+        print(bookmaker_title + ' :: Could not process event: ' + str(ex))
+
+bookmaker_updater.finish()
 
 print("--- %s seconds ---" % (time.time() - start_time))
