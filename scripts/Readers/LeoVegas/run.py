@@ -2,52 +2,163 @@ import ijson
 import requests
 import time
 import os
-from datetime import date
+import csv
+import sys
+import re
+from fractions import Fraction
+from datetime import datetime, timedelta
+sys.path.append("../")
+sys.path.append("../../")
+from models import BookmakerEvent, BookmakerEventTeam, BookmakerEventTeamMember, BookmakerOdd, BookmakerOddOutcome
+import bookmaker_updater
+
+EVENT_CHAMPIONSHIP_WINNER = 'Winner'
+MYSQL_DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
+
+def checkTeamMembers(sport, team):
+    if sport == 'Tennis':
+        matches = re.search('(.*)\/(.*)', team.title)
+
+        if matches and matches.group(1) and matches.group(2) and matches.group(1) != matches.group(2):
+            members = []
+            
+            member = BookmakerEventTeamMember.BookmakerEventTeamMember()
+            member.title = matches.group(1)
+            members.append(member)
+
+            member = BookmakerEventTeamMember.BookmakerEventTeamMember()
+            member.title = matches.group(2)
+            members.append(member)
+
+            team.members = members
 
 start_time = time.time()
 timestamp = str(int(time.time()));
-queue_path = '../../../queues/Downloaders/'
-queue_csv_path = queue_path + 'queue_' + date.today().strftime("%d-%m-%Y") + '.csv';
-queue_downloader_path = queue_path + 'LeoVegas/' + timestamp + '/';
+bookmaker_id = 8
+bookmaker_title = 'LeoVegas'
+queue_path = '../../../queues/Downloaders/' + bookmaker_title + '/'
+queue_csv_path = queue_path + 'queue.csv';
+queue_reader_path = queue_path + bookmaker_title + '/' + timestamp + '/';
 event_feeds = []
+event_feed_url = None
 
-# Download sports feed
-print('Beginning sports feed download...')
-sports_feed_url = 'https://sports-offering.leovegas.com/offering/v2018/es/group.json?lang=en_US&market=all'
-response = requests.get(sports_feed_url)
-file = open("sports.json", "wb")
-file.write(response.text.encode('utf-8'))
-file.close()
+bookmaker_updater.init(bookmaker_id, bookmaker_title)
 
-# Loop sports
-sports = ijson.items(open('sports.json', 'r'), 'group.groups.item');
-for sport in sports:
-        name = sport.get('name')
-        id = sport.get('termKey')
-        print("Looping sport " + name + " with ID " + str(id))
-        # Download tournaments feed
-        print('-- Beginning events feed download...')
-        events_feed_url = 'https://sports-offering.leovegas.com/offering/v2018/es/listView/' + str(id) + '?lang=en_US&market=all&includeParticipants=true';
-        response = requests.get(events_feed_url)
+# Extract row from CSV and process it
+if os.path.exists(queue_csv_path):
+    with open(queue_csv_path, 'r') as file:
+        reader = csv.reader(file, delimiter=';')
+        for row in reader:
+            # timestamp;sports;type;files(separated by comma)
+            folder_path = queue_path + row[2] + '/' + row[0] + '/'
+            if os.path.exists(folder_path):
+                files = row[3].split(',')
+                if len(files) > 0:
+                    for file in files:
+                        file_path = folder_path + file
+                        if os.path.exists(file_path):
+                            print('Processing ' + file)
+                            events = ijson.items(open(file_path, 'r', encoding="utf-8"), 'events.item');
+                            for event in events:
+                                try:
+                                    live = event.get('liveData')
+                                    event = event.get('event')
+                                    bookmaker_event = BookmakerEvent.BookmakerEvent()
+                                    event_name = event.get('englishName')
+                                    sport = event.get('path')[0]['englishName']
 
-        if response.text:
-            if not os.path.exists(queue_downloader_path):
-                os.makedirs(queue_downloader_path)
+                                    # Check if it's Motorsport
+                                    if sport == 'Motorsport':
+                                        sport = event.get('path')[1]['englishName']
+                                        tournament = event_name
+                                    else:
+                                        country = event.get('path')[1]['englishName'] + ' ' if len(event.get('path')) == 3 else ''
+                                        tournament = country + event.get('group')
 
-            file = open(queue_downloader_path + "events-" + str(id) + ".json", "wb")
-            file.write(response.text.encode('utf-8'))
-            file.close()
+                                    # Check if this event should be skipped
+                                    if len(sport) > 0:
+                                        _datetime = None
+                                        date = ''
 
-            event_feeds.append("events-" + str(id) + ".json")
-                                
+                                        if event.get('start').endswith('Z'):
+                                            # UTC Time
+                                            _datetime = datetime.strptime(event.get('start'), '%Y-%m-%dT%H:%M:%SZ')
+                                            _datetime = _datetime + timedelta(hours=2)
+                                        else:
+                                            _datetime = datetime.strptime(event.get('start'))
 
-# Delete temporary files that have been downloaded
-#if os.path.exists("sports.json"):
-#  os.remove("sports.json")
+                                        if _datetime:
+                                            date = _datetime.strftime(MYSQL_DATETIME_FORMAT)
+                                            print(bookmaker_title + ' :: Processing API event: ' + event_name)
 
-# Add to queue
-if len(event_feeds):
-    with open(queue_csv_path, 'a') as fd:
-        fd.write('LeoVegas;' + timestamp + ';All;prematch;' + ",".join(event_feeds) + "\n")
+                                            teams = []
+
+                                            if event.get('participants'):
+                                                for participant in event.get('participants'):
+                                                    _team = BookmakerEventTeam.BookmakerEventTeam()
+
+                                                    _team.title = participant.get('name').strip()
+                                                    _team.local = participant.get('home')
+                                                    checkTeamMembers(sport, _team)
+
+                                                    teams.append(_team)
+
+                                            bookmaker_event.event_id = event.get('id')
+                                            bookmaker_event.title = event_name
+                                            bookmaker_event.tournament = tournament
+                                            bookmaker_event.sport = sport
+                                            bookmaker_event.date = date
+                                            bookmaker_event.teams = teams
+
+                                            # Get odds from API
+                                            event_feed_url = 'https://sports-offering.leovegas.com/offering/v2018/es/betoffer/event/' + str(event.get('id'))
+                                            # Get JSON file from API URL
+                                            response = requests.get(event_feed_url, timeout=30)
+
+                                            if response.text:
+                                                event_json_path = bookmaker_title + "-event.json"
+                                                file = open(event_json_path, "wb")
+                                                file.write(response.text.encode('utf-8'))
+                                                file.close()
+
+                                                odds = []
+                                                markets = ijson.items(open(event_json_path, 'r', encoding="utf-8"), 'betoffers.item')
+
+                                                for market in markets:
+                                                    if market.get('outcomes'):
+                                                        outcomes = []
+
+                                                        for outcome in market.get('outcomes'):
+                                                            if not outcome.get('oddsFractional'):
+                                                                continue
+
+                                                            bookmaker_odd_outcome = BookmakerOddOutcome.BookmakerOddOutcome()
+                                                            title = outcome.get('englishLabel')
+
+                                                            if title == 'Over' or title == 'Under':
+                                                                title += ' ' + (outcome.get('line') / 1000)
+
+                                                            odds_fractional = Fraction(outcome.get('oddsFractional'))
+                                                            bookmaker_odd_outcome.outcome_id = outcome.get('id')
+                                                            bookmaker_odd_outcome.title = title
+                                                            bookmaker_odd_outcome.decimal = float(odds_fractional)
+
+                                                            outcomes.append(bookmaker_odd_outcome)
+
+                                                        odd = BookmakerOdd.BookmakerOdd()
+
+                                                        odd.title = market.get('criterion')['englishLabel']
+                                                        odd.outcomes = outcomes
+
+                                                        odds.append(odd)
+
+                                                bookmaker_event.odds = odds
+
+                                            bookmaker_updater.processEvent(bookmaker_event)
+
+                                except (Exception) as ex:
+                                    print(bookmaker_title + ' :: Could not process event: ' + str(ex))
+
+bookmaker_updater.finish()
 
 print("--- %s seconds ---" % (time.time() - start_time))

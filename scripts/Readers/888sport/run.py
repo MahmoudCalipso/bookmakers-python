@@ -100,7 +100,7 @@ if os.path.exists(queue_csv_path):
                                         if event.get('start').endswith('Z'):
                                             # UTC Time
                                             _datetime = datetime.strptime(event.get('start'), '%Y-%m-%dT%H:%MZ')
-                                            _datetime = _datetime - timedelta(hours=2)
+                                            _datetime = _datetime + timedelta(hours=2)
                                         else:
                                             _datetime = datetime.strptime(event.get('start'))
 
