@@ -23,17 +23,19 @@ print('-- Beginning events feed download...')
 events_feed_url = 'https://feeds.betway.com/sbeventsliveen' if is_live else 'https://feeds.betway.com/sbeventsen';
 events_feed_url += '?key=83594BE8&keywords=soccer,basketball,motor-sport,motor-racing,formula-1,esports,rugby-league,rugby-union,tennis,boxing,ufc---martial-arts,cycling,golf,american-football'
 
-print(events_feed_url)
-response = requests.get(events_feed_url)
-
-if response.text:
+with requests.get(events_feed_url, stream=True) as r:
+	r.raise_for_status()
 	if not os.path.exists(queue_downloader_path):
 		os.makedirs(queue_downloader_path)
 
-	file = open(queue_downloader_path + "events.xml", "wb")
-	file.write(response.text.encode('utf-8'))
-	file.close()
-	event_feeds.append("events.xml")
+	with open(queue_downloader_path + "events.xml", 'wb') as f:
+		for chunk in r.iter_content(chunk_size=8192): 
+			# If you have chunk encoded response uncomment if
+			# and set chunk_size parameter to None.
+			#if chunk: 
+			f.write(chunk)
+
+event_feeds.append("events.xml")
 
 # Add to queue
 if len(event_feeds):

@@ -120,7 +120,7 @@ if os.path.exists(queue_csv_path):
                                                         for event in events:
                                                             bookmaker_event = BookmakerEvent.BookmakerEvent()
                                                             event_name = event.get('EventName')
-                                                            print(bookmaker_title + ' :: Processing API event: ' + event_name)
+                                                            #print(bookmaker_title + ' :: Processing API event: ' + event_name)
 
                                                             if event_name.find('vs.') > -1:
                                                                 _teams = event_name.split('vs.')

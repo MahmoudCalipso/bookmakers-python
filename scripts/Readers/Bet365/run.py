@@ -125,7 +125,7 @@ if os.path.exists(queue_csv_path):
 											_datetime = datetime.strptime(_time, '%d/%m/%y %H:%M:%S')
 
 											if _datetime:
-												_datetime = _datetime - timedelta(hours=1)
+												_datetime = _datetime + timedelta(hours=1)
 												date = _datetime.strftime(MYSQL_DATETIME_FORMAT)
 
 										bookmaker_event.event_id = event.attrib['ID']
