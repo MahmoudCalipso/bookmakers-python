@@ -50,10 +50,12 @@ if token:
 		'Authorization': 'Bearer ' + token,
 	}
 	sports_feed_url = 'https://partner.odds.ws/api/Sports/EN'
-	response = requests.get(sports_feed_url, headers=headers)
-	file = open("sports.json", "wb")
-	file.write(response.text.encode('utf-8'))
-	file.close()
+	with requests.get(sports_feed_url, stream=True, headers=headers) as r:
+	    r.raise_for_status()
+
+	    with open("sports.json", 'wb') as f:
+	        for chunk in r.iter_content(chunk_size=8192): 
+	            f.write(chunk)
 
 	# Loop sports
 	sports = ijson.items(open('sports.json', 'r'), 'items.item');
@@ -65,15 +67,14 @@ if token:
 
 		events_feed_url = 'https://partner.odds.ws/api/sport/EN/' + str(id) + '?eventFilter=' + ('Live' if is_live else 'PreMatch') + '&marketFilter=All'
 		print(events_feed_url)
-		response = requests.get(events_feed_url, headers=headers)
-
 		if response.text:
 			if not os.path.exists(queue_downloader_path):
 			    os.makedirs(queue_downloader_path)
 
-		file = open(queue_downloader_path + "events-" + str(id) + ".json", "wb")
-		file.write(response.text.encode('utf-8'))
-		file.close()
+		with requests.get(events_feed_url, stream=True, headers=headers) as r:
+		    with open(queue_downloader_path + "events-" + str(id) + ".json", 'wb') as f:
+		        for chunk in r.iter_content(chunk_size=8192): 
+		            f.write(chunk)
 
 		event_feeds.append("events-" + str(id) + ".json")
 

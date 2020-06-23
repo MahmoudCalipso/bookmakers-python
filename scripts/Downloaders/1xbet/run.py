@@ -23,17 +23,20 @@ event_feeds = []
 print('-- Beginning events feed download...')
 events_feed_url = 'https://part.upnp.xyz/PartLive/GetAllFeedGames?lng=en' if is_live else 'https://part.upnp.xyz/PartLine/GetAllFeedGames?lng=en';
 print(events_feed_url)
-response = requests.get(events_feed_url)
 
-if response.text:
-    if not os.path.exists(queue_downloader_path):
-        os.makedirs(queue_downloader_path)
+with requests.get(events_feed_url, stream=True) as r:
+	r.raise_for_status()
+	if not os.path.exists(queue_downloader_path):
+		os.makedirs(queue_downloader_path)
 
-    file = open(queue_downloader_path + "events.json", "wb")
-    file.write(response.text.encode('utf-8'))
-    file.close()
+	with open(queue_downloader_path + "events.xml", 'wb') as f:
+		for chunk in r.iter_content(chunk_size=8192): 
+			# If you have chunk encoded response uncomment if
+			# and set chunk_size parameter to None.
+			#if chunk: 
+			f.write(chunk)
 
-    event_feeds.append("events.json")
+event_feeds.append("events.json")
 
 # Add to queue
 if len(event_feeds):

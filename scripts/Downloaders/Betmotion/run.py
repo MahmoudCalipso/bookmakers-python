@@ -22,16 +22,18 @@ event_feeds = []
 print('-- Beginning events feed download...')
 events_feed_url = 'http://dataexport-uof-betmotion.biahosted.com/Export/GetLiveEvents?importerId=2919' if is_live else 'http://dataexport-uof-betmotion.biahosted.com/Export/GetEvents?importerId=2919';
 print(events_feed_url)
-response = requests.get(events_feed_url)
 
-if response.text:
-    if not os.path.exists(queue_downloader_path):
-        os.makedirs(queue_downloader_path)
+if not os.path.exists(queue_downloader_path):
+    os.makedirs(queue_downloader_path)
 
-    file = open(queue_downloader_path + "events.json", "wb")
-    file.write(response.text.encode('utf-8'))
-    file.close()
-    event_feeds.append("events.json")
+with requests.get(events_feed_url, stream=True) as r:
+    r.raise_for_status()
+
+    with open(queue_downloader_path + "events.json", 'wb') as f:
+        for chunk in r.iter_content(chunk_size=8192): 
+            f.write(chunk)
+
+event_feeds.append("events.json")
 
 # Add to queue
 if len(event_feeds):

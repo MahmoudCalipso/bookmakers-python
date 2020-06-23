@@ -21,7 +21,7 @@ event_feeds = []
 
 print('-- Beginning events feed download...')
 events_feed_url = 'https://feeds.betway.com/sbeventsliveen' if is_live else 'https://feeds.betway.com/sbeventsen';
-events_feed_url += '?key=83594BE8&keywords=soccer,basketball,motor-sport,motor-racing,formula-1,esports,rugby-league,rugby-union,tennis,boxing,ufc---martial-arts,cycling,golf,american-football'
+events_feed_url += '?key=83594BE8'
 
 with requests.get(events_feed_url, stream=True) as r:
 	r.raise_for_status()

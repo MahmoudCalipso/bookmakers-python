@@ -24,10 +24,12 @@ event_feeds = []
 # Download sports feed
 print('Beginning sports feed download...')
 sports_feed_url = 'http://livefeeds.win/feed/scannerbet_pre?content=sports'
-response = requests.get(sports_feed_url)
-file = open("sports.xml", "wb")
-file.write(response.text.encode('utf-8'))
-file.close()
+with requests.get(sports_feed_url, stream=True) as r:
+    r.raise_for_status()
+
+    with open("sports.xml", 'wb') as f:
+        for chunk in r.iter_content(chunk_size=8192): 
+            f.write(chunk)
 
 # Loop sports
 root = ET.parse('sports.xml').getroot()
@@ -37,18 +39,17 @@ for type_tag in root.findall('sport'):
     print("Looping sport " + name + " with ID " + str(id))
     # Download tournaments feed
     print('-- Beginning events feed download...')
-    events_feed_url = 'http://livefeeds.marathonbet.com/feed/scannerbet_pre?sport_codes=' + str(id);
-    response = requests.get(events_feed_url)
+    events_feed_url = 'http://livefeeds.marathonbet.com/feed/scannerbet_pre?sport_codes=' + str(id)
 
-    if response.text:
-        if not os.path.exists(queue_downloader_path):
-            os.makedirs(queue_downloader_path)
+    if not os.path.exists(queue_downloader_path):
+        os.makedirs(queue_downloader_path)
 
-        file = open(queue_downloader_path + "events-" + str(id) + ".xml", "wb")
-        file.write(response.text.encode('utf-8'))
-        file.close()
+    with requests.get(events_feed_url, stream=True) as r:
+        with open(queue_downloader_path + "events-" + str(id) + ".xml", 'wb') as f:
+            for chunk in r.iter_content(chunk_size=8192): 
+                f.write(chunk)
 
-        event_feeds.append("events-" + str(id) + ".xml")
+    event_feeds.append("events-" + str(id) + ".xml")
                                 
 
 # Delete temporary files that have been downloaded

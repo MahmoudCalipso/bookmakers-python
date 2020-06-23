@@ -31,17 +31,18 @@ print(events_feed_url)
 headers = {
 	'Accept-Encoding': 'deflate, gzip'	
 }
-response = requests.get(events_feed_url, headers=headers)
 
-if response.text:
-    if not os.path.exists(queue_downloader_path):
-        os.makedirs(queue_downloader_path)
+if not os.path.exists(queue_downloader_path):
+    os.makedirs(queue_downloader_path)
 
-    file = open(queue_downloader_path + "events.xml", "wb")
-    file.write(response.content)
-    file.close()
+with requests.get(events_feed_url, stream=True, headers=headers) as r:
+    r.raise_for_status()
 
-    event_feeds.append("events.xml")
+    with open(queue_downloader_path + "events.xml", 'wb') as f:
+        for chunk in r.iter_content(chunk_size=8192): 
+            f.write(chunk)
+
+event_feeds.append("events.xml")
 
 # Add to queue
 if len(event_feeds):

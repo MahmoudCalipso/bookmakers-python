@@ -23,31 +23,30 @@ event_feeds = []
 # Download sports feed
 print('Beginning sports feed download...')
 sports_feed_url = 'https://sports-offering.leovegas.com/offering/v2018/es/group.json?lang=en_US&market=all'
-response = requests.get(sports_feed_url)
-file = open("sports.json", "wb")
-file.write(response.text.encode('utf-8'))
-file.close()
+with requests.get(sports_feed_url, stream=True) as r:
+    with open("sports.json", 'wb') as f:
+        for chunk in r.iter_content(chunk_size=8192): 
+            f.write(chunk)
 
 # Loop sports
 sports = ijson.items(open('sports.json', 'r'), 'group.groups.item');
 for sport in sports:
-        name = sport.get('name')
-        id = sport.get('termKey')
-        print("Looping sport " + name + " with ID " + str(id))
-        # Download tournaments feed
-        print('-- Beginning events feed download...')
-        events_feed_url = 'https://sports-offering.leovegas.com/offering/v2018/es/listView/' + str(id) + '?lang=en_US&market=all&includeParticipants=true';
-        response = requests.get(events_feed_url)
+    name = sport.get('name')
+    id = sport.get('termKey')
+    print("Looping sport " + name + " with ID " + str(id))
+    # Download tournaments feed
+    print('-- Beginning events feed download...')
+    events_feed_url = 'https://sports-offering.leovegas.com/offering/v2018/es/listView/' + str(id) + '?lang=en_US&market=all&includeParticipants=true';
 
-        if response.text:
-            if not os.path.exists(queue_downloader_path):
-                os.makedirs(queue_downloader_path)
+    if not os.path.exists(queue_downloader_path):
+        os.makedirs(queue_downloader_path)
 
-            file = open(queue_downloader_path + "events-" + str(id) + ".json", "wb")
-            file.write(response.text.encode('utf-8'))
-            file.close()
+    with requests.get(events_feed_url, stream=True) as r:
+        with open(queue_downloader_path + "events-" + str(id) + ".json", 'wb') as f:
+            for chunk in r.iter_content(chunk_size=8192): 
+                f.write(chunk)
 
-            event_feeds.append("events-" + str(id) + ".json")
+    event_feeds.append("events-" + str(id) + ".json")
                                 
 
 # Delete temporary files that have been downloaded

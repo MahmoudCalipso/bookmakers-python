@@ -32,17 +32,18 @@ def download():
 		feed_url += '&eventPhase=1&eventStartingIn=10080'
 
 	print(feed_url)
-	response = requests.get(feed_url, headers=headers)
+	if not os.path.exists(queue_downloader_path):
+		os.makedirs(queue_downloader_path)
 
-	if response.text:
-		if not os.path.exists(queue_downloader_path):
-			os.makedirs(queue_downloader_path)
+	with requests.get(feed_url, stream=True, headers=headers) as r:
+		r.raise_for_status()
 
-		file = open(queue_downloader_path + "events-" + str(current_page) + ".json", "wb")
-		file.write(response.text.encode('utf-8'))
-		file.close()
+		with open(queue_downloader_path + "events-" + str(current_page) + ".json", 'wb') as f:
+			for chunk in r.iter_content(chunk_size=8192): 
+				f.write(chunk)
+
 		event_feeds.append("events-" + str(current_page) + ".json")
-
+		
 		if total_pages == 0:
 			tp = 1
 			for prefix, event, value in ijson.parse(open(queue_downloader_path + "events-" + str(current_page) + ".json", 'r')):

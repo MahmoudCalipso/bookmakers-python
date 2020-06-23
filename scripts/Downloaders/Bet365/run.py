@@ -200,17 +200,19 @@ for sport in sports:
 			if is_live:
 				feed_url += '&InRunning=1'
 
+			if not os.path.exists(queue_downloader_path):
+				os.makedirs(queue_downloader_path)
+
 			print(feed_url)
-			response = requests.get(feed_url)
+			with requests.get(feed_url, stream=True) as r:
+				r.raise_for_status()
 
-			if response.text:
-				if not os.path.exists(queue_downloader_path):
-					os.makedirs(queue_downloader_path)
+				with open(queue_downloader_path + "events-" + sport + "-" + market_id +".xml", 'wb') as f:
+					for chunk in r.iter_content(chunk_size=8192): 
+						f.write(chunk)
 
-				file = open(queue_downloader_path + "events-" + sport + "-" + market_id +".xml", "wb")
-				file.write(response.text.encode('utf-8'))
-				file.close()
-				event_feeds.append("events-" + sport + "-" + market_id +".xml")
+
+			event_feeds.append("events-" + sport + "-" + market_id +".xml")
 
 # Add to queue
 if len(event_feeds):

@@ -27,56 +27,67 @@ headers = {
         'CodereAffiliateApiSecret': '8d2577601b4c38200522322c69d3c22a'
 }
 sports_feed_url = 'http://coderesbgonlinesbs.azurewebsites.net/api/feeds/sports'
-response = requests.get(sports_feed_url, headers=headers)
-file = open("sports.json", "wb")
-file.write(response.text.encode('utf-8'))
-file.close()
+
+with requests.get(sports_feed_url, stream=True, headers=headers) as r:
+    r.raise_for_status()
+
+    with open("sports.json", 'wb') as f:
+        for chunk in r.iter_content(chunk_size=8192): 
+            f.write(chunk)
 
 # Loop sports
 sports = ijson.items(open('sports.json', 'r'), 'item');
 for sport in sports:
-        name = sport.get('Name')
-        id = sport.get('NodeId')
-        print("Looping sport " + name + " with ID " + id)
-        # Download tournaments feed
-        print('-- Beginning tournaments feed download...')
-        leagues_feed_url = 'http://coderesbgonlinesbs.azurewebsites.net/api/feeds/sports/' + id + '/leagues'
-        response = requests.get(leagues_feed_url, headers=headers)
-        file = open("tournaments.json", "wb")
+    name = sport.get('Name')
+    id = sport.get('NodeId')
+    print("Looping sport " + name + " with ID " + id)
+    # Download tournaments feed
+    print('-- Beginning tournaments feed download...')
+    leagues_feed_url = 'http://coderesbgonlinesbs.azurewebsites.net/api/feeds/sports/' + id + '/leagues'
 
-        if response.text:
-                file.write(response.text.encode('utf-8'))
-                file.close()
+    try:
 
-                # Loop tournaments and get events feed
-                tournaments = ijson.items(open('tournaments.json', 'r'), 'item')
-                for tournament in tournaments:
-                        leagues = tournament.get('Leagues')
-                        for league in leagues:
-                                # Download events feed
-                                name = league.get('Name')
-                                id = league.get('NodeId')
-                                print("---- Looping tournament " + name + " with ID " + id)
-                                print('------ Beginning events feed download...')
+        with requests.get(leagues_feed_url, stream=True, headers=headers) as r:
+            r.raise_for_status()
 
-                                if is_live:
-                                    events_feed_url = 'http://coderesbgonlinesbs.azurewebsites.net/api/feeds/leagues/' + id + '/liveEvents';
-                                else:
-                                    events_feed_url = 'http://coderesbgonlinesbs.azurewebsites.net/api/feeds/leagues/' + id + '/nonLiveEvents'
+            with open("tournaments.json", 'wb') as f:
+                for chunk in r.iter_content(chunk_size=8192): 
+                    f.write(chunk)
 
-                                print(events_feed_url)
-                                response = requests.get(events_feed_url, headers=headers)
 
-                                if response.text:
-                                    if not os.path.exists(queue_downloader_path):
-                                        os.makedirs(queue_downloader_path)
+        # Loop tournaments and get events feed
+        tournaments = ijson.items(open('tournaments.json', 'r'), 'item')
+        for tournament in tournaments:
+            leagues = tournament.get('Leagues')
+            for league in leagues:
+                # Download events feed
+                name = league.get('Name')
+                id = league.get('NodeId')
+                print("---- Looping tournament " + name + " with ID " + id)
+                print('------ Beginning events feed download...')
 
-                                    file = open(queue_downloader_path + "events-" + id + ".json", "wb")
-                                    file.write(response.text.encode('utf-8'))
-                                    file.close()
+                if is_live:
+                    events_feed_url = 'http://coderesbgonlinesbs.azurewebsites.net/api/feeds/leagues/' + id + '/liveEvents';
+                else:
+                    events_feed_url = 'http://coderesbgonlinesbs.azurewebsites.net/api/feeds/leagues/' + id + '/nonLiveEvents'
 
-                                    event_feeds.append("events-" + id + ".json")
+                print(events_feed_url)
+                if not os.path.exists(queue_downloader_path):
+                    os.makedirs(queue_downloader_path)
 
+                try:
+                    with requests.get(events_feed_url, stream=True, headers=headers) as r:
+                        r.raise_for_status()
+
+                        with open(queue_downloader_path + "events-" + id + ".json", 'wb') as f:
+                            for chunk in r.iter_content(chunk_size=8192): 
+                                f.write(chunk)
+
+                        event_feeds.append("events-" + id + ".json")
+                except (Exception) as ex:
+                    pass
+    except (Exception) as ex:
+        pass
 
 # Delete temporary files that have been downloaded
 #if os.path.exists("sports.json"):

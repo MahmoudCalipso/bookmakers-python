@@ -24,47 +24,47 @@ if is_live:
     print('-- Beginning events feed download...')
     events_feed_url = 'http://www.smart-feeds.com/getfeeds.aspx?Param=event/live/open';
     print(events_feed_url)
-    response = requests.get(events_feed_url)
 
-    if response.text:
+    with requests.get(events_feed_url, stream=True) as r:
+        r.raise_for_status()
         if not os.path.exists(queue_downloader_path):
             os.makedirs(queue_downloader_path)
 
-        file = open(queue_downloader_path + "events.json", "wb")
-        file.write(response.text.encode('utf-8'))
-        file.close()
-
-        event_feeds.append("events.json")
+        with open(queue_downloader_path + "events.json", 'wb') as f:
+            for chunk in r.iter_content(chunk_size=8192): 
+                f.write(chunk)
 else:
     # Download sports feed
     print('Beginning sports feed download...')
     sports_feed_url = 'http://www.smart-feeds.com/getfeeds.aspx?Param=group'
-    response = requests.get(sports_feed_url)
-    file = open("sports.json", "wb")
-    file.write(response.text.encode('utf-8'))
-    file.close()
+    with requests.get(sports_feed_url, stream=True) as r:
+        r.raise_for_status()
+
+        with open("sports.json", 'wb') as f:
+            for chunk in r.iter_content(chunk_size=8192): 
+                f.write(chunk)
 
     # Loop sports
     sports = ijson.items(open('sports.json', 'r'), 'group.groups.item');
     for sport in sports:
-            name = sport.get('englishName')
-            id = sport.get('id')
-            print("Looping sport " + name + " with ID " + str(id))
-            # Download tournaments feed
-            print('-- Beginning events feed download...')
-            events_feed_url = 'http://www.smart-feeds.com/getfeeds.aspx?Param=event/group/' + str(id) + '&includeParticipants=true';
-            response = requests.get(events_feed_url)
+        name = sport.get('englishName')
+        id = sport.get('id')
+        print("Looping sport " + name + " with ID " + str(id))
+        # Download tournaments feed
+        print('-- Beginning events feed download...')
+        events_feed_url = 'http://www.smart-feeds.com/getfeeds.aspx?Param=event/group/' + str(id) + '&includeParticipants=true';
 
-            if response.text:
-                if not os.path.exists(queue_downloader_path):
-                    os.makedirs(queue_downloader_path)
+        if not os.path.exists(queue_downloader_path):
+            os.makedirs(queue_downloader_path)
 
-                file = open(queue_downloader_path + "events-" + str(id) + ".json", "wb")
-                file.write(response.text.encode('utf-8'))
-                file.close()
+        with requests.get(events_feed_url, stream=True) as r:
+            r.raise_for_status()
 
-                event_feeds.append("events-" + str(id) + ".json")
-                                
+            with open(queue_downloader_path + "events-" + str(id) + ".json", 'wb') as f:
+                for chunk in r.iter_content(chunk_size=8192): 
+                    f.write(chunk)
+
+        event_feeds.append("events-" + str(id) + ".json")                 
 
 # Delete temporary files that have been downloaded
 #if os.path.exists("sports.json"):
