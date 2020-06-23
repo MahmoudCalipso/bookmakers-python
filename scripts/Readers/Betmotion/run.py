@@ -13,6 +13,35 @@ import bookmaker_updater
 
 EVENT_CHAMPIONSHIP_WINNER = 'Winner'
 MYSQL_DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
+MARKETS = {
+    '1': '1x2',
+    '10': 'Double chance',
+    '11': 'Draw no bet',
+    '14': 'Handicap {hcp}',
+    '16': 'Handicap',
+    '18': 'Total',
+    '29': 'Both teams to score',
+    '186': 'Winner',
+    '187': 'Game handicap',
+    '189': 'Total games',
+    '219': 'Winner (incl. overtime)',
+    '223': 'Handicap (incl. overtime)',
+    '225': 'Total (incl. overtime)',
+    '237': 'Point handicap',
+    '238': 'Total points',
+    '251': 'Winner (incl. extra innings)',
+    '258': 'Total (incl. extra innings)',
+    '314': 'Total sets',
+    '327': 'Map handicap',
+    '340': 'Winner (incl. super over)',
+    '493': 'Frame handicap',
+    '534': 'Championship free text market',
+    '535': 'Short term free text market',
+    '536': 'Free text multiwinner market',
+    '538': 'Head2head (1x2)',
+    '539': 'Head2head',
+    '559': 'Free text market'
+}
 
 def str_repeat(str, multiplier):
     return str * multiplier
@@ -77,10 +106,11 @@ if os.path.exists(queue_csv_path):
                             for item in items:
                                 try:
                                     categories = item.get('Categories')
+                                    sport = item.get('Name')
 
                                     if categories:
                                         for category in categories:
-                                            sport = category.get('Name')
+                                            #sport = category.get('Name')
                                             championships = category.get('Championships')
                                             if championships:
                                                 for championship in championships:
@@ -142,7 +172,35 @@ if os.path.exists(queue_csv_path):
 
                                                                     if selections:
                                                                         for selection in selections:
-                                                                            
+                                                                            is_enabled = selection.get('IsEnabled')
+                                                                            if is_enabled:
+                                                                                outcome_title = selection.get('Name')
+
+                                                                                if len(teams) > 0:
+                                                                                    outcome_title = outcome_title.replace('{$competitor1}', teams[0].title)
+                                                                                    outcome_title = outcome_title.replace('{$competitor2}', teams[0].title)
+
+                                                                                outcome_title = outcome_title.replace('{hcp}', market.get('SpecialOddsValue'))
+                                                                                outcome_title = outcome_title.replace('{+hcp}', market.get('SpecialOddsValue'))
+                                                                                outcome_title = outcome_title.replace('{-hcp}', market.get('SpecialOddsValue'))
+                                                                                outcome_title = outcome_title.replace('{total}', market.get('SpecialOddsValue'))
+
+                                                                                bookmaker_odd_outcome = BookmakerOddOutcome.BookmakerOddOutcome()
+
+                                                                                bookmaker_odd_outcome.outcome_id = selection.get('SelectionId')
+                                                                                bookmaker_odd_outcome.title = outcome_title
+                                                                                bookmaker_odd_outcome.decimal = selection.get('Price')
+
+                                                                                outcomes.append(bookmaker_odd_outcome)
+
+                                                                    market_type_id = str(market.get('MarketTypeid'))
+                                                                    market_title = MARKETS[market_type_id] if market_type_id in MARKETS else market.get('Name')
+                                                                    market_title = market_title.replace('{hcp}', market.get('SpecialOddsValue'))
+
+                                                                    odd.title = market_title
+                                                                    odd.outcomes = outcomes
+
+                                                                    odds.append(odd)
 
                                                             filterTeams(sport, teams)
 
