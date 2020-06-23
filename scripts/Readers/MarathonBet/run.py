@@ -1,63 +1,175 @@
 import requests
 import time
 import os
-import xml.etree.ElementTree as ET
-from datetime import date
-
+import csv
 import sys
+import re
+import xml.etree.ElementTree as ET
+from datetime import datetime, timedelta
+sys.path.append("../")
+sys.path.append("../../")
+from models import BookmakerEvent, BookmakerEventTeam, BookmakerEventTeamMember, BookmakerOdd, BookmakerOddOutcome
+import bookmaker_updater
 
-is_live = False
+EVENT_CHAMPIONSHIP_WINNER = 'Winner'
+MYSQL_DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
-if len(sys.argv) > 1 and sys.argv[1] == 'live':
-    is_live = True
+def checkTeamMembers(sport, team):
+    if sport == 'Tennis':
+        matches = re.search('(.*)\/(.*)', team.title)
 
-bookmaker_title = 'MarathonBet';
-download_type = 'live' if is_live else 'prematch';
+        if matches and matches.group(1) and matches.group(2) and matches.group(1) != matches.group(2):
+            members = []
+            
+            member = BookmakerEventTeamMember.BookmakerEventTeamMember()
+            member.title = matches.group(1)
+            members.append(member)
+
+            member = BookmakerEventTeamMember.BookmakerEventTeamMember()
+            member.title = matches.group(2)
+            members.append(member)
+
+            team.members = members
 
 start_time = time.time()
 timestamp = str(int(time.time()));
-queue_path = '../../../queues/Downloaders/'
-queue_csv_path = queue_path + 'queue_' + date.today().strftime("%d-%m-%Y") + '.csv';
-queue_downloader_path = queue_path + bookmaker_title + '/' + download_type + '/' + timestamp + '/';
+bookmaker_id = 13
+bookmaker_title = 'MarathonBet'
+queue_path = '../../../queues/Downloaders/' + bookmaker_title + '/'
+queue_csv_path = queue_path + 'queue.csv';
+queue_reader_path = queue_path + bookmaker_title + '/' + timestamp + '/';
 event_feeds = []
 
-# Download sports feed
-print('Beginning sports feed download...')
-sports_feed_url = 'http://livefeeds.win/feed/scannerbet_pre?content=sports'
-response = requests.get(sports_feed_url)
-file = open("sports.xml", "wb")
-file.write(response.text.encode('utf-8'))
-file.close()
+bookmaker_updater.init(bookmaker_id, bookmaker_title)
 
-# Loop sports
-root = ET.parse('sports.xml').getroot()
-for type_tag in root.findall('sport'):
-    name = type_tag.get('name')
-    id = type_tag.get('code')
-    print("Looping sport " + name + " with ID " + str(id))
-    # Download tournaments feed
-    print('-- Beginning events feed download...')
-    events_feed_url = 'http://livefeeds.marathonbet.com/feed/scannerbet_pre?sport_codes=' + str(id);
-    response = requests.get(events_feed_url)
+# Extract row from CSV and process it
+if os.path.exists(queue_csv_path):
+    with open(queue_csv_path, 'r') as file:
+        reader = csv.reader(file, delimiter=';')
+        for row in reader:
+            # timestamp;sports;type;files(separated by comma)
+            folder_path = queue_path + row[2] + '/' + row[0] + '/'
+            if os.path.exists(folder_path):
+                files = row[3].split(',')
+                if len(files) > 0:
+                    for file in files:
+                        file_path = folder_path + file
+                        if os.path.exists(file_path):
+                            print('Processing ' + file)
+                            root = ET.parse(file_path).getroot()
+                            sports = root.findall('sport')
 
-    if response.text:
-        if not os.path.exists(queue_downloader_path):
-            os.makedirs(queue_downloader_path)
+                            for sport_node in sports:
+                                sport = sport_node.attrib['name']
+                                groups = sport_node.findall('groups')[0].findall('group')
 
-        file = open(queue_downloader_path + "events-" + str(id) + ".xml", "wb")
-        file.write(response.text.encode('utf-8'))
-        file.close()
+                                for group in groups:
+                                    tournament = group.attrib['name']
+                                    events = group.findall('events')[0].findall('event')
 
-        event_feeds.append("events-" + str(id) + ".xml")
-                                
+                                    for event in events:
+                                        try:
+                                            bookmaker_event = BookmakerEvent.BookmakerEvent()
+                                            event_name = event.attrib['name']
+                                            date = ''
+                                            _datetime = datetime.strptime(event.attrib['date'], '%Y-%m-%dT%H:%M:%SZ')
 
-# Delete temporary files that have been downloaded
-#if os.path.exists("sports.json"):
-#  os.remove("sports.json")
+                                            if _datetime:
+                                                _datetime = _datetime + timedelta(hours=2)
+                                                date = _datetime.strftime(MYSQL_DATETIME_FORMAT)
 
-# Add to queue
-if len(event_feeds):
-    with open(queue_csv_path, 'a') as fd:
-        fd.write(bookmaker_title + ';' + timestamp + ';All;' + download_type + ';' + ",".join(event_feeds) + "\n")
+                                            print(bookmaker_title + ' :: Processing API event: ' + event_name)
+
+                                            teams = []
+                                            members = event.findall('members')
+
+                                            if len(members) > 0:
+                                                members = members[0].findall('member')
+                                                for team in members:
+                                                    _team = BookmakerEventTeam.BookmakerEventTeam()
+
+                                                    _team.title = team.attrib['name']
+                                                    _team.local = team.attrib['selkey'] == 'HOME'
+
+                                                    checkTeamMembers(sport, _team)
+                                                    teams.append(_team)
+                                            else:
+                                                _teams = event.findall('teams')
+
+                                                if len(_teams) > 0:
+                                                    # TEAM 1
+                                                    team1 = _teams[0].findall('team1')[0]
+                                                    _team = BookmakerEventTeam.BookmakerEventTeam()
+
+                                                    _team.title = team.attrib['name']
+                                                    _team.local = team.attrib['selkey'] == 'HOME'
+
+                                                    checkTeamMembers(sport, _team)
+                                                    teams.append(_team)
+
+                                                    # TEAM 2
+                                                    team2 = _teams[0].findall('team2')[0]
+                                                    _team = BookmakerEventTeam.BookmakerEventTeam()
+
+                                                    _team.title = team.attrib['name']
+                                                    _team.local = team.attrib['selkey'] == 'HOME'
+
+                                                    checkTeamMembers(sport, _team)
+                                                    teams.append(_team)
+
+                                            bookmaker_event.event_id = event.attrib['eventId']
+                                            bookmaker_event.title = event_name
+                                            bookmaker_event.tournament = tournament
+                                            bookmaker_event.sport = sport
+                                            bookmaker_event.date = date
+
+                                            odds = []
+                                            markets = event.findall('markets')[0].findall('market')
+
+                                            for market in markets:
+                                                outcomes = []
+                                                selections = market.findall('sel')
+
+                                                for selection in selections:
+                                                    bookmaker_odd_outcome = BookmakerOddOutcome.BookmakerOddOutcome()
+
+                                                    bookmaker_odd_outcome.outcome_id = selection.attrib['coeffId']
+                                                    bookmaker_odd_outcome.title = selection.attrib['name']
+                                                    bookmaker_odd_outcome.decimal = selection.attrib['coeff']
+
+                                                    outcomes.append(bookmaker_odd_outcome)
+
+                                                odd = BookmakerOdd.BookmakerOdd()
+
+                                                odd.id = market.attrib['event_id']
+                                                odd.title = market.attrib['name']
+                                                odd.outcomes = outcomes
+
+                                                odds.append(odd)
+
+                                            bookmaker_event.odds = odds
+
+                                            # Get teams from markets if array is empty
+                                            if len(teams) == 0:
+                                                for odd in odds:
+                                                    i = 0
+                                                    for outcome in odd.outcomes:
+                                                        team = BookmakerEventTeam.BookmakerEventTeam()
+
+                                                        team.title = outcome.title
+                                                        team.local = i == 0
+
+                                                        checkTeamMembers(keyword_sport, team)
+
+                                                        teams.append(team)
+                                                        i += 1
+                                                    break
+
+                                            bookmaker_event.teams = teams
+                                            bookmaker_updater.processEvent(bookmaker_event)
+                                        except (Exception) as ex:
+                                            print(bookmaker_title + ' :: Could not process event: ' + str(ex))
+
+bookmaker_updater.finish()
 
 print("--- %s seconds ---" % (time.time() - start_time))
