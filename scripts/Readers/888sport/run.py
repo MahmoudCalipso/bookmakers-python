@@ -181,6 +181,8 @@ if os.path.exists(queue_csv_path):
                                             if event_name.find(' - ') == -1 and len(teams) > 2:
                                                 bookmaker_event.replace_title = EVENT_CHAMPIONSHIP_WINNER
 
+                                            bookmaker_event.live = live
+
                                             bookmaker_updater.processEvent(bookmaker_event)
 
                                 except (Exception) as ex:

@@ -1080,6 +1080,7 @@ if os.path.exists(queue_csv_path):
 		for row in reader:
 			# timestamp;sports;type;files(separated by comma)
 			folder_path = queue_path + row[2] + '/' + row[0] + '/'
+            live = row[2] == 'live'
 			if os.path.exists(folder_path):
 				files = row[3].split(',')
 				if len(files) > 0:
@@ -1210,6 +1211,7 @@ if os.path.exists(queue_csv_path):
 											break
 
 									bookmaker_event.teams = teams
+                                    bookmaker_event.live = live
 
 									bookmaker_updater.processEvent(bookmaker_event)
 								except (Exception) as ex:

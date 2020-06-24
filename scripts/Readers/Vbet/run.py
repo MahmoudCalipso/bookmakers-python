@@ -137,8 +137,7 @@ if os.path.exists(queue_csv_path):
 
 													bookmaker_event.odds = odds
 													bookmaker_event.teams = teams
-
-													print(bookmaker_event.__str__())
+													bookmaker_event.live = live
 
 													bookmaker_updater.processEvent(bookmaker_event)
 

@@ -65,6 +65,7 @@ if os.path.exists(queue_csv_path):
         reader = csv.reader(file, delimiter=';')
         for row in reader:
             # timestamp;sports;type;files(separated by comma)
+            live = row[2] == 'live'
             folder_path = queue_path + row[2] + '/' + row[0] + '/'
             if os.path.exists(folder_path):
                 files = row[3].split(',')
@@ -207,6 +208,8 @@ if os.path.exists(queue_csv_path):
                                     # Check if this event is referring to the championship winner
                                     if winner_event_found:
                                         bookmaker_event.replace_title = EVENT_CHAMPIONSHIP_WINNER
+
+                                    bookmaker_event.live = live
 
                                     bookmaker_updater.processEvent(bookmaker_event)
 
