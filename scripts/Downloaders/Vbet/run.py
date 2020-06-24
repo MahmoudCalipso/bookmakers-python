@@ -22,25 +22,24 @@ event_feeds = []
 
 print('-- Beginning events feed download...')
 events_feed_url = 'https://vbetaffiliates-admin.com/global/feed/json/?language=eng&timeZone=200&brandId=4&filterData[type][]=1' if is_live else 'https://vbetaffiliates-admin.com/global/feed/json/?language=eng&timeZone=200&filterData[start_ts]=172800&brandId=4';
-response = requests.get(events_feed_url)
 
-if response.text:
-    if not os.path.exists(queue_downloader_path):
-        os.makedirs(queue_downloader_path)
+if not os.path.exists(queue_downloader_path):
+    os.makedirs(queue_downloader_path)
 
-    path = queue_downloader_path + "events.json"
+path = queue_downloader_path + "events.json"
 
-    with open(path, 'a') as file:
-    	file.write("{\"items\": [")
+with open(path, 'a') as file:
+	file.write("{\"items\": [")
 
-    file = open(path, "ab")    	
-    file.write(response.text.encode('utf-8'))
-    file.close()
+with requests.get(events_feed_url, stream=True) as r:
+    with open(path, 'ab') as f:
+        for chunk in r.iter_content(chunk_size=8192): 
+            f.write(chunk)
 
-    with open(path, 'a') as file:
-    	file.write("]}")
+with open(path, 'a') as file:
+	file.write("]}")
 
-    event_feeds.append("events.json")
+event_feeds.append("events.json")
 
 # Add to queue
 if len(event_feeds):

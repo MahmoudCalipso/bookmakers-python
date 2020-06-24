@@ -5,16 +5,16 @@ import sys
 from datetime import date
 
 sports = {
-        'Basketball': [
-        	"acb_copa.xml",
+    'Basketball': [
+    	"acb_copa.xml",
         "acb.xml",
         "eurobasket.xml",
         "euroliga.xml",
         "nba.xml",
         "mundialBaloncesto.xml",
-        ],
-        'Football': [
-        	"adelante.xml",
+    ],
+    'Football': [
+    	"adelante.xml",
         "amistosos2018.xml",
         "amistososClubes.xml",
         "bundesliga.xml",
@@ -48,24 +48,24 @@ sports = {
         "UEFA_nations_league.xml",
         "mundialFemenino.xml",
         "mundial2018.xml",
-        ],
-        'Motor': [
-        	"motociclismo.xml",
+    ],
+    'Motor': [
+    	"motociclismo.xml",
         "motor.xml",
-        ],
-        'American Football': [
-        	"nfl.xml",
+    ],
+    'American Football': [
+    	"nfl.xml",
         "super-bowl.xml",
-        ],
-        'Tennis': [
-        	"tenis.xml"
-        ],
-        'Rugby': [
-        	"rugby.xml"
-        ],
-        'Boxing': [
-        	'boxeo.xml'
-        ]
+    ],
+    'Tennis': [
+    	"tenis.xml"
+    ],
+    'Rugby': [
+    	"rugby.xml"
+    ],
+    'Boxing': [
+    	'boxeo.xml'
+    ]
 }
 
 is_live = False
@@ -84,22 +84,21 @@ queue_downloader_path = queue_path + bookmaker_title + '/' + download_type + '/'
 event_feeds = []
 
 for sport in sports:
-	feeds = sports[sport]
-	print('Beginning feed download for ' + sport)
-	if len(feeds):
-		for name in feeds:
-			feed_url = 'https://services.sportium.es/feed/xml/' + name
-			print('Beginning feed download for ' + feed_url)
-			response = requests.get(feed_url)
+    feeds = sports[sport]
+    print('Beginning feed download for ' + sport)
+    if len(feeds):
+        for name in feeds:
+            if not os.path.exists(queue_downloader_path):
+                os.makedirs(queue_downloader_path)
+                
+            feed_url = 'https://services.sportium.es/feed/xml/' + name
+            print('Beginning feed download for ' + feed_url)
+            with requests.get(feed_url, stream=True) as r:
+                with open(queue_downloader_path + "events-" + sport + "-" + name, 'wb') as f:
+                    for chunk in r.iter_content(chunk_size=8192): 
+                        f.write(chunk)
 
-			if response.text:
-				if not os.path.exists(queue_downloader_path):
-					os.makedirs(queue_downloader_path)
-
-				file = open(queue_downloader_path + "events-" + sport + "-" + name, "wb")
-				file.write(response.text.encode('utf-8'))
-				file.close()
-				event_feeds.append("events-" + sport + "-" + name)
+            event_feeds.append("events-" + sport + "-" + name)
 
 # Add to queue
 if len(event_feeds):

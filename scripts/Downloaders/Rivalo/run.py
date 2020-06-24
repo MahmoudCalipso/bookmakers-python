@@ -39,14 +39,13 @@ if response.text:
 		for xml in xmls:
 			print('Downloading ' + xml)
 			if len(xml) > 0:
-				response = requests.get(xml, auth=HTTPBasicAuth('scannerbet1-xml', 'kSrJoBPaEm9L'), verify=False)
-
 				if not os.path.exists(queue_downloader_path):
 					os.makedirs(queue_downloader_path)
 
-				file = open(queue_downloader_path + "events-" + str(index) + ".xml", "wb")
-				file.write(response.text.encode('utf-8'))
-				file.close()
+				with requests.get(xml, auth=HTTPBasicAuth('scannerbet1-xml', 'kSrJoBPaEm9L'), verify=False, stream=True) as r:
+					with open(queue_downloader_path + "events-" + str(index) + ".xml", 'wb') as f:
+						for chunk in r.iter_content(chunk_size=8192): 
+							f.write(chunk)
 
 				event_feeds.append("events-" + str(index) + ".xml")
 				index += 1

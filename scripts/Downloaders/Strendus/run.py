@@ -27,30 +27,30 @@ def download(id):
     feed_url = 'https://sports.strendus.com.mx/rest/FEMobile/GetPagedMatches?Culture=en&affi=49&DateFilterType=0&WidgetType=2&StartRecord=' + str(offset) + '&EndRecord=' + str(offset + records_per_page) + '&SportID=' + str(id)
     print(feed_url)
     response = requests.get(feed_url)
+    if not os.path.exists(queue_downloader_path):
+        os.makedirs(queue_downloader_path)
 
-    if response.text:
-        if not os.path.exists(queue_downloader_path):
-            os.makedirs(queue_downloader_path)
+    with requests.get(feed_url, stream=True) as r:
+        with open(queue_downloader_path + "events-" + str(id) + "-" + str(current_page) + ".json", 'wb') as f:
+            for chunk in r.iter_content(chunk_size=8192): 
+                f.write(chunk)
 
-        file = open(queue_downloader_path + "events-" + str(id) + "-" + str(current_page) + ".json", "wb")
-        file.write(response.text.encode('utf-8'))
-        file.close()
-        event_feeds.append("events-" + str(id) + "-" + str(current_page) + ".json")
+    event_feeds.append("events-" + str(id) + "-" + str(current_page) + ".json")
 
-        items = ijson.items(open(queue_downloader_path + "events-" + str(id) + "-" + str(current_page) + ".json", 'r'), 'd.m.item');
+    items = ijson.items(open(queue_downloader_path + "events-" + str(id) + "-" + str(current_page) + ".json", 'r'), 'd.m.item');
 
-        print(items)
-        has_items = False;
-        try:
-            for item in items:
-                has_items = True;
-                break;
-        except:
-            has_items = False
+    print(items)
+    has_items = False;
+    try:
+        for item in items:
+            has_items = True;
+            break;
+    except:
+        has_items = False
 
-        if has_items:
-            current_page += 1
-            download(id)
+    if has_items:
+        current_page += 1
+        download(id)
 
 start_time = time.time()
 timestamp = str(int(time.time()));
@@ -62,36 +62,35 @@ event_feeds = []
 if is_live:
     events_feed_url = 'https://sports.strendus.com.mx/rest/FEMobile/GetLiveMatchesMetaData?LanguageID=en&affi=49&IncludeOdds=true'
     print(events_feed_url)
-    response = requests.get(events_feed_url)
 
-    if response.text:
-        if not os.path.exists(queue_downloader_path):
-            os.makedirs(queue_downloader_path)
+    if not os.path.exists(queue_downloader_path):
+        os.makedirs(queue_downloader_path)
 
-    file = open(queue_downloader_path + "events.json", "wb")
-    file.write(response.text.encode('utf-8'))
-    file.close()
+    with requests.get(events_feed_url, stream=True) as r:
+        with open(queue_downloader_path + "events.json", 'wb') as f:
+            for chunk in r.iter_content(chunk_size=8192): 
+                f.write(chunk)
 
-    event_feeds.append("events-.json")
+    event_feeds.append("events.json")
 else:
     # Download sports feed
     print('Beginning sports feed download...')
     sports_feed_url = 'https://sports.strendus.com.mx/rest/FEMobile/GetFixturesMenu?Culture=en&affid=49&LoadPeriod=0'
-    response = requests.get(sports_feed_url)
-    file = open("sports.json", "wb")
-    file.write(response.text.encode('utf-8'))
-    file.close()
+    with requests.get(sports_feed_url, stream=True) as r:
+        with open("sports.json", 'wb') as f:
+            for chunk in r.iter_content(chunk_size=8192): 
+                f.write(chunk)
 
     # Loop sports
     sports = ijson.items(open('sports.json', 'r'), 's.item');
     for sport in sports:
-            name = sport.get('n')
-            id = sport.get('id')
-            current_page = 0
-            print("Looping sport " + name + " with ID " + str(id))
-            # Download events feed
-            print('Beginning events feed download...')
-            download(id)
+        name = sport.get('n')
+        id = sport.get('id')
+        current_page = 0
+        print("Looping sport " + name + " with ID " + str(id))
+        # Download events feed
+        print('Beginning events feed download...')
+        download(id)
 
 # Delete temporary files that have been downloaded
 #if os.path.exists("sports.json"):
