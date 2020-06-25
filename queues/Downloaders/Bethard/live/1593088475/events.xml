@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 39 Live Betting-->
+<!-- 2560 Test Live Market-->
+<Events>
+  <Event DateTimeGMT="28/06/2020 19:00:00" Branch="Soccer" Sport="Soccer" BranchID="1" League="English FA Cup" LeagueID="56687" ID="47126900" IsOption="0" EventType="39" MEID="18342709">
+    <Participants>
+      <Participant1 Name="Leicester" Home_Visiting="Home" />
+      <Participant2 Name="Chelsea" Home_Visiting="Visiting" />
+    </Participants>
+  </Event>
+  <Event DateTimeGMT="28/06/2020 19:00:00" Branch="Soccer" Sport="Soccer" BranchID="1" League="English FA Cup" LeagueID="56687" ID="47126900" IsOption="1" EventType="39" MEID="18342709">
+    <Participants>
+      <Participant1 Name="Leicester" Home_Visiting="Home" />
+      <Participant2 Name="Chelsea" Home_Visiting="Visiting" />
+    </Participants>
+  </Event>
+  <Event DateTimeGMT="28/06/2020 19:00:00" Branch="Soccer" Sport="Soccer" BranchID="1" League="English FA Cup" LeagueID="56687" ID="47126900" IsOption="1" EventType="39" MEID="18342709">
+    <Participants>
+      <Participant1 Name="Leicester" Home_Visiting="Home" />
+      <Participant2 Name="Chelsea" Home_Visiting="Visiting" />
+    </Participants>
+  </Event>
+  <Event DateTimeGMT="28/06/2020 21:00:00" Branch="Soccer" Sport="Soccer" BranchID="1" League="Romania - Liga 1" LeagueID="43764" ID="46899667" IsOption="0" EventType="39" MEID="18543853">
+    <Participants>
+      <Participant1 Name="CFR Cluj" Home_Visiting="Home" />
+      <Participant2 Name="Universitatea Craiova" Home_Visiting="Visiting" />
+    </Participants>
+  </Event>
+  <Event DateTimeGMT="28/06/2020 21:00:00" Branch="Soccer" Sport="Soccer" BranchID="1" League="Romania - Liga 1" LeagueID="43764" ID="46899667" IsOption="1" EventType="39" MEID="18543853">
+    <Participants>
+      <Participant1 Name="CFR Cluj" Home_Visiting="Home" />
+      <Participant2 Name="Universitatea Craiova" Home_Visiting="Visiting" />
+    </Participants>
+  </Event>
+  <Event DateTimeGMT="28/06/2020 21:00:00" Branch="Soccer" Sport="Soccer" BranchID="1" League="Romania - Liga 1" LeagueID="43764" ID="46899667" IsOption="1" EventType="39" MEID="18543853">
+    <Participants>
+      <Participant1 Name="CFR Cluj" Home_Visiting="Home" />
+      <Participant2 Name="Universitatea Craiova" Home_Visiting="Visiting" />
+    </Participants>
+  </Event>
+  <Event DateTimeGMT="29/06/2020 21:00:00" Branch="Soccer" Sport="Soccer" BranchID="1" League="Romania - Liga 1" LeagueID="43764" ID="46899675" IsOption="0" EventType="39" MEID="18543854">
+    <Participants>
+      <Participant1 Name="Astra Giurgiu" Home_Visiting="Home" />
+      <Participant2 Name="FC Steaua Bucharest" Home_Visiting="Visiting" />
+    </Participants>
+  </Event>
+  <Event DateTimeGMT="29/06/2020 21:00:00" Branch="Soccer" Sport="Soccer" BranchID="1" League="Romania - Liga 1" LeagueID="43764" ID="46899675" IsOption="1" EventType="39" MEID="18543854">
+    <Participants>
+      <Participant1 Name="Astra Giurgiu" Home_Visiting="Home" />
+      <Participant2 Name="FC Steaua Bucharest" Home_Visiting="Visiting" />
+    </Participants>
+  </Event>
+  <Event DateTimeGMT="29/06/2020 21:00:00" Branch="Soccer" Sport="Soccer" BranchID="1" League="Romania - Liga 1" LeagueID="43764" ID="46899675" IsOption="1" EventType="39" MEID="18543854">
+    <Participants>
+      <Participant1 Name="Astra Giurgiu" Home_Visiting="Home" />
+      <Participant2 Name="FC Steaua Bucharest" Home_Visiting="Visiting" />
+    </Participants>
+  </Event>
+  <Event DateTimeGMT="25/06/2020 21:30:00" Branch="Soccer" Sport="Soccer" BranchID="1" League="Spain - La Liga" LeagueID="40031" ID="47127673" IsOption="0" EventType="39" MEID="18573238">
+    <Participants>
+      <Participant1 Name="Eibar" Home_Visiting="Home" />
+      <Participant2 Name="Valencia" Home_Visiting="Visiting" />
+    </Participants>
+  </Event>
+  <Event DateTimeGMT="25/06/2020 21:30:00" Branch="Soccer" Sport="Soccer" BranchID="1" League="Spain - La Liga" LeagueID="40031" ID="47127673" IsOption="1" EventType="39" MEID="18573238">
+    <Participants>
+      <Participant1 Name="Eibar" Home_Visiting="Home" />
+      <Participant2 Name="Valencia" Home_Visiting="Visiting" />
+    </Participants>
+  </Event>
+  <Event DateTimeGMT="25/06/2020 21:30:00" Branch="Soccer" Sport="Soccer" BranchID="1" League="Spain - La Liga" LeagueID="40031" ID="47127673" IsOption="1" EventType="39" MEID="18573238">
+    <Participants>
+      <Participant1 Name="Eibar" Home_Visiting="Home" />
+      <Participant2 Name="Valencia" Home_Visiting="Visiting" />
+    </Participants>
+  </Event>
+  <Event DateTimeGMT="25/06/2020 21:00:00" Branch="Soccer" Sport="Soccer" BranchID="1" League="Israel - Leumit League" LeagueID="56918" ID="47127207" IsOption="0" EventType="39" MEID="18642270">
+    <Participants>
+      <Participant1 Name="Hapoel Ramat Gan" Home_Visiting="Home" />
+      <Participant2 Name="FC Kafr Qasim" Home_Visiting="Visiting" />
+    </Participants>
+  </Event>
+  <Event DateTimeGMT="25/06/2020 21:00:00" Branch="Soccer" Sport="Soccer" BranchID="1" League="Israel - Leumit League" LeagueID="56918" ID="47127207" IsOption="1" EventType="39" MEID="18642270">
+    <Participants>
+      <Participant1 Name="Hapoel Ramat Gan" Home_Visiting="Home" />
+      <Participant2 Name="FC Kafr Qasim" Home_Visiting="Visiting" />
+    </Participants>
+  </Event>
+  <Event DateTimeGMT="25/06/2020 21:00:00" Branch="Soccer" Sport="Soccer" BranchID="1" League="Israel - Leumit League" LeagueID="56918" ID="47127207" IsOption="1" EventType="39" MEID="18642270">
+    <Participants>
+      <Participant1 Name="Hapoel Ramat Gan" Home_Visiting="Home" />
+      <Participant2 Name="FC Kafr Qasim" Home_Visiting="Visiting" />
+    </Participants>
+  </Event>
+  <Event DateTimeGMT="25/06/2020 22:25:00" Branch="BasketBall" Sport="BasketBall" BranchID="2" League="Israel - Super League" LeagueID="81342" ID="47124833" IsOption="0" EventType="39" MEID="18647058">
+    <Participants>
+      <Participant1 Name="Maccabi Tel-Aviv" Home_Visiting="Home" />
+      <Participant2 Name="Hapoel Holon" Home_Visiting="Visiting" />
+    </Participants>
+  </Event>
+  <Event DateTimeGMT="25/06/2020 20:35:00" Branch="BasketBall" Sport="BasketBall" BranchID="2" League="Israel - Super League" LeagueID="81342" ID="47124812" IsOption="0" EventType="39" MEID="18647059">
+    <Participants>
+      <Participant1 Name="Ironi Nes Ziona" Home_Visiting="Home" />
+      <Participant2 Name="Hapoel Beer Sheva" Home_Visiting="Visiting" />
+    </Participants>
+  </Event>
+  <Event DateTimeGMT="25/06/2020 17:40:00" Branch="BasketBall" Sport="BasketBall" BranchID="2" League="Spain - ACB League" LeagueID="42805" ID="47124905" IsOption="0" EventType="39" MEID="18648073">
+    <Participants>
+      <Participant1 Name="DKV Joventut" Home_Visiting="Home" />
+      <Participant2 Name="Baskonia" Home_Visiting="Visiting" />
+    </Participants>
+  </Event>
+  <Event DateTimeGMT="25/06/2020 20:40:00" Branch="BasketBall" Sport="BasketBall" BranchID="2" League="Spain - ACB League" LeagueID="42805" ID="47124926" IsOption="0" EventType="39" MEID="18648074">
+    <Participants>
+      <Participant1 Name="Unicaja" Home_Visiting="Home" />
+      <Participant2 Name="Bilbao Basket" Home_Visiting="Visiting" />
+    </Participants>
+  </Event>
+  <Event DateTimeGMT="25/06/2020 23:40:00" Branch="BasketBall" Sport="BasketBall" BranchID="2" League="Spain - ACB League" LeagueID="42805" ID="47124947" IsOption="0" EventType="39" MEID="18648075">
+    <Participants>
+      <Participant1 Name="FC Barcelona" Home_Visiting="Home" />
+      <Participant2 Name="CB Canarias" Home_Visiting="Visiting" />
+    </Participants>
+  </Event>
+  <Event DateTimeGMT="26/06/2020 11:00:00" Branch="Rugby League" Sport="Rugby League" BranchID="11" League="NRL Premiership" LeagueID="82508" ID="47049110" IsOption="0" EventType="39" MEID="18546804">
+    <Participants>
+      <Participant1 Name="Melbourne Storm" Home_Visiting="Home" />
+      <Participant2 Name="New Zealand Warriors" Home_Visiting="Visiting" />
+    </Participants>
+  </Event>
+  <Event DateTimeGMT="26/06/2020 12:55:00" Branch="Rugby League" Sport="Rugby League" BranchID="11" League="NRL Premiership" LeagueID="82508" ID="47049130" IsOption="0" EventType="39" MEID="18546805">
+    <Participants>
+      <Participant1 Name="Sydney Roosters" Home_Visiting="Home" />
+      <Participant2 Name="St George Illawarra Dragons" Home_Visiting="Visiting" />
+    </Participants>
+  </Event>
+  <Event DateTimeGMT="27/06/2020 08:00:00" Branch="Rugby League" Sport="Rugby League" BranchID="11" League="NRL Premiership" LeagueID="82508" ID="47049150" IsOption="0" EventType="39" MEID="18546806">
+    <Participants>
+      <Participant1 Name="North Queensland Cowboys" Home_Visiting="Home" />
+      <Participant2 Name="Newcastle Knights" Home_Visiting="Visiting" />
+    </Participants>
+  </Event>
+  <Event DateTimeGMT="27/06/2020 10:30:00" Branch="Rugby League" Sport="Rugby League" BranchID="11" League="NRL Premiership" LeagueID="82508" ID="47049170" IsOption="0" EventType="39" MEID="18546807">
+    <Participants>
+      <Participant1 Name="Brisbane Broncos" Home_Visiting="Home" />
+      <Participant2 Name="Gold Coast Titans" Home_Visiting="Visiting" />
+    </Participants>
+  </Event>
+  <Event DateTimeGMT="27/06/2020 12:35:00" Branch="Rugby League" Sport="Rugby League" BranchID="11" League="NRL Premiership" LeagueID="82508" ID="47049190" IsOption="0" EventType="39" MEID="18546808">
+    <Participants>
+      <Participant1 Name="Parramatta Eels" Home_Visiting="Home" />
+      <Participant2 Name="Canberra Raiders" Home_Visiting="Visiting" />
+    </Participants>
+  </Event>
+  <Event DateTimeGMT="28/06/2020 09:05:00" Branch="Rugby League" Sport="Rugby League" BranchID="11" League="NRL Premiership" LeagueID="82508" ID="47049210" IsOption="0" EventType="39" MEID="18546809">
+    <Participants>
+      <Participant1 Name="Manly Sea Eagles" Home_Visiting="Home" />
+      <Participant2 Name="Cronulla Sharks" Home_Visiting="Visiting" />
+    </Participants>
+  </Event>
+  <Event DateTimeGMT="28/06/2020 11:30:00" Branch="Rugby League" Sport="Rugby League" BranchID="11" League="NRL Premiership" LeagueID="82508" ID="47049230" IsOption="0" EventType="39" MEID="18546810">
+    <Participants>
+      <Participant1 Name="Canterbury Bulldogs" Home_Visiting="Home" />
+      <Participant2 Name="Wests Tigers" Home_Visiting="Visiting" />
+    </Participants>
+  </Event>
+  <Event DateTimeGMT="28/06/2020 06:35:00" Branch="Rugby Union" Sport="Rugby Union" BranchID="35" League="Super Rugby Aotearoa" LeagueID="200859" ID="47048253" IsOption="0" EventType="39" MEID="18618412">
+    <Participants>
+      <Participant1 Name="Crusaders" Home_Visiting="Home" />
+      <Participant2 Name="Chiefs" Home_Visiting="Visiting" />
+    </Participants>
+  </Event>
+  <Event DateTimeGMT="27/06/2020 10:05:00" Branch="Rugby Union" Sport="Rugby Union" BranchID="35" League="Super Rugby Aotearoa" LeagueID="200859" ID="47048238" IsOption="0" EventType="39" MEID="18618413">
+    <Participants>
+      <Participant1 Name="Blues" Home_Visiting="Home" />
+      <Participant2 Name="Highlanders" Home_Visiting="Visiting" />
+    </Participants>
+  </Event>
+</Events>

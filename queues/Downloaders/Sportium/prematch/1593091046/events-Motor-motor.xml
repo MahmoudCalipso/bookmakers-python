@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document>
+    <Competition>
+        <Id>15167</Id>
+        <Name>Fórmula-1</Name>
+        <Type>
+            <Name>Mundial</Name>
+            <URL>?mkt_sort=/35570/Mundial</URL>
+            <Event>
+                <Name>Austrian Grand Prix (Qualifying)</Name>
+                <Time>2020-07-04 13:00:00</Time>
+                <Ev_id>11275218</Ev_id>
+                <Market>
+                    <Name>Tiempo oficial de clasificación más rápido</Name>
+                    <URL>?mkt_sort=/35570/Mundial?mkt_sort=STRD</URL>
+                    <Prices>
+                        <Price name="Max Verstappen" bet_ref="NjczMTMxNzQxOjE1Lzg6OjA">Max Verstappen : 2.875</Price>
+                        <Price name="Lewis Hamilton" bet_ref="NjczMTMxNzQyOjE1Lzg6OjA">Lewis Hamilton : 2.875</Price>
+                        <Price name="Valtteri Bottas" bet_ref="NjczMTMxNzQ0OjcvMjo6MA">Valtteri Bottas : 4.50</Price>
+                        <Price name="Charles Leclerc" bet_ref="NjczMTMxNzMyOjExLzI6OjA">Charles Leclerc : 6.50</Price>
+                        <Price name="Sebastian Vettel" bet_ref="NjczMTMxNzQ1OjE3LzI6OjA">Sebastian Vettel : 9.50</Price>
+                        <Price name="Alexander Albon" bet_ref="NjczMTMxNzI4OjI1LzE6OjA">Alexander Albon : 26.00</Price>
+                        <Price name="Sergio Perez" bet_ref="NjczMTMxNzQzOjMzLzE6OjA">Sergio Perez : 34.00</Price>
+                        <Price name="Lance Stroll" bet_ref="NjczMTMxNzM5OjE1MC8xOjow">Lance Stroll : 151.00</Price>
+                        <Price name="Carlos Sainz" bet_ref="NjczMTMxNzMxOjIwMC8xOjow">Carlos Sainz : 201.00</Price>
+                        <Price name="Lando Norris" bet_ref="NjczMTMxNzQwOjI1MC8xOjow">Lando Norris : 251.00</Price>
+                        <Price name="Daniel Ricciardo" bet_ref="NjczMTMxNzMwOjQwMC8xOjow">Daniel Ricciardo : 401.00</Price>
+                        <Price name="Pierre Gasly" bet_ref="NjczMTMxNzQ3OjQwMC8xOjow">Pierre Gasly : 401.00</Price>
+                        <Price name="Daniil Kvyat" bet_ref="NjczMTMxNzMzOjUwMC8xOjow">Daniil Kvyat : 501.00</Price>
+                        <Price name="Kimi Raikkonen" bet_ref="NjczMTMxNzM0OjUwMC8xOjow">Kimi Raikkonen : 501.00</Price>
+                        <Price name="Esteban Ocon" bet_ref="NjczMTMxNzM3OjUwMC8xOjow">Esteban Ocon : 501.00</Price>
+                        <Price name="Antonio Giovinazzi" bet_ref="NjczMTMxNzI5Ojc1MC8xOjow">Antonio Giovinazzi : 751.00</Price>
+                        <Price name="Kevin Magnussen" bet_ref="NjczMTMxNzM1Ojc1MC8xOjow">Kevin Magnussen : 751.00</Price>
+                        <Price name="Romain Grosjean" bet_ref="NjczMTMxNzQ2Ojc1MC8xOjow">Romain Grosjean : 751.00</Price>
+                        <Price name="George Russell" bet_ref="NjczMTMxNzM2OjEwMDAvMTo6MA">George Russell : 1001.00</Price>
+                        <Price name="Nicholas Latifi" bet_ref="NjczMTMxNzM4OjE1MDAvMTo6MA">Nicholas Latifi : 1501.00</Price>
+                    </Prices>
+                </Market>
+                <Market>
+                    <Name>Qualifying Winning Car</Name>
+                    <URL>?mkt_sort=/35570/Mundial?mkt_sort=STRD</URL>
+                    <Prices>
+                        <Price name="Mercedes" bet_ref="NjczMTM4MjQ5OjEwLzExOjow">Mercedes : 1.909</Price>
+                        <Price name="Red Bull" bet_ref="NjczMTM4MjU2OjcvNDo6MA">Red Bull : 2.75</Price>
+                        <Price name="Ferrari" bet_ref="NjczMTM4MjUzOjcvMjo6MA">Ferrari : 4.50</Price>
+                        <Price name="Racing Point" bet_ref="NjczMTM4MjUxOjI1LzE6OjA">Racing Point : 26.00</Price>
+                        <Price name="McLaren" bet_ref="NjczMTM4MjU0OjEwMC8xOjow">McLaren : 101.00</Price>
+                        <Price name="Renault" bet_ref="NjczMTM4MjU1OjIwMC8xOjow">Renault : 201.00</Price>
+                        <Price name="Alphatauri" bet_ref="NjczMTM4MjU3OjIwMC8xOjow">Alphatauri : 201.00</Price>
+                        <Price name="Alfa Romeo" bet_ref="NjczMTM4MjU4OjMwMC8xOjow">Alfa Romeo : 301.00</Price>
+                        <Price name="Haas" bet_ref="NjczMTM4MjU5OjQwMC8xOjow">Haas : 401.00</Price>
+                        <Price name="Williams" bet_ref="NjczMTM4MjYwOjUwMC8xOjow">Williams : 501.00</Price>
+                    </Prices>
+                </Market>
+                <Market>
+                    <Name>Margen de Victoria en la Clasificación</Name>
+                    <URL>?mkt_sort=/35570/Mundial?mkt_sort=STRD</URL>
+                    <Prices>
+                        <Price name="Under 0.1 Seconds" bet_ref="NjczMTQ1MTg1OjYvNTo6MA">Under 0.1 Seconds : 2.20</Price>
+                        <Price name="Between 0.1 &amp; 0.25 Seconds" bet_ref="NjczMTQ1MTgxOjkvNTo6MA">Between 0.1 &amp; 0.25 Seconds : 2.80</Price>
+                        <Price name="Over 0.25 Seconds" bet_ref="NjczMTQ1MTg0OjExLzU6OjA">Over 0.25 Seconds : 3.20</Price>
+                    </Prices>
+                </Market>
+            </Event>
+            <Event>
+                <Name>Mundial 2020</Name>
+                <Time>2020-11-29 13:10:00</Time>
+                <Ev_id>10163275</Ev_id>
+                <Market>
+                    <Name>Campeonato de Pilotos</Name>
+                    <URL>?mkt_sort=/35570/Mundial?mkt_sort=STRD</URL>
+                    <Prices>
+                        <Price name="Lewis Hamilton" bet_ref="NTY3MjM3NzQwOjQvOTo6MA">Lewis Hamilton : 1.444</Price>
+                        <Price name="Max Verstappen" bet_ref="NTY3MjM3NzM4OjQvMTo6MA">Max Verstappen : 5.00</Price>
+                        <Price name="Valtteri Bottas" bet_ref="NTY3MjM3NzQ0OjExLzI6OjA">Valtteri Bottas : 6.50</Price>
+                        <Price name="Charles Leclerc" bet_ref="NTY3MjM3NzMyOjE1LzI6OjA">Charles Leclerc : 8.50</Price>
+                        <Price name="Sebastian Vettel" bet_ref="NTY3MjM3NzQyOjE0LzE6OjA">Sebastian Vettel : 15.00</Price>
+                        <Price name="Alexander Albon" bet_ref="NTY3MjM3NzI5OjgwLzE6OjA">Alexander Albon : 81.00</Price>
+                        <Price name="Sergio Perez" bet_ref="NTY3MjM3NzQzOjIwMC8xOjow">Sergio Perez : 201.00</Price>
+                        <Price name="Carlos Sainz" bet_ref="NTY3MjM3NzMwOjUwMC8xOjow">Carlos Sainz : 501.00</Price>
+                        <Price name="Daniel Ricciardo" bet_ref="NTY3MjM3NzMxOjc1MC8xOjow">Daniel Ricciardo : 751.00</Price>
+                        <Price name="Esteban Ocon" bet_ref="NTY3MjM3NzM0Ojc1MC8xOjow">Esteban Ocon : 751.00</Price>
+                        <Price name="Lando Norris" bet_ref="NTY3MjM3NzM5Ojc1MC8xOjow">Lando Norris : 751.00</Price>
+                        <Price name="Kimi Raikkonen" bet_ref="NTY3MjM3NzM1OjEwMDAvMTo6MA">Kimi Raikkonen : 1001.00</Price>
+                        <Price name="Lance Stroll" bet_ref="NTY3MjM3NzQxOjEwMDAvMTo6MA">Lance Stroll : 1001.00</Price>
+                        <Price name="Daniil Kvyat" bet_ref="NTczMDQ4MzIwOjEwMDAvMTo6MA">Daniil Kvyat : 1001.00</Price>
+                        <Price name="Pierre Gasly" bet_ref="NTczMDQ4MzIxOjEwMDAvMTo6MA">Pierre Gasly : 1001.00</Price>
+                        <Price name="Kevin Magnussen" bet_ref="NTY3MjM3NzM2OjE1MDAvMTo6MA">Kevin Magnussen : 1501.00</Price>
+                        <Price name="Romain Grosjean" bet_ref="NTY3MjM3NzM3OjE1MDAvMTo6MA">Romain Grosjean : 1501.00</Price>
+                        <Price name="Antonio Giovinazzi" bet_ref="NTY3NjUyMzE5OjE1MDAvMTo6MA">Antonio Giovinazzi : 1501.00</Price>
+                        <Price name="George Russell" bet_ref="NTY3MjM3NzMzOjIwMDAvMTo6MA">George Russell : 2001.00</Price>
+                        <Price name="Nicholas Latifi" bet_ref="NTgyNzgyMDg0OjIwMDAvMTo6MA">Nicholas Latifi : 2001.00</Price>
+                    </Prices>
+                </Market>
+                <Market>
+                    <Name>Mundial de Constructores</Name>
+                    <URL>?mkt_sort=/35570/Mundial?mkt_sort=STRD</URL>
+                    <Prices>
+                        <Price name="Mercedes" bet_ref="NTg1Mjk2MDQyOjEvNDo6MA">Mercedes : 1.25</Price>
+                        <Price name="Red Bull" bet_ref="NTg1Mjk2MDQ0OjkvMjo6MA">Red Bull : 5.50</Price>
+                        <Price name="Ferrari" bet_ref="NTg1Mjk2MDM5OjExLzI6OjA">Ferrari : 6.50</Price>
+                        <Price name="Racing Point" bet_ref="NTg1Mjk2MDQzOjEyNS8xOjow">Racing Point : 126.00</Price>
+                        <Price name="Mclaren" bet_ref="NTg1Mjk2MDQxOjQwMC8xOjow">Mclaren : 401.00</Price>
+                        <Price name="Renault" bet_ref="NTg1Mjk2MDQ1OjQwMC8xOjow">Renault : 401.00</Price>
+                        <Price name="Alfa Romeo" bet_ref="NTg1Mjk2MDM4OjUwMC8xOjow">Alfa Romeo : 501.00</Price>
+                        <Price name="AlphaTauri" bet_ref="NTg1Mjk2MDQ2OjUwMC8xOjow">AlphaTauri : 501.00</Price>
+                        <Price name="Haas" bet_ref="NTg1Mjk2MDQwOjc1MC8xOjow">Haas : 751.00</Price>
+                        <Price name="Williams" bet_ref="NTg1Mjk2MDQ3OjEwMDAvMTo6MA">Williams : 1001.00</Price>
+                    </Prices>
+                </Market>
+            </Event>
+        </Type>
+    </Competition>
+    <Competition>
+        <Id>15328</Id>
+        <Name>NASCAR</Name>
+        <Type>
+            <Name>NASCAR Sprint Cup</Name>
+            <URL>?mkt_sort=/37372/NASCAR-Sprint-Cup</URL>
+            <Event>
+                <Name>2020 NASCAR Cup Series</Name>
+                <Time>2020-11-08 09:00:00</Time>
+                <Ev_id>10574193</Ev_id>
+                <Market>
+                    <Name>Ganador Campeonato</Name>
+                    <URL>?mkt_sort=/37372/NASCAR-Sprint-Cup?mkt_sort=STRD</URL>
+                    <Prices>
+                        <Price name="Kevin Harvick" bet_ref="NjExNjEzNTQ4OjkvMjo6MA">Kevin Harvick : 5.50</Price>
+                        <Price name="Martin Truex Jr" bet_ref="NjExNjEzNTQ5OjUvMTo6MA">Martin Truex Jr : 6.00</Price>
+                        <Price name="Kyle Busch" bet_ref="NjExNjEzNTQ2OjExLzI6OjA">Kyle Busch : 6.50</Price>
+                        <Price name="Chase Elliott" bet_ref="NjExNjEzNTMxOjcvMTo6MA">Chase Elliott : 8.00</Price>
+                        <Price name="Denny Hamlin" bet_ref="NjExNjEzNTM2OjE1LzI6OjA">Denny Hamlin : 8.50</Price>
+                        <Price name="Joey Logano" bet_ref="NjExNjEzNTQ0OjE1LzI6OjA">Joey Logano : 8.50</Price>
+                        <Price name="Brad Keselowski" bet_ref="NjExNjEzNTI3OjE3LzI6OjA">Brad Keselowski : 9.50</Price>
+                        <Price name="Kyle Larson" bet_ref="NjExNjEzNTQ3OjkvMTo6MA">Kyle Larson : 10.00</Price>
+                        <Price name="Jimmie Johnson" bet_ref="NjExNjEzNTQwOjE0LzE6OjA">Jimmie Johnson : 15.00</Price>
+                        <Price name="Alex Bowman" bet_ref="NjExNjEzNTI1OjE2LzE6OjA">Alex Bowman : 17.00</Price>
+                        <Price name="Ryan Blaney" bet_ref="NjExNjEzNTU0OjE4LzE6OjA">Ryan Blaney : 19.00</Price>
+                        <Price name="Erik Jones" bet_ref="NjExNjEzNTM5OjIyLzE6OjA">Erik Jones : 23.00</Price>
+                        <Price name="Kurt Busch" bet_ref="NjExNjEzNTQ1OjIyLzE6OjA">Kurt Busch : 23.00</Price>
+                        <Price name="William Byron" bet_ref="NjExNjEzNTYwOjMzLzE6OjA">William Byron : 34.00</Price>
+                        <Price name="Clint Bowyer" bet_ref="NjExNjEzNTMzOjQ1LzE6OjA">Clint Bowyer : 46.00</Price>
+                        <Price name="Aric Almirola" bet_ref="NjExNjEzNTI0OjY2LzE6OjA">Aric Almirola : 67.00</Price>
+                        <Price name="Matt DiBenedetto" bet_ref="NjExNjEzNTUwOjY2LzE6OjA">Matt DiBenedetto : 67.00</Price>
+                        <Price name="Christopher Bell" bet_ref="NjExNjEzNTMyOjE1MC8xOjow">Christopher Bell : 151.00</Price>
+                        <Price name="Ryan Newman" bet_ref="NjExNjEzNTU2OjE1MC8xOjow">Ryan Newman : 151.00</Price>
+                        <Price name="Tyler Reddick" bet_ref="NjExNjEzNTU5OjE1MC8xOjow">Tyler Reddick : 151.00</Price>
+                        <Price name="Austin Dillon" bet_ref="NjExNjEzNTI2OjIwMC8xOjow">Austin Dillon : 201.00</Price>
+                        <Price name="Cole Custer" bet_ref="NjExNjEzNTMwOjIwMC8xOjow">Cole Custer : 201.00</Price>
+                        <Price name="Ricky Stenhouse Jr" bet_ref="NjExNjEzNTUxOjI1MC8xOjow">Ricky Stenhouse Jr : 251.00</Price>
+                        <Price name="Chris Buescher" bet_ref="NjExNjEzNTM0OjQwMC8xOjow">Chris Buescher : 401.00</Price>
+                        <Price name="Ross Chastain" bet_ref="NjExNjEzNTU1OjUwMC8xOjow">Ross Chastain : 501.00</Price>
+                        <Price name="Ty Dillon" bet_ref="NjExNjEzNTU4OjUwMC8xOjow">Ty Dillon : 501.00</Price>
+                        <Price name="Daniel Suarez" bet_ref="NjExNjEzNTM3Ojc1MC8xOjow">Daniel Suarez : 751.00</Price>
+                        <Price name="J. J. Yeley" bet_ref="NjExNjEzNTQxOjc1MC8xOjow">J. J. Yeley : 751.00</Price>
+                        <Price name="Ryan Preece" bet_ref="NjExNjEzNTU3Ojc1MC8xOjow">Ryan Preece : 751.00</Price>
+                        <Price name="Bubba Wallace" bet_ref="NjExNjEzNTI4OjEwMDAvMTo6MA">Bubba Wallace : 1001.00</Price>
+                        <Price name="Corey LaJoie" bet_ref="NjExNjEzNTM1OjEwMDAvMTo6MA">Corey LaJoie : 1001.00</Price>
+                        <Price name="John Hunter Nemechek" bet_ref="NjExNjEzNTQzOjEwMDAvMTo6MA">John Hunter Nemechek : 1001.00</Price>
+                        <Price name="Michael McDowell" bet_ref="NjExNjEzNTUzOjEwMDAvMTo6MA">Michael McDowell : 1001.00</Price>
+                        <Price name="Quin Houff" bet_ref="NjExNjEzNTUyOjE1MDAvMTo6MA">Quin Houff : 1501.00</Price>
+                        <Price name="Brennan Poole" bet_ref="NjExNjEzNTI5OjIwMDAvMTo6MA">Brennan Poole : 2001.00</Price>
+                    </Prices>
+                </Market>
+            </Event>
+        </Type>
+    </Competition>
+</Document>

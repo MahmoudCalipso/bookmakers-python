@@ -141,7 +141,7 @@ def initBookmakerEntities(title):
 								'title': row[3],
 								'bookmaker_sport_id': row[0],
 								'bookmaker_sport_title': row[1],
-								'outcomes': None if row[5] == '[]' or len(row[5]) == 0 else row[5]
+								'outcomes': [] if row[5] == '[]' or len(row[5]) == 0 else row[5]
 							}
 					except:
 						pass
@@ -202,7 +202,7 @@ def initMappings(title):
 								'sport_title': row[4],
 								'market_id': row[0],
 								'market_title': row[1],
-								'market_display_title': row[2]
+								'market_display_title': row[2],
 								'bookmaker_market_id': row[5],
 								'bookmaker_market_title': row[6],
 							}

@@ -300,7 +300,7 @@ def initBookmakerEntities(title):
 								'title': row[3],
 								'bookmaker_sport_id': row[0],
 								'bookmaker_sport_title': row[1],
-								'outcomes': None if row[5] == '[]' or len(row[5]) == 0 else row[5]
+								'outcomes': [] if row[5] == '[]' or len(row[5]) == 0 else row[5]
 							}
 					except:
 						pass
@@ -356,13 +356,14 @@ def initMappings(title):
 							}
 						elif entity == 'markets':
 							# entity_id@s.s@entity_title@s.s@entity_parent_id@s.s@entity_parent_title@s.s@bookmaker_entity_id@s.s@bookmaker_entity_title
-							markets_maps[row[4]] = {
-								'sport_id': row[2],
-								'sport_title': row[3],
+							markets_maps[row[5]] = {
+								'sport_id': row[3],
+								'sport_title': row[4],
 								'market_id': row[0],
 								'market_title': row[1],
-								'bookmaker_market_id': row[4],
-								'bookmaker_market_title': row[5],
+								'market_display_title': row[2],
+								'bookmaker_market_id': row[5],
+								'bookmaker_market_title': row[6],
 							}
 					except:
 						pass

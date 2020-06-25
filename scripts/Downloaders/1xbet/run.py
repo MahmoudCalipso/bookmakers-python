@@ -42,7 +42,6 @@ events_feed_url = 'https://part.upnp.xyz/PartLive/GetAllFeedGames?lng=en' if is_
 print(events_feed_url)
 
 with requests.get(events_feed_url, stream=True) as r:
-	r.raise_for_status()
 	if not os.path.exists(queue_downloader_path):
 		os.makedirs(queue_downloader_path)
 
