@@ -97,40 +97,41 @@ if os.path.exists(queue_csv_path):
 
                                     # Get odds from API
                                     event_feed_url = 'https://sports.strendus.com.mx/rest/FEMobile/GetMatchOdds?Culture=en&affi=49&MatchID=' + str(event.get('mid'))
-                                    # Get JSON file from API URL
-                                    response = requests.get(event_feed_url, timeout=30)
+                                    event_json_path = bookmaker_title + "-event.json"
+                                    with requests.get(event_feed_url, stream=True) as r:
+                                        with open(event_json_path, 'wb') as f:
+                                            for chunk in r.iter_content(chunk_size=8192): 
+                                                # If you have chunk encoded response uncomment if
+                                                # and set chunk_size parameter to None.
+                                                #if chunk: 
+                                                f.write(chunk)
 
-                                    if response.text:
-                                        event_json_path = bookmaker_title + "-event.json"
-                                        file = open(event_json_path, "wb")
-                                        file.write(response.text.encode('utf-8'))
-                                        file.close()
 
-                                        odds = []
-                                        tabs = ijson.items(open(event_json_path, 'r', encoding="utf-8"), 't.item')
+                                    odds = []
+                                    tabs = ijson.items(open(event_json_path, 'r', encoding="utf-8"), 't.item')
 
-                                        for tab in tabs:
-                                            markets = tab.get('o')
+                                    for tab in tabs:
+                                        markets = tab.get('o')
 
-                                            for market in markets:
-                                                odd = BookmakerOdd.BookmakerOdd()
-                                                outcomes = []
-                                                selections = market.get('m')
+                                        for market in markets:
+                                            odd = BookmakerOdd.BookmakerOdd()
+                                            outcomes = []
+                                            selections = market.get('m')
 
-                                                if selections:
-                                                    for selection in selections:
-                                                        bookmaker_odd_outcome = BookmakerOddOutcome.BookmakerOddOutcome()
+                                            if selections:
+                                                for selection in selections:
+                                                    bookmaker_odd_outcome = BookmakerOddOutcome.BookmakerOddOutcome()
 
-                                                        bookmaker_odd_outcome.outcome_id = selection.get('id')
-                                                        bookmaker_odd_outcome.title = selection.get('n')
-                                                        bookmaker_odd_outcome.decimal = selection.get('o')
+                                                    bookmaker_odd_outcome.outcome_id = str(selection.get('id'))
+                                                    bookmaker_odd_outcome.title = selection.get('n')
+                                                    bookmaker_odd_outcome.decimal = float(selection.get('o'))
 
-                                                        outcomes.append(bookmaker_odd_outcome)
+                                                    outcomes.append(bookmaker_odd_outcome)
 
-                                                odd.title = market.get('n')
-                                                odd.outcomes = outcomes
+                                            odd.title = market.get('n')
+                                            odd.outcomes = outcomes
 
-                                                odds.append(odd)
+                                            odds.append(odd)
 
                                     bookmaker_event.odds = odds
                                     bookmaker_event.teams = teams

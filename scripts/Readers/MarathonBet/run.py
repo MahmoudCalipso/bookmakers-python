@@ -136,7 +136,7 @@ if os.path.exists(queue_csv_path):
 
                                                     bookmaker_odd_outcome.outcome_id = selection.attrib['coeffId']
                                                     bookmaker_odd_outcome.title = selection.attrib['name']
-                                                    bookmaker_odd_outcome.decimal = selection.attrib['coeff']
+                                                    bookmaker_odd_outcome.decimal = float(selection.attrib['coeff'])
 
                                                     outcomes.append(bookmaker_odd_outcome)
 

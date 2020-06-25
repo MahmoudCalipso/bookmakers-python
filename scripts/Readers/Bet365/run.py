@@ -154,9 +154,14 @@ if os.path.exists(queue_csv_path):
 														elif 'Handicap' in outcome.attrib:
 															outcome_title += ' ' + outcome.attrib['Handicap']
 
+														try:
+															decimal = float(outcome.attrib['OddsDecimal'])
+														except:
+															decimal = 0
+
 														bookmaker_odd_outcome.outcome_id = outcome.attrib['ID'] if 'ID' in outcome.attrib else None
 														bookmaker_odd_outcome.title = outcome_title
-														bookmaker_odd_outcome.decimal = outcome.attrib['OddsDecimal'] if 'OddsDecimal' in outcome.attrib else None
+														bookmaker_odd_outcome.decimal = decimal
 
 														if 'AVG' in outcome.attrib:
 															deep_link = {'AVG': outcome.attrib['AVG']}

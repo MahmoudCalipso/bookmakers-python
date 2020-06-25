@@ -137,14 +137,14 @@ if os.path.exists(queue_csv_path):
                                                 outcome = BookmakerOddOutcome.BookmakerOddOutcome()
                                                 outcome.outcome_id = spread.attrib['Home_LineID']
                                                 outcome.title = 'Home ' + spread.attrib['Home_Points']
-                                                outcome.decimal = spread.attrib['Home_Odds']
+                                                outcome.decimal = float(spread.attrib['Home_Odds'])
                                                 outcomes.append(outcome)
 
                                                 # Away
                                                 outcome = BookmakerOddOutcome.BookmakerOddOutcome()
                                                 outcome.outcome_id = spread.attrib['Away_LineID']
                                                 outcome.title = 'Away ' + spread.attrib['Away_Points']
-                                                outcome.decimal = spread.attrib['Away_Odds']
+                                                outcome.decimal = float(spread.attrib['Away_Odds'])
                                                 outcomes.append(outcome)
 
                                                 odd = BookmakerOdd.BookmakerOdd()
@@ -163,14 +163,14 @@ if os.path.exists(queue_csv_path):
                                                 outcome = BookmakerOddOutcome.BookmakerOddOutcome()
                                                 outcome.outcome_id = total.attrib['Over_LineID']
                                                 outcome.title = 'Over ' + total.attrib['Points']
-                                                outcome.decimal = total.attrib['Over']
+                                                outcome.decimal = float(total.attrib['Over'])
                                                 outcomes.append(outcome)
 
                                                 # Under
                                                 outcome = BookmakerOddOutcome.BookmakerOddOutcome()
                                                 outcome.outcome_id = total.attrib['Under_LineID']
                                                 outcome.title = 'Under ' + total.attrib['Points']
-                                                outcome.decimal = total.attrib['Under']
+                                                outcome.decimal = float(total.attrib['Under'])
                                                 outcomes.append(outcome)
 
                                                 odd = BookmakerOdd.BookmakerOdd()
@@ -190,7 +190,7 @@ if os.path.exists(queue_csv_path):
                                                     outcome = BookmakerOddOutcome.BookmakerOddOutcome()
                                                     outcome.outcome_id = moneyline.attrib['Home_LineID']
                                                     outcome.title = 'Home'
-                                                    outcome.decimal = moneyline.attrib['Home']
+                                                    outcome.decimal = float(moneyline.attrib['Home'])
                                                     outcomes.append(outcome)
 
                                                 # Draw
@@ -198,7 +198,7 @@ if os.path.exists(queue_csv_path):
                                                     outcome = BookmakerOddOutcome.BookmakerOddOutcome()
                                                     outcome.outcome_id = moneyline.attrib['Draw_LineID']
                                                     outcome.title = 'Draw'
-                                                    outcome.decimal = moneyline.attrib['Draw']
+                                                    outcome.decimal = float(moneyline.attrib['Draw'])
                                                     outcomes.append(outcome)
 
                                                 # Away
@@ -206,7 +206,7 @@ if os.path.exists(queue_csv_path):
                                                     outcome = BookmakerOddOutcome.BookmakerOddOutcome()
                                                     outcome.outcome_id = moneyline.attrib['Away_LineID']
                                                     outcome.title = 'Away'
-                                                    outcome.decimal = moneyline.attrib['Away']
+                                                    outcome.decimal = float(moneyline.attrib['Away'])
                                                     outcomes.append(outcome)
 
                                                 odd = BookmakerOdd.BookmakerOdd()
@@ -226,7 +226,7 @@ if os.path.exists(queue_csv_path):
 
                                                 outcome.outcome_id = _odd.attrib['LineID']
                                                 outcome.title = participant.attrib['Name']
-                                                outcome.decimal = _odd.attrib['OddsValue']
+                                                outcome.decimal = float(_odd.attrib['OddsValue'])
 
                                                 outcomes.append(outcome)
 

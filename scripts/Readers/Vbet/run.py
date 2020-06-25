@@ -79,17 +79,21 @@ if os.path.exists(queue_csv_path):
 
 													teams = []
 
-													team_local = BookmakerEventTeam.BookmakerEventTeam()
-													team_local.title = event.get('team1_name')
-													team_local.local = True
-													checkTeamMembers(sport, team_local)
+													if event.get('team2_name'):
+														team_local = BookmakerEventTeam.BookmakerEventTeam()
+														team_local.title = event.get('team1_name')
+														team_local.local = True
+														checkTeamMembers(sport, team_local)
 
-													team_away = BookmakerEventTeam.BookmakerEventTeam()
-													team_away.title = event.get('team2_name')
-													team_away.local = False
-													checkTeamMembers(sport, team_away)
+														team_away = BookmakerEventTeam.BookmakerEventTeam()
+														team_away.title = event.get('team2_name')
+														team_away.local = False
+														checkTeamMembers(sport, team_away)
+														teams = [team_local, team_away]
+														event_name = teams[0].title + ' vs ' + teams[1].title
+													else:
+														event_name = event.get('team1_name')
 
-													teams = [team_local, team_away]
 													event_name = teams[0].title + ' vs ' + teams[1].title
 
 													#print(bookmaker_title + ' :: Processing API event: ' + event_name)
@@ -104,36 +108,36 @@ if os.path.exists(queue_csv_path):
 
 													# Get odds from API
 													event_feed_url = 'https://vbetaffiliates-admin.com/global/feed/json/?language=eng&timeZone=179&filterData%5Bstart_ts%5D=172800&brandId=4&gameid=' + str(event.get('id'))
-													# Get JSON file from API URL
-													response = requests.get(event_feed_url, timeout=30)
+													event_json_path = bookmaker_title + "-event.json"
+		                                            with requests.get(event_feed_url, stream=True) as r:
+		                                                with open(event_json_path, 'wb') as f:
+		                                                    for chunk in r.iter_content(chunk_size=8192): 
+		                                                        # If you have chunk encoded response uncomment if
+		                                                        # and set chunk_size parameter to None.
+		                                                        #if chunk: 
+		                                                        f.write(chunk)
 
-													if response.text:
-														event_json_path = bookmaker_title + "-event.json"
-														file = open(event_json_path, "wb")
-														file.write(response.text.encode('utf-8'))
-														file.close()
+													markets = ijson.items(open(event_json_path, 'r', encoding="utf-8"), 'markets.item')
 
-														markets = ijson.items(open(event_json_path, 'r', encoding="utf-8"), 'markets.item')
+													for market in markets:
+														odd = BookmakerOdd.BookmakerOdd()
+														outcomes = []
+														selections = market.get('m')
 
-														for market in markets:
-															odd = BookmakerOdd.BookmakerOdd()
-															outcomes = []
-															selections = market.get('m')
+														if selections:
+															for selection in selections:
+																bookmaker_odd_outcome = BookmakerOddOutcome.BookmakerOddOutcome()
 
-															if selections:
-																for selection in selections:
-																	bookmaker_odd_outcome = BookmakerOddOutcome.BookmakerOddOutcome()
+																bookmaker_odd_outcome.outcome_id = str(selection.get('event_id'))
+																bookmaker_odd_outcome.title = selection.get('name') + (outcome.get('base') if outcome.get('base') else '')
+																bookmaker_odd_outcome.decimal = selection.get('price')
 
-																	bookmaker_odd_outcome.outcome_id = selection.get('event_id')
-																	bookmaker_odd_outcome.title = selection.get('name') + (outcome.get('base') if outcome.get('base') else '')
-																	bookmaker_odd_outcome.decimal = selection.get('price')
+																outcomes.append(bookmaker_odd_outcome)
 
-																	outcomes.append(bookmaker_odd_outcome)
+														odd.title = market.get('name')
+														odd.outcomes = outcomes
 
-															odd.title = market.get('name')
-															odd.outcomes = outcomes
-
-															odds.append(odd)
+														odds.append(odd)
 
 													bookmaker_event.odds = odds
 													bookmaker_event.teams = teams

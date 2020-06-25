@@ -154,54 +154,54 @@ if os.path.exists(queue_csv_path):
 
                                                             # Get odds from API
                                                             event_feed_url = 'http://dataexport-uof-betmotion.biahosted.com/Export/GetMarkets?importerId=2919&eventId=' + str(event.get('EventId'))
-                                                            # Get JSON file from API URL
-                                                            response = requests.get(event_feed_url, timeout=30)
+                                                            event_json_path = bookmaker_title + "-event.json"
+                                                            with requests.get(event_feed_url, stream=True) as r:
+                                                                with open(event_json_path, 'wb') as f:
+                                                                    for chunk in r.iter_content(chunk_size=8192): 
+                                                                        # If you have chunk encoded response uncomment if
+                                                                        # and set chunk_size parameter to None.
+                                                                        #if chunk: 
+                                                                        f.write(chunk)
 
-                                                            if response.text:
-                                                                event_json_path = bookmaker_title + "-event.json"
-                                                                file = open(event_json_path, "wb")
-                                                                file.write(response.text.encode('utf-8'))
-                                                                file.close()
+                                                            odds = []
+                                                            markets = ijson.items(open(event_json_path, 'r', encoding="utf-8"), 'item')
 
-                                                                odds = []
-                                                                markets = ijson.items(open(event_json_path, 'r', encoding="utf-8"), 'item')
+                                                            for market in markets:
+                                                                odd = BookmakerOdd.BookmakerOdd()
+                                                                outcomes = []
+                                                                selections = market.get('Selections')
 
-                                                                for market in markets:
-                                                                    odd = BookmakerOdd.BookmakerOdd()
-                                                                    outcomes = []
-                                                                    selections = market.get('Selections')
+                                                                if selections:
+                                                                    for selection in selections:
+                                                                        is_enabled = selection.get('IsEnabled')
+                                                                        if is_enabled:
+                                                                            outcome_title = selection.get('Name')
 
-                                                                    if selections:
-                                                                        for selection in selections:
-                                                                            is_enabled = selection.get('IsEnabled')
-                                                                            if is_enabled:
-                                                                                outcome_title = selection.get('Name')
+                                                                            if len(teams) > 0:
+                                                                                outcome_title = outcome_title.replace('{$competitor1}', teams[0].title)
+                                                                                outcome_title = outcome_title.replace('{$competitor2}', teams[0].title)
 
-                                                                                if len(teams) > 0:
-                                                                                    outcome_title = outcome_title.replace('{$competitor1}', teams[0].title)
-                                                                                    outcome_title = outcome_title.replace('{$competitor2}', teams[0].title)
+                                                                            outcome_title = outcome_title.replace('{hcp}', market.get('SpecialOddsValue'))
+                                                                            outcome_title = outcome_title.replace('{+hcp}', market.get('SpecialOddsValue'))
+                                                                            outcome_title = outcome_title.replace('{-hcp}', market.get('SpecialOddsValue'))
+                                                                            outcome_title = outcome_title.replace('{total}', market.get('SpecialOddsValue'))
 
-                                                                                outcome_title = outcome_title.replace('{hcp}', market.get('SpecialOddsValue'))
-                                                                                outcome_title = outcome_title.replace('{+hcp}', market.get('SpecialOddsValue'))
-                                                                                outcome_title = outcome_title.replace('{-hcp}', market.get('SpecialOddsValue'))
-                                                                                outcome_title = outcome_title.replace('{total}', market.get('SpecialOddsValue'))
+                                                                            bookmaker_odd_outcome = BookmakerOddOutcome.BookmakerOddOutcome()
 
-                                                                                bookmaker_odd_outcome = BookmakerOddOutcome.BookmakerOddOutcome()
+                                                                            bookmaker_odd_outcome.outcome_id = str(selection.get('SelectionId'))
+                                                                            bookmaker_odd_outcome.title = outcome_title
+                                                                            bookmaker_odd_outcome.decimal = selection.get('Price')
 
-                                                                                bookmaker_odd_outcome.outcome_id = selection.get('SelectionId')
-                                                                                bookmaker_odd_outcome.title = outcome_title
-                                                                                bookmaker_odd_outcome.decimal = selection.get('Price')
+                                                                            outcomes.append(bookmaker_odd_outcome)
 
-                                                                                outcomes.append(bookmaker_odd_outcome)
+                                                                market_type_id = str(market.get('MarketTypeid'))
+                                                                market_title = MARKETS[market_type_id] if market_type_id in MARKETS else market.get('Name')
+                                                                market_title = market_title.replace('{hcp}', market.get('SpecialOddsValue'))
 
-                                                                    market_type_id = str(market.get('MarketTypeid'))
-                                                                    market_title = MARKETS[market_type_id] if market_type_id in MARKETS else market.get('Name')
-                                                                    market_title = market_title.replace('{hcp}', market.get('SpecialOddsValue'))
+                                                                odd.title = market_title
+                                                                odd.outcomes = outcomes
 
-                                                                    odd.title = market_title
-                                                                    odd.outcomes = outcomes
-
-                                                                    odds.append(odd)
+                                                                odds.append(odd)
 
                                                             filterTeams(sport, teams)
 

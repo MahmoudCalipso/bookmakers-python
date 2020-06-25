@@ -134,46 +134,45 @@ if os.path.exists(queue_csv_path):
                                             bookmaker_event.teams = teams
 
                                             # Get odds from API
-                                            event_feed_url = event_feed_url.replace('{id}', str(event.get('id')))
-                                            # Get JSON file from API URL
-                                            response = requests.get(event_feed_url, timeout=30)
+                                            event_json_path = bookmaker_title + "-event.json"
+                                            with requests.get(event_feed_url, stream=True) as r:
+                                                with open(event_json_path, 'wb') as f:
+                                                    for chunk in r.iter_content(chunk_size=8192): 
+                                                        # If you have chunk encoded response uncomment if
+                                                        # and set chunk_size parameter to None.
+                                                        #if chunk: 
+                                                        f.write(chunk)
 
-                                            if response.text:
-                                                event_json_path = bookmaker_title + "-event.json"
-                                                file = open(event_json_path, "wb")
-                                                file.write(response.text.encode('utf-8'))
-                                                file.close()
+                                            odds = []
+                                            markets = ijson.items(open(event_json_path, 'r', encoding="utf-8"), 'betoffers.item')
 
-                                                odds = []
-                                                markets = ijson.items(open(event_json_path, 'r', encoding="utf-8"), 'betoffers.item')
+                                            for market in markets:
+                                                if market.get('outcomes'):
+                                                    outcomes = []
 
-                                                for market in markets:
-                                                    if market.get('outcomes'):
-                                                        outcomes = []
+                                                    for outcome in market.get('outcomes'):
+                                                        if not outcome.get('oddsFractional'):
+                                                            continue
 
-                                                        for outcome in market.get('outcomes'):
-                                                            if not outcome.get('oddsFractional'):
-                                                                continue
+                                                        bookmaker_odd_outcome = BookmakerOddOutcome.BookmakerOddOutcome()
+                                                        title = outcome.get('englishLabel')
 
-                                                            bookmaker_odd_outcome = BookmakerOddOutcome.BookmakerOddOutcome()
-                                                            title = outcome.get('englishLabel')
+                                                        if title == 'Over' or title == 'Under':
+                                                            title += ' ' + (outcome.get('line') / 1000)
 
-                                                            if title == 'Over' or title == 'Under':
-                                                                title += ' ' + (outcome.get('line') / 1000)
+                                                        odds_fractional = Fraction(outcome.get('oddsFractional'))
+                                                        bookmaker_odd_outcome.outcome_id = str(outcome.get('id'))
+                                                        bookmaker_odd_outcome.title = title
+                                                        bookmaker_odd_outcome.decimal = float(odds_fractional)
 
-                                                            odds_fractional = Fraction(outcome.get('oddsFractional'))
-                                                            bookmaker_odd_outcome.outcome_id = outcome.get('id')
-                                                            bookmaker_odd_outcome.title = title
-                                                            bookmaker_odd_outcome.decimal = float(odds_fractional)
+                                                        outcomes.append(bookmaker_odd_outcome)
 
-                                                            outcomes.append(bookmaker_odd_outcome)
+                                                    odd = BookmakerOdd.BookmakerOdd()
 
-                                                        odd = BookmakerOdd.BookmakerOdd()
+                                                    odd.title = market.get('criterion')['englishLabel']
+                                                    odd.outcomes = outcomes
 
-                                                        odd.title = market.get('criterion')['englishLabel']
-                                                        odd.outcomes = outcomes
-
-                                                        odds.append(odd)
+                                                    odds.append(odd)
 
                                                 bookmaker_event.odds = odds
 

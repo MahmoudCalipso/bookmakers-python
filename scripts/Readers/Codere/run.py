@@ -38,7 +38,6 @@ bookmaker_title = 'Codere'
 queue_path = '../../../queues/Downloaders/' + bookmaker_title + '/'
 queue_csv_path = queue_path + 'queue.csv';
 queue_reader_path = queue_path + bookmaker_title + '/' + timestamp + '/';
-events_to_process = {}
 
 bookmaker_updater.init(bookmaker_id, bookmaker_title)
 
@@ -57,6 +56,7 @@ if os.path.exists(queue_csv_path):
                         file_path = folder_path + file
                         if os.path.exists(file_path):
                             print('Processing ' + file)
+                            events_to_process = {}
                             items = ijson.items(open(file_path, 'r', encoding="utf-8"), 'item');
                             for item in items:
                                 try:
@@ -142,12 +142,12 @@ if os.path.exists(queue_csv_path):
                                 except (Exception) as ex:
                                     print(bookmaker_title + ' :: Could not process event: ' + str(ex))
 
-for key in events_to_process:
-    try:
-        print(bookmaker_title + ' :: Processing API event: ' + events_to_process[key].title)
-        bookmaker_updater.processEvent(events_to_process[key])
-    except (Exception) as ex:
-        print(bookmaker_title + ' :: Could not process event: ' + str(ex))
+                            for key in events_to_process:
+                                try:
+                                    print(bookmaker_title + ' :: Processing API event: ' + events_to_process[key].title)
+                                    bookmaker_updater.processEvent(events_to_process[key])
+                                except (Exception) as ex:
+                                    print(bookmaker_title + ' :: Could not process event: ' + str(ex))
 
 bookmaker_updater.finish()
 
