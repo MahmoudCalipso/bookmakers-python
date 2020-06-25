@@ -4,6 +4,23 @@ import time
 import os
 import sys
 from datetime import date
+import socketio
+
+sio = socketio.Client()
+
+@sio.event
+def connect():
+    print('Connection established')
+
+@sio.event
+def connect_error():
+    print("The connection failed!")
+
+@sio.event
+def disconnect():
+    print('Disconnected from server')
+
+sio.connect('http://127.0.0.1:5000', namespaces=['/readers'])
 
 is_live = False
 
@@ -64,15 +81,23 @@ else:
                 for chunk in r.iter_content(chunk_size=8192): 
                     f.write(chunk)
 
-        event_feeds.append("events-" + str(id) + ".json")                 
-
-# Delete temporary files that have been downloaded
-#if os.path.exists("sports.json"):
-#  os.remove("sports.json")
+        event_feeds.append("events-" + str(id) + ".json")
 
 # Add to queue
 if len(event_feeds):
     with open(queue_csv_path, 'a') as fd:
         fd.write(timestamp + ';All;' + download_type + ';' + ",".join(event_feeds) + "\n")
+
+sio.emit('download_complete', {
+    'bookmaker': bookmaker_title,
+    'timestamp': timestamp,
+    'sport': 'All',
+    'type': download_type,
+    'feeds': event_feeds
+}, namespace='/readers')
+
+sio.sleep(5)
+print('Disconnecting!')
+sio.disconnect()
 
 print("--- %s seconds ---" % (time.time() - start_time))

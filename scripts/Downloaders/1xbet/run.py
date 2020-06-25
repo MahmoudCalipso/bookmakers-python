@@ -4,6 +4,23 @@ import time
 import os
 import sys
 from datetime import date
+import socketio
+
+sio = socketio.Client()
+
+@sio.event
+def connect():
+    print('Connection established')
+
+@sio.event
+def connect_error():
+    print("The connection failed!")
+
+@sio.event
+def disconnect():
+    print('Disconnected from server')
+
+sio.connect('http://127.0.0.1:5000', namespaces=['/readers'])
 
 is_live = False
 
@@ -29,7 +46,7 @@ with requests.get(events_feed_url, stream=True) as r:
 	if not os.path.exists(queue_downloader_path):
 		os.makedirs(queue_downloader_path)
 
-	with open(queue_downloader_path + "events.xml", 'wb') as f:
+	with open(queue_downloader_path + "events.json", 'wb') as f:
 		for chunk in r.iter_content(chunk_size=8192): 
 			# If you have chunk encoded response uncomment if
 			# and set chunk_size parameter to None.
@@ -42,5 +59,17 @@ event_feeds.append("events.json")
 if len(event_feeds):
 	with open(queue_csv_path, 'a') as fd:
 	    fd.write(timestamp + ';All;' + download_type + ';' + ",".join(event_feeds) + "\n")
+
+sio.emit('download_complete', {
+	'bookmaker': bookmaker_title,
+	'timestamp': timestamp,
+	'sport': 'All',
+	'type': download_type,
+	'feeds': event_feeds
+}, namespace='/readers')
+
+sio.sleep(5)
+print('Disconnecting!')
+sio.disconnect()
 
 print("--- %s seconds ---" % (time.time() - start_time))
