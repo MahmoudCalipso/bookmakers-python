@@ -838,7 +838,7 @@ def seedBookmakerEventMarketOutcomes(ids):
 					not_mapped = True
 					replaced = False
 
-					#print('Preg replace ' + event_title + ' => ' + bookmaker_market_title + ' // ' + outcome_title)
+					print('Preg replace ' + event_title + ' => ' + bookmaker_market_title + ' // ' + outcome_title)
 
 					teams = json.loads(teams_titles)
 					event_teams = []
