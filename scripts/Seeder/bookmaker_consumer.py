@@ -44,13 +44,15 @@ connection = None
 events = {}
 processed_events = []
 not_processed_outcomes = NOT_PROCESSED_STRUCTURE
+bookmaker_update_queues_sql = ''
 
 def run(id, title):
 	global bookmaker_id
 	global bookmaker_title
 	global queue_path
 	global connection
-	global cursor
+	global bookmaker_update_queues_sql
+
 
 	if connection == None:
 		connection = psycopg2.connect(user = "postgres",
@@ -64,6 +66,7 @@ def run(id, title):
 	queue_csv_path = '../../queues/Readers/' + bookmaker_title + '/queue.csv'
 	saved_outcomes = []
 	not_processed_outcomes = NOT_PROCESSED_STRUCTURE
+	bookmaker_update_queues_sql = 'INSERT INTO bookmaker_update_queues VALUES \n'
 
 	# Init bookmaker entities
 	initBookmakerEntities(title)
@@ -74,6 +77,7 @@ def run(id, title):
 	if os.path.exists(queue_csv_path):
 		with open(queue_csv_path, 'r') as file:
 			reader = csv.reader(file, delimiter=';')
+			row_index = 0
 			for row in reader:
 				timestamp = row[0]
 				page = row[1]
@@ -81,10 +85,29 @@ def run(id, title):
 
 				if os.path.exists(queue_path):
 					print('Processing page ' + page)
+					picket_at = datetime.datetime.now().strftime(MYSQL_DATETIME_FORMAT)
 					seedDB()
+					now = datetime.datetime.now().strftime(MYSQL_DATETIME_FORMAT)
+					if row_index > 0:
+						bookmaker_update_queues_sql += '\n'
+
+					bookmaker_update_queues_sql += '(DEFAULT, ' + str(bookmaker_id) + ', NULL, \'' + queue_path + '\', ' + page  + ', 0, 1, 0, 0, NULL, \'' + json.dumps(not_processed_outcomes) + '\', \'' + now + '\', \'' + now + '\', \'' + picket_at + '\', \'' + row[1] + '\', \'' + json.dumps(saved_outcomes) + '\')\n' 
+					row_index += 1
 
 					# Remove folder
-					#os.remove(queue_path)
+					try:
+						os.remove(queue_path)
+					except:
+						pass
+
+	if len(bookmaker_update_queues_sql):
+		try:
+			cursor = connection.cursor()
+			cursor.execute(bookmaker_update_queues_sql)
+			connection.commit()
+		except (Exception, psycopg2.DatabaseError) as error:
+			print(error)                 
+			connection.rollback()
 
 def initBookmakerEntities(title):
 	global bookmaker_sports
@@ -334,13 +357,12 @@ def seedBookmakerSports():
 	sql_path = queue_path + 'bookmaker_sports.sql'
 	if os.path.exists(sql_path):
 		try:
-			print('Seeding bookmaker sports')
+			#print('Seeding bookmaker sports')
 			file = open(sql_path, 'r', encoding="utf-8")
 			sql = file.read()
 			cursor = connection.cursor()
 			cursor.execute(sql)
 			connection.commit()
-			print('Bookmaker sports inserted successfully')
 			sql = ''
 		except (Exception, psycopg2.DatabaseError) as error:
 			print('Could not insert bookmaker sports: ' + str(error))
@@ -354,7 +376,7 @@ def seedBookmakerTournaments():
 	sql_path = queue_path + 'bookmaker_tournaments.sql'
 	if os.path.exists(sql_path):
 		try:
-			print('Seeding bookmaker tournaments')
+			#print('Seeding bookmaker tournaments')
 			file = open(sql_path, 'r', encoding="utf-8")
 			sql = file.read()
 			matches = re.findall('{sport=(.*)}', sql)
@@ -380,7 +402,7 @@ def seedBookmakerTeams():
 	sql_path = queue_path + 'bookmaker_teams.sql'
 	if os.path.exists(sql_path):
 		try:
-			print('Seeding bookmaker teams')
+			#print('Seeding bookmaker teams')
 			file = open(sql_path, 'r', encoding="utf-8")
 			sql = file.read()
 			matches = re.findall('{sport=(.*)}', sql)
@@ -406,7 +428,7 @@ def seedBookmakerMarkets():
 	sql_path = queue_path + 'bookmaker_markets.sql'
 	if os.path.exists(sql_path):
 		try:
-			print('Seeding bookmaker markets')
+			#print('Seeding bookmaker markets')
 			file = open(sql_path, 'r', encoding="utf-8")
 			sql = file.read()
 			matches = re.findall('{sport=(.*)}', sql)
@@ -436,7 +458,7 @@ def seedEvents():
 
 		if len(sql) > 0:
 			try:
-				print('Seeding events')
+				#print('Seeding events')
 				cursor = connection.cursor()
 				cursor.execute(sql)
 				connection.commit()
@@ -536,23 +558,21 @@ def seedEvents():
 
 				# Seed event teams
 				try:
-					print('Seeding event teams')
+					#print('Seeding event teams')
 					cursor.execute(event_teams_sql)
 					connection.commit()
 				except (Exception, psycopg2.DatabaseError) as error:
-					print(event_teams_sql)
 					print('Could not insert event teams: ' + str(error))
 					connection.rollback()
 
 				# Seed bookmaker events
 				insert_bookmaker_event_markets = False
 				try:
-					print('Seeding bookmaker events')
+					#print('Seeding bookmaker events')
 					cursor.execute(bookmaker_events_sql)
 					connection.commit()
 					insert_bookmaker_event_markets = True
 				except (Exception, psycopg2.DatabaseError) as error:
-					print(bookmaker_events_sql)
 					print('Could not insert bookmaker events: ' + str(error))
 					connection.rollback()
 
@@ -620,11 +640,11 @@ def filterEvents(sql_path):
 
 									ids = event['teams']
 									if (
-	                                    len(teams_ids) == 2
-	                                    and len(ids) == 2
-	                                    and (teams_ids[0] == ids[0] or teams_ids[0] == ids[1])
-	                                    and (teams_ids[1] == ids[0] or teams_ids[1] == ids[1])
-	                                ):
+										len(teams_ids) == 2
+										and len(ids) == 2
+										and (teams_ids[0] == ids[0] or teams_ids[0] == ids[1])
+										and (teams_ids[1] == ids[0] or teams_ids[1] == ids[1])
+									):
 										found = True
 										break
 
@@ -700,11 +720,11 @@ def filterEvents(sql_path):
 
 							ids = event['teams']
 							if (
-                                len(teams_ids) == 2
-                                and len(ids) == 2
-                                and (teams_ids[0] == ids[0] or teams_ids[0] == ids[1])
-                                and (teams_ids[1] == ids[0] or teams_ids[1] == ids[1])
-                            ):
+								len(teams_ids) == 2
+								and len(ids) == 2
+								and (teams_ids[0] == ids[0] or teams_ids[0] == ids[1])
+								and (teams_ids[1] == ids[0] or teams_ids[1] == ids[1])
+							):
 								found = True
 								break
 
@@ -769,7 +789,7 @@ def seedBookmakerEventMarkets(ids):
 			# Seed bookmaker event markets
 			insert_bookmaker_event_market_outcomes = False
 			try:
-				print('Seeding bookmaker event markets')
+				#print('Seeding bookmaker event markets')
 				cursor.execute(sql)
 				connection.commit()
 				insert_bookmaker_event_market_outcomes = True
@@ -791,6 +811,8 @@ def seedBookmakerEventMarketOutcomes(ids):
 	global teams_maps
 	global markets_maps
 	global market_parser
+
+	not_processed_outcomes = NOT_PROCESSED_STRUCTURE
 
 	if os.path.exists(queue_path + 'bookmaker_event_market_outcomes.sql'):
 		sql = ''
@@ -838,7 +860,7 @@ def seedBookmakerEventMarketOutcomes(ids):
 					not_mapped = True
 					replaced = False
 
-					print('Preg replace ' + event_title + ' => ' + bookmaker_market_title + ' // ' + outcome_title)
+					#print('Preg replace ' + event_title + ' => ' + bookmaker_market_title + ' // ' + outcome_title)
 
 					teams = json.loads(teams_titles)
 					event_teams = []
@@ -913,7 +935,7 @@ def seedBookmakerEventMarketOutcomes(ids):
 														'fk_bookmaker_id': bookmaker_id,
 														'fk_bookmaker_sport_id': bookmaker_sport_id,
 														'title': missing_bookmaker_team,
-														'found_in': event_title	
+														'found_in': event_title 
 													})
 											elif (
 												outcome_title in bookmaker_teams[bookmaker_sport_title]
@@ -945,7 +967,7 @@ def seedBookmakerEventMarketOutcomes(ids):
 													saved_outcomes.append({
 														'market': market_display_title,
 														'bookmaker_market': bookmaker_market_title,
-														'outcome': outcome_title,
+														'outcome': outcome_title.replace("'", ""),
 														'sport': sport_title,
 														'tournament': bookmaker_tournament_title,
 														'teams': event_teams,
@@ -966,10 +988,9 @@ def seedBookmakerEventMarketOutcomes(ids):
 												not_processed['mapped'][bookmaker_market_title][bookmaker_event_market_id].append({
 													'market': market_display_title,
 													'bookmaker_market': bookmaker_market_title,
-													'outcome': outcome_title,
+													'outcome': outcome_title.replace("'", "´"),
 													'sport': sport_title,
 													'tournament': bookmaker_tournament_title,
-													'teams': event_teams,
 													'event': event_title,
 													'output': outcome,
 													'final_outcomes': outcomes[bookmaker_event_market_id],
@@ -985,10 +1006,9 @@ def seedBookmakerEventMarketOutcomes(ids):
 											not_processed['error'][bookmaker_event_market_id].append({
 												'market': market_display_title,
 												'bookmaker_market': bookmaker_market_title,
-												'outcome': outcome_title,
+												'outcome': outcome_title.replace("'", "´"),
 												'sport': sport_title,
 												'tournament': bookmaker_tournament_title,
-												'teams': event_teams,
 												'event': event_title,
 												'error': str(error),
 												'datetime': datetime.datetime.now().strftime(MYSQL_DATETIME_FORMAT)
@@ -1008,8 +1028,7 @@ def seedBookmakerEventMarketOutcomes(ids):
 							'outcome': outcome_title,
 							'sport': bookmaker_sport_title,
 							'tournament': bookmaker_tournament_title,
-							'teams': event_teams,
-							'datetime': datetime.datetime.now().strftime(MYSQL_DATETIME_FORMAT)	
+							'datetime': datetime.datetime.now().strftime(MYSQL_DATETIME_FORMAT) 
 						})
 
 				not_processed_outcomes = not_processed
@@ -1017,7 +1036,7 @@ def seedBookmakerEventMarketOutcomes(ids):
 				sql += '\n' + last_line
 
 				try:
-					print('Seeding bookmaker event market outcomes')
+					#print('Seeding bookmaker event market outcomes')
 					cursor.execute(sql)
 					connection.commit()
 				except (Exception, psycopg2.DatabaseError) as error:
