@@ -371,7 +371,7 @@ class MarketParser():
                             self.missing_bookmaker_teams.append(outcome_title)
 
         if len(output) == 0 and (output_rule == self.VARIABLE_TEAM_1 or output_rule == self.VARIABLE_TEAM_2):
-            team_title = teams[0].title if variable == self.VARIABLE_TEAM_1 else teams[1].title
+            team_title = teams[0].title if output_rule == self.VARIABLE_TEAM_1 else teams[1].title
             # Check if this bookmaker team is mapped
             if (
                 (team_title not in self.bookmaker_teams or self.bookmaker_teams[team_title]['id'] not in self.teams_maps)
