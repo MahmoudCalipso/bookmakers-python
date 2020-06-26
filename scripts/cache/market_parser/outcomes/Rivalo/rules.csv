@@ -1,77 +1,77 @@
-110@s.s@Total number of goals@s.s@14@s.s@E-Sports@s.s@1513@s.s@- @scannerbet.global.decimal@@s.s@None@s.s@Totals Under@s.s@Under @scannerbet.global.decimal@@s.s@Under @scannerbet.global.decimal@
-86@s.s@3-way@s.s@7@s.s@Boxing@s.s@1525@s.s@1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
-23@s.s@Penalty shootout yes o no@s.s@1@s.s@Football@s.s@1489@s.s@No@s.s@None@s.s@No@s.s@No@s.s@No
-23@s.s@Penalty shootout yes o no@s.s@1@s.s@Football@s.s@1488@s.s@Yes@s.s@None@s.s@Yes@s.s@Yes@s.s@Yes
-44@s.s@First half 1x2@s.s@2@s.s@Basketball@s.s@1528@s.s@1 2@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
-2@s.s@3-way@s.s@1@s.s@Football@s.s@1486@s.s@X@s.s@None@s.s@Draw@s.s@X@s.s@X
-147@s.s@Winner@s.s@38@s.s@Handball@s.s@1597@s.s@X@s.s@None@s.s@Draw@s.s@X@s.s@X
-88@s.s@Winning form@s.s@7@s.s@Boxing@s.s@1520@s.s@X@s.s@None@s.s@Winning Form (Draw or Technical draw)@s.s@Draw or Technical Draw@s.s@Draw or Technical Draw
-87@s.s@2-way@s.s@7@s.s@Boxing@s.s@1518@s.s@1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
-88@s.s@Winning form@s.s@7@s.s@Boxing@s.s@1521@s.s@1:ko@s.s@None@s.s@Local Winning Form (KO)@s.s@@scannerbet.teams.team1@ - KO@s.s@@scannerbet.teams.team1@ - KO
-20@s.s@Odd or even number of total goals@s.s@1@s.s@Football@s.s@1497@s.s@O@s.s@None@s.s@Odd@s.s@Odd@s.s@Odd
-6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@1763@s.s@2:1@s.s@None@s.s@Half time/full time 2/1@s.s@2/1@s.s@@scannerbet.teams.team2@/@scannerbet.teams.team1@
-6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@1765@s.s@2:2@s.s@None@s.s@Half time/full time 2/2@s.s@2/2@s.s@@scannerbet.teams.team2@/@scannerbet.teams.team2@
-6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@1759@s.s@1:2@s.s@None@s.s@Half time/full time 1/2@s.s@1/2@s.s@@scannerbet.teams.team1@/@scannerbet.teams.team2@
-6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@1764@s.s@2:X@s.s@None@s.s@Half time/full time 2/X@s.s@2/X@s.s@@scannerbet.teams.team2@/X
-6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@1760@s.s@X:1@s.s@None@s.s@Half time/full time X/1@s.s@X/1@s.s@X/@scannerbet.teams.team1@
-14@s.s@Asian Handicap@s.s@1@s.s@Football@s.s@1492@s.s@2 -@scannerbet.global.decimal@@s.s@{"2 -": "Away -"}@s.s@Away Handicap Minus@s.s@@scannerbet.teams.team2@ -@scannerbet.global.decimal@@s.s@@scannerbet.teams.team2@ -@scannerbet.global.decimal@
-6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@1761@s.s@X:X@s.s@None@s.s@Half time/full time X/X@s.s@X/X@s.s@X/X
-91@s.s@Championship outright@s.s@9@s.s@Cycling@s.s@1773@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
-6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@1762@s.s@X:2@s.s@None@s.s@Half time/full time X/2@s.s@X/2@s.s@X/@scannerbet.teams.team2@
-146@s.s@Total Goals over/under@s.s@38@s.s@Handball@s.s@1595@s.s@- @scannerbet.global.decimal@@s.s@None@s.s@Totals Under@s.s@Under @scannerbet.global.decimal@@s.s@Under @scannerbet.global.decimal@
-88@s.s@Winning form@s.s@7@s.s@Boxing@s.s@1523@s.s@1:points@s.s@None@s.s@Local Winning Form (points)@s.s@@scannerbet.teams.team1@ - Points@s.s@@scannerbet.teams.team1@ - Points
-198@s.s@Runs over/under@s.s@44@s.s@Baseball@s.s@1642@s.s@+ @scannerbet.global.decimal@@s.s@None@s.s@Totals Over@s.s@Over @scannerbet.global.decimal@@s.s@Over @scannerbet.global.decimal@
-23@s.s@Penalty shootout yes o no@s.s@1@s.s@Football@s.s@1768@s.s@N@s.s@None@s.s@No@s.s@No@s.s@No
-23@s.s@Penalty shootout yes o no@s.s@1@s.s@Football@s.s@1767@s.s@J@s.s@None@s.s@Yes@s.s@Yes@s.s@Yes
-88@s.s@Winning form@s.s@7@s.s@Boxing@s.s@1524@s.s@2:points@s.s@None@s.s@Away Winning form (Points)@s.s@@scannerbet.teams.team2@ - Points@s.s@@scannerbet.teams.team2@ - Points
-88@s.s@Winning form@s.s@7@s.s@Boxing@s.s@1522@s.s@2:ko@s.s@None@s.s@Away Winning form (KO)@s.s@@scannerbet.teams.team2@ - KO@s.s@@scannerbet.teams.team2@ - KO
-39@s.s@Winner 2 way@s.s@2@s.s@Basketball@s.s@1500@s.s@1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
-188@s.s@Match Winner@s.s@39@s.s@Table Tennis@s.s@1600@s.s@2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
-147@s.s@Winner@s.s@38@s.s@Handball@s.s@1598@s.s@2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
-151@s.s@Draw no bet@s.s@38@s.s@Handball@s.s@1593@s.s@2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
-44@s.s@First half 1x2@s.s@2@s.s@Basketball@s.s@1724@s.s@1 1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
-6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@1757@s.s@1:1@s.s@None@s.s@Half time/full time 1/1@s.s@1/1@s.s@@scannerbet.teams.team1@/@scannerbet.teams.team1@
-188@s.s@Match Winner@s.s@39@s.s@Table Tennis@s.s@1599@s.s@1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
-147@s.s@Winner@s.s@38@s.s@Handball@s.s@1596@s.s@1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
-151@s.s@Draw no bet@s.s@38@s.s@Handball@s.s@1592@s.s@1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
-196@s.s@Match Winner@s.s@44@s.s@Baseball@s.s@1645@s.s@2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
-44@s.s@First half 1x2@s.s@2@s.s@Basketball@s.s@1725@s.s@X 1@s.s@None@s.s@Draw@s.s@X@s.s@X
-1@s.s@Correct score@s.s@1@s.s@Football@s.s@1490@s.s@@scannerbet.global.integer@:@scannerbet.global.integer@@s.s@None@s.s@Correct Score@s.s@@scannerbet.global.integer@:@scannerbet.global.integer@@s.s@@scannerbet.global.integer@:@scannerbet.global.integer@
-183@s.s@Double chance@s.s@38@s.s@Handball@s.s@1590@s.s@12@s.s@None@s.s@Double bet chance 12@s.s@12@s.s@12
-183@s.s@Double chance@s.s@38@s.s@Handball@s.s@1589@s.s@1X@s.s@None@s.s@Double bet chance 1X@s.s@1X@s.s@1X
-183@s.s@Double chance@s.s@38@s.s@Handball@s.s@1591@s.s@X2@s.s@None@s.s@Double bet chance X2@s.s@X2@s.s@X2
-10@s.s@Both teams to score@s.s@1@s.s@Football@s.s@1499@s.s@N@s.s@None@s.s@No@s.s@No@s.s@No
-10@s.s@Both teams to score@s.s@1@s.s@Football@s.s@1498@s.s@J@s.s@None@s.s@Yes@s.s@Yes@s.s@Yes
-82@s.s@Total games over/under@s.s@6@s.s@Tennis@s.s@1509@s.s@- @scannerbet.global.decimal@@s.s@None@s.s@Totals Under@s.s@Under @scannerbet.global.decimal@@s.s@Under @scannerbet.global.decimal@
-110@s.s@Total number of goals@s.s@14@s.s@E-Sports@s.s@1512@s.s@+ @scannerbet.global.decimal@@s.s@None@s.s@Totals Over@s.s@Over @scannerbet.global.decimal@@s.s@Over @scannerbet.global.decimal@
-2@s.s@3-way@s.s@1@s.s@Football@s.s@1487@s.s@2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
-21@s.s@Double bet chance@s.s@1@s.s@Football@s.s@1494@s.s@12@s.s@None@s.s@Double bet chance 12@s.s@12@s.s@12
-82@s.s@Total games over/under@s.s@6@s.s@Tennis@s.s@1508@s.s@+ @scannerbet.global.decimal@@s.s@None@s.s@Totals Over@s.s@Over @scannerbet.global.decimal@@s.s@Over @scannerbet.global.decimal@
-44@s.s@First half 1x2@s.s@2@s.s@Basketball@s.s@1529@s.s@X 2@s.s@None@s.s@Draw@s.s@X@s.s@X
-86@s.s@3-way@s.s@7@s.s@Boxing@s.s@1526@s.s@X@s.s@None@s.s@Draw@s.s@X@s.s@X
-21@s.s@Double bet chance@s.s@1@s.s@Football@s.s@1495@s.s@X2@s.s@None@s.s@Double bet chance X2@s.s@X2@s.s@X2
-60@s.s@3-way@s.s@4@s.s@Rugby Union@s.s@1506@s.s@X@s.s@None@s.s@Draw@s.s@X@s.s@X
-146@s.s@Total Goals over/under@s.s@38@s.s@Handball@s.s@1594@s.s@+ @scannerbet.global.decimal@@s.s@None@s.s@Totals Over@s.s@Over @scannerbet.global.decimal@@s.s@Over @scannerbet.global.decimal@
-48@s.s@3-way@s.s@5@s.s@Rugby League@s.s@1503@s.s@X@s.s@None@s.s@Draw@s.s@X@s.s@X
-2@s.s@3-way@s.s@1@s.s@Football@s.s@1485@s.s@1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
-21@s.s@Double bet chance@s.s@1@s.s@Football@s.s@1493@s.s@1X@s.s@None@s.s@Double bet chance 1X@s.s@1X@s.s@1X
-196@s.s@Match Winner@s.s@44@s.s@Baseball@s.s@1644@s.s@1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
-6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@1758@s.s@1:X@s.s@None@s.s@Half time/full time 1/X@s.s@1/X@s.s@@scannerbet.teams.team1@/X
-198@s.s@Runs over/under@s.s@44@s.s@Baseball@s.s@1643@s.s@- @scannerbet.global.decimal@@s.s@None@s.s@Totals Under@s.s@Under @scannerbet.global.decimal@@s.s@Under @scannerbet.global.decimal@
-86@s.s@3-way@s.s@7@s.s@Boxing@s.s@1527@s.s@2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
-87@s.s@2-way@s.s@7@s.s@Boxing@s.s@1519@s.s@2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
-150@s.s@Winner 2 way@s.s@29@s.s@MMA-UFC@s.s@1517@s.s@2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
-102@s.s@Match winner@s.s@14@s.s@E-Sports@s.s@1515@s.s@2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
+72@s.s@Winner@s.s@6@s.s@Tennis@s.s@1510@s.s@1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
 72@s.s@Winner@s.s@6@s.s@Tennis@s.s@1511@s.s@2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
-60@s.s@3-way@s.s@4@s.s@Rugby Union@s.s@1507@s.s@2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
-48@s.s@3-way@s.s@5@s.s@Rugby League@s.s@1504@s.s@2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
-39@s.s@Winner 2 way@s.s@2@s.s@Basketball@s.s@1501@s.s@2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
-44@s.s@First half 1x2@s.s@2@s.s@Basketball@s.s@1726@s.s@2 1@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
-14@s.s@Asian Handicap@s.s@1@s.s@Football@s.s@1491@s.s@1 -@scannerbet.global.decimal@@s.s@{"1 -": "Local -"}@s.s@Local Handicap Minus@s.s@@scannerbet.teams.team1@ -@scannerbet.global.decimal@@s.s@@scannerbet.teams.team1@ -@scannerbet.global.decimal@
-44@s.s@First half 1x2@s.s@2@s.s@Basketball@s.s@1530@s.s@2 2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
+6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@1759@s.s@1:2@s.s@None@s.s@Half time/full time 1/2@s.s@1/2@s.s@@scannerbet.teams.team1@/@scannerbet.teams.team2@
+1@s.s@Correct score@s.s@1@s.s@Football@s.s@1490@s.s@@scannerbet.global.integer@:@scannerbet.global.integer@@s.s@None@s.s@Correct Score@s.s@@scannerbet.global.integer@:@scannerbet.global.integer@@s.s@@scannerbet.global.integer@:@scannerbet.global.integer@
+198@s.s@Runs over/under@s.s@44@s.s@Baseball@s.s@1642@s.s@+ @scannerbet.global.decimal@@s.s@None@s.s@Totals Over@s.s@Over @scannerbet.global.decimal@@s.s@Over @scannerbet.global.decimal@
+60@s.s@3-way@s.s@4@s.s@Rugby Union@s.s@1505@s.s@1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
 20@s.s@Odd or even number of total goals@s.s@1@s.s@Football@s.s@1496@s.s@E@s.s@None@s.s@Even@s.s@Even@s.s@Even
+2@s.s@3-way@s.s@1@s.s@Football@s.s@1486@s.s@X@s.s@None@s.s@Draw@s.s@X@s.s@X
+44@s.s@First half 1x2@s.s@2@s.s@Basketball@s.s@1528@s.s@1 2@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
+86@s.s@3-way@s.s@7@s.s@Boxing@s.s@1525@s.s@1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
+87@s.s@2-way@s.s@7@s.s@Boxing@s.s@1518@s.s@1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
 150@s.s@Winner 2 way@s.s@29@s.s@MMA-UFC@s.s@1516@s.s@1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
 102@s.s@Match winner@s.s@14@s.s@E-Sports@s.s@1514@s.s@1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
-72@s.s@Winner@s.s@6@s.s@Tennis@s.s@1510@s.s@1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
-60@s.s@3-way@s.s@4@s.s@Rugby Union@s.s@1505@s.s@1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
+6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@1764@s.s@2:X@s.s@None@s.s@Half time/full time 2/X@s.s@2/X@s.s@@scannerbet.teams.team2@/X
+146@s.s@Total Goals over/under@s.s@38@s.s@Handball@s.s@1594@s.s@+ @scannerbet.global.decimal@@s.s@None@s.s@Totals Over@s.s@Over @scannerbet.global.decimal@@s.s@Over @scannerbet.global.decimal@
+102@s.s@Match winner@s.s@14@s.s@E-Sports@s.s@1515@s.s@2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
+150@s.s@Winner 2 way@s.s@29@s.s@MMA-UFC@s.s@1517@s.s@2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
+87@s.s@2-way@s.s@7@s.s@Boxing@s.s@1519@s.s@2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
+86@s.s@3-way@s.s@7@s.s@Boxing@s.s@1527@s.s@2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
+44@s.s@First half 1x2@s.s@2@s.s@Basketball@s.s@1530@s.s@2 2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
+44@s.s@First half 1x2@s.s@2@s.s@Basketball@s.s@1726@s.s@2 1@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
+48@s.s@3-way@s.s@5@s.s@Rugby League@s.s@1503@s.s@X@s.s@None@s.s@Draw@s.s@X@s.s@X
+60@s.s@3-way@s.s@4@s.s@Rugby Union@s.s@1506@s.s@X@s.s@None@s.s@Draw@s.s@X@s.s@X
+86@s.s@3-way@s.s@7@s.s@Boxing@s.s@1526@s.s@X@s.s@None@s.s@Draw@s.s@X@s.s@X
+44@s.s@First half 1x2@s.s@2@s.s@Basketball@s.s@1529@s.s@X 2@s.s@None@s.s@Draw@s.s@X@s.s@X
+23@s.s@Penalty shootout yes o no@s.s@1@s.s@Football@s.s@1488@s.s@Yes@s.s@None@s.s@Yes@s.s@Yes@s.s@Yes
+82@s.s@Total games over/under@s.s@6@s.s@Tennis@s.s@1508@s.s@+ @scannerbet.global.decimal@@s.s@None@s.s@Totals Over@s.s@Over @scannerbet.global.decimal@@s.s@Over @scannerbet.global.decimal@
+110@s.s@Total number of goals@s.s@14@s.s@E-Sports@s.s@1512@s.s@+ @scannerbet.global.decimal@@s.s@None@s.s@Totals Over@s.s@Over @scannerbet.global.decimal@@s.s@Over @scannerbet.global.decimal@
+82@s.s@Total games over/under@s.s@6@s.s@Tennis@s.s@1509@s.s@- @scannerbet.global.decimal@@s.s@None@s.s@Totals Under@s.s@Under @scannerbet.global.decimal@@s.s@Under @scannerbet.global.decimal@
+110@s.s@Total number of goals@s.s@14@s.s@E-Sports@s.s@1513@s.s@- @scannerbet.global.decimal@@s.s@None@s.s@Totals Under@s.s@Under @scannerbet.global.decimal@@s.s@Under @scannerbet.global.decimal@
+10@s.s@Both teams to score@s.s@1@s.s@Football@s.s@1499@s.s@N@s.s@None@s.s@No@s.s@No@s.s@No
+183@s.s@Double chance@s.s@38@s.s@Handball@s.s@1591@s.s@X2@s.s@None@s.s@Double bet chance X2@s.s@X2@s.s@X2
+183@s.s@Double chance@s.s@38@s.s@Handball@s.s@1589@s.s@1X@s.s@None@s.s@Double bet chance 1X@s.s@1X@s.s@1X
+183@s.s@Double chance@s.s@38@s.s@Handball@s.s@1590@s.s@12@s.s@None@s.s@Double bet chance 12@s.s@12@s.s@12
+23@s.s@Penalty shootout yes o no@s.s@1@s.s@Football@s.s@1489@s.s@No@s.s@None@s.s@No@s.s@No@s.s@No
+10@s.s@Both teams to score@s.s@1@s.s@Football@s.s@1498@s.s@J@s.s@None@s.s@Yes@s.s@Yes@s.s@Yes
+39@s.s@Winner 2 way@s.s@2@s.s@Basketball@s.s@1500@s.s@1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
+88@s.s@Winning form@s.s@7@s.s@Boxing@s.s@1522@s.s@2:ko@s.s@None@s.s@Away Winning form (KO)@s.s@@scannerbet.teams.team2@ - KO@s.s@@scannerbet.teams.team2@ - KO
+88@s.s@Winning form@s.s@7@s.s@Boxing@s.s@1524@s.s@2:points@s.s@None@s.s@Away Winning form (Points)@s.s@@scannerbet.teams.team2@ - Points@s.s@@scannerbet.teams.team2@ - Points
+88@s.s@Winning form@s.s@7@s.s@Boxing@s.s@1523@s.s@1:points@s.s@None@s.s@Local Winning Form (points)@s.s@@scannerbet.teams.team1@ - Points@s.s@@scannerbet.teams.team1@ - Points
+196@s.s@Match Winner@s.s@44@s.s@Baseball@s.s@1644@s.s@1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
+20@s.s@Odd or even number of total goals@s.s@1@s.s@Football@s.s@1497@s.s@O@s.s@None@s.s@Odd@s.s@Odd@s.s@Odd
+151@s.s@Draw no bet@s.s@38@s.s@Handball@s.s@1592@s.s@1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
+88@s.s@Winning form@s.s@7@s.s@Boxing@s.s@1521@s.s@1:ko@s.s@None@s.s@Local Winning Form (KO)@s.s@@scannerbet.teams.team1@ - KO@s.s@@scannerbet.teams.team1@ - KO
+198@s.s@Runs over/under@s.s@44@s.s@Baseball@s.s@1643@s.s@- @scannerbet.global.decimal@@s.s@None@s.s@Totals Under@s.s@Under @scannerbet.global.decimal@@s.s@Under @scannerbet.global.decimal@
+88@s.s@Winning form@s.s@7@s.s@Boxing@s.s@1520@s.s@X@s.s@None@s.s@Winning Form (Draw or Technical draw)@s.s@Draw or Technical Draw@s.s@Draw or Technical Draw
+196@s.s@Match Winner@s.s@44@s.s@Baseball@s.s@1645@s.s@2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
+147@s.s@Winner@s.s@38@s.s@Handball@s.s@1596@s.s@1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
+6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@1762@s.s@X:2@s.s@None@s.s@Half time/full time X/2@s.s@X/2@s.s@X/@scannerbet.teams.team2@
+188@s.s@Match Winner@s.s@39@s.s@Table Tennis@s.s@1599@s.s@1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
 48@s.s@3-way@s.s@5@s.s@Rugby League@s.s@1502@s.s@1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
+151@s.s@Draw no bet@s.s@38@s.s@Handball@s.s@1593@s.s@2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
+147@s.s@Winner@s.s@38@s.s@Handball@s.s@1598@s.s@2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
+6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@1760@s.s@X:1@s.s@None@s.s@Half time/full time X/1@s.s@X/1@s.s@X/@scannerbet.teams.team1@
+14@s.s@Asian Handicap@s.s@1@s.s@Football@s.s@1491@s.s@1 -@scannerbet.global.decimal@@s.s@{"1 -": "Local -"}@s.s@Local Handicap Minus@s.s@@scannerbet.teams.team1@ -@scannerbet.global.decimal@@s.s@@scannerbet.teams.team1@ -@scannerbet.global.decimal@
+21@s.s@Double bet chance@s.s@1@s.s@Football@s.s@1493@s.s@1X@s.s@None@s.s@Double bet chance 1X@s.s@1X@s.s@1X
+23@s.s@Penalty shootout yes o no@s.s@1@s.s@Football@s.s@1768@s.s@N@s.s@None@s.s@No@s.s@No@s.s@No
+23@s.s@Penalty shootout yes o no@s.s@1@s.s@Football@s.s@1767@s.s@J@s.s@None@s.s@Yes@s.s@Yes@s.s@Yes
+188@s.s@Match Winner@s.s@39@s.s@Table Tennis@s.s@1600@s.s@2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
+147@s.s@Winner@s.s@38@s.s@Handball@s.s@1597@s.s@X@s.s@None@s.s@Draw@s.s@X@s.s@X
+146@s.s@Total Goals over/under@s.s@38@s.s@Handball@s.s@1595@s.s@- @scannerbet.global.decimal@@s.s@None@s.s@Totals Under@s.s@Under @scannerbet.global.decimal@@s.s@Under @scannerbet.global.decimal@
+44@s.s@First half 1x2@s.s@2@s.s@Basketball@s.s@1725@s.s@X 1@s.s@None@s.s@Draw@s.s@X@s.s@X
+2@s.s@3-way@s.s@1@s.s@Football@s.s@1485@s.s@1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
+6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@1757@s.s@1:1@s.s@None@s.s@Half time/full time 1/1@s.s@1/1@s.s@@scannerbet.teams.team1@/@scannerbet.teams.team1@
+44@s.s@First half 1x2@s.s@2@s.s@Basketball@s.s@1724@s.s@1 1@s.s@None@s.s@Local team wins@s.s@@scannerbet.teams.team1@@s.s@@scannerbet.teams.team1@
+2@s.s@3-way@s.s@1@s.s@Football@s.s@1487@s.s@2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
+21@s.s@Double bet chance@s.s@1@s.s@Football@s.s@1495@s.s@X2@s.s@None@s.s@Double bet chance X2@s.s@X2@s.s@X2
+39@s.s@Winner 2 way@s.s@2@s.s@Basketball@s.s@1501@s.s@2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
+6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@1758@s.s@1:X@s.s@None@s.s@Half time/full time 1/X@s.s@1/X@s.s@@scannerbet.teams.team1@/X
+14@s.s@Asian Handicap@s.s@1@s.s@Football@s.s@1492@s.s@2 -@scannerbet.global.decimal@@s.s@{"2 -": "Away -"}@s.s@Away Handicap Minus@s.s@@scannerbet.teams.team2@ -@scannerbet.global.decimal@@s.s@@scannerbet.teams.team2@ -@scannerbet.global.decimal@
+48@s.s@3-way@s.s@5@s.s@Rugby League@s.s@1504@s.s@2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
+60@s.s@3-way@s.s@4@s.s@Rugby Union@s.s@1507@s.s@2@s.s@None@s.s@Away team wins@s.s@@scannerbet.teams.team2@@s.s@@scannerbet.teams.team2@
+6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@1763@s.s@2:1@s.s@None@s.s@Half time/full time 2/1@s.s@2/1@s.s@@scannerbet.teams.team2@/@scannerbet.teams.team1@
+21@s.s@Double bet chance@s.s@1@s.s@Football@s.s@1494@s.s@12@s.s@None@s.s@Double bet chance 12@s.s@12@s.s@12
+6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@1761@s.s@X:X@s.s@None@s.s@Half time/full time X/X@s.s@X/X@s.s@X/X
+91@s.s@Championship outright@s.s@9@s.s@Cycling@s.s@1773@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@1765@s.s@2:2@s.s@None@s.s@Half time/full time 2/2@s.s@2/2@s.s@@scannerbet.teams.team2@/@scannerbet.teams.team2@

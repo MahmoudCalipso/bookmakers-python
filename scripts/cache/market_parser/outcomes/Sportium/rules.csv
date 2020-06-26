@@ -1,146 +1,146 @@
-90@s.s@Championship outright@s.s@7@s.s@Boxing@s.s@1131@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
-88@s.s@Winning form@s.s@7@s.s@Boxing@s.s@1134@s.s@Empate o Empate Tecnico@s.s@None@s.s@Winning Form (Draw or Technical draw)@s.s@Draw or Technical Draw@s.s@Draw or Technical Draw
-56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@868@s.s@@scannerbet.bookmaker.teams.team2@/@scannerbet.bookmaker.teams.team2@@s.s@None@s.s@Half time/full time 2/2@s.s@2/2@s.s@@scannerbet.teams.team2@/@scannerbet.teams.team2@
-34@s.s@3rd quarter winner@s.s@2@s.s@Basketball@s.s@496@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
-45@s.s@Second half 1x2@s.s@2@s.s@Basketball@s.s@506@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
-97@s.s@Winner@s.s@11@s.s@American Football@s.s@1200@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
-39@s.s@Winner 2 way@s.s@2@s.s@Basketball@s.s@509@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
-21@s.s@Double bet chance@s.s@1@s.s@Football@s.s@13@s.s@@scannerbet.bookmaker.teams.team1@ @scannerbet.constants.o@ @scannerbet.constants.empate@@s.s@{" o ": " / "}@s.s@Double bet chance 1X@s.s@1X@s.s@1X
-46@s.s@Championship outright@s.s@2@s.s@Basketball@s.s@501@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
-13@s.s@Handicap@s.s@1@s.s@Football@s.s@22@s.s@@scannerbet.constants.empate@ @scannerbet.constants.minus@@scannerbet.global.decimal@@s.s@None@s.s@Draw Handicap Minus@s.s@X -@scannerbet.global.decimal@@s.s@X -@scannerbet.global.decimal@
-51@s.s@Winning Margins Rugby Union@s.s@5@s.s@Rugby League@s.s@893@s.s@@scannerbet.bookmaker.teams.any@ @scannerbet.global.integer@+@s.s@France 1-10@s.s@Winning Margins +@s.s@@scannerbet.teams.any@ @scannerbet.global.integer@ or +@s.s@@scannerbet.teams.any@ @scannerbet.global.integer@ or more
-10@s.s@Both teams to score@s.s@1@s.s@Football@s.s@9@s.s@@scannerbet.constants.sí@@s.s@None@s.s@Yes@s.s@Yes@s.s@Yes
-51@s.s@Winning Margins Rugby Union@s.s@5@s.s@Rugby League@s.s@892@s.s@@scannerbet.bookmaker.teams.any@ @scannerbet.global.integer@-@scannerbet.global.integer@@s.s@France 1-10@s.s@Winning Margins@s.s@@scannerbet.teams.any@ @scannerbet.global.integer@-@scannerbet.global.integer@@s.s@@scannerbet.teams.any@ @scannerbet.global.integer@-@scannerbet.global.integer@
-62@s.s@Draw no bet@s.s@4@s.s@Rugby Union@s.s@694@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
-37@s.s@2nd time result@s.s@2@s.s@Basketball@s.s@492@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
-56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@880@s.s@Empate/Empate@s.s@None@s.s@Half time/full time X/X@s.s@X/X@s.s@X/X
-40@s.s@Total points odd/even@s.s@2@s.s@Basketball@s.s@508@s.s@Impar@s.s@None@s.s@Odd@s.s@Odd@s.s@Odd
-21@s.s@Double bet chance@s.s@1@s.s@Football@s.s@15@s.s@@scannerbet.bookmaker.teams.team2@ @scannerbet.constants.o@ @scannerbet.constants.empate@@s.s@{" o ": " / "}@s.s@Double bet chance 2X@s.s@2X@s.s@2X
-45@s.s@Second half 1x2@s.s@2@s.s@Basketball@s.s@505@s.s@Empate@s.s@None@s.s@Draw@s.s@X@s.s@X
-56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@881@s.s@Empate/@scannerbet.bookmaker.teams.team2@@s.s@None@s.s@Half time/full time X/2@s.s@X/2@s.s@X/@scannerbet.teams.team2@
-89@s.s@Number of rounds@s.s@7@s.s@Boxing@s.s@1137@s.s@Ganara después del primer Asalto@s.s@None@s.s@Totals Over Fixed 1@s.s@Over 1@s.s@Over 1
-12@s.s@To qualify (Groups)@s.s@1@s.s@Football@s.s@34@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
-43@s.s@First half (draw no bet)@s.s@2@s.s@Basketball@s.s@502@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
-33@s.s@2nd quarter winner@s.s@2@s.s@Basketball@s.s@491@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
-3@s.s@2-way@s.s@1@s.s@Football@s.s@16@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
-16@s.s@Championship outright@s.s@1@s.s@Football@s.s@11@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
-6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@30@s.s@@scannerbet.constants.empate@/@scannerbet.bookmaker.teams.team2@@s.s@None@s.s@Half time/full time X/2@s.s@X/2@s.s@X/@scannerbet.teams.team2@
-32@s.s@1st quarter winner@s.s@2@s.s@Basketball@s.s@484@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
-44@s.s@First half 1x2@s.s@2@s.s@Basketball@s.s@503@s.s@Empate@s.s@None@s.s@Draw@s.s@X@s.s@X
-6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@28@s.s@@scannerbet.constants.empate@/@scannerbet.bookmaker.teams.team1@@s.s@None@s.s@Half time/full time X/1@s.s@X/1@s.s@X/@scannerbet.teams.team1@
-7@s.s@Home team goals@s.s@1@s.s@Football@s.s@23@s.s@@scannerbet.global.integer@ @scannerbet.constants.o@ @scannerbet.constants.plus@@s.s@None@s.s@Number or more@s.s@@scannerbet.global.integer@ or +@s.s@@scannerbet.global.integer@ or more
-6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@26@s.s@@scannerbet.bookmaker.teams.team1@/Empate@s.s@None@s.s@Half time/full time 1/X@s.s@1/X@s.s@@scannerbet.teams.team1@/X
-31@s.s@4th quarter odd/even@s.s@2@s.s@Basketball@s.s@498@s.s@Impar@s.s@None@s.s@Odd@s.s@Odd@s.s@Odd
-88@s.s@Winning form@s.s@7@s.s@Boxing@s.s@1133@s.s@@scannerbet.bookmaker.teams.any@ - KO or TKO or Disqualification@s.s@{" - KO or TKO or Disqualification": " / KO or TKO or Disqualification"}@s.s@Winning Form (KO, TKO or Disqualification)@s.s@@scannerbet.teams.any@ - KO, TKO or Disqualification@s.s@@scannerbet.teams.any@ - KO, TKO or Disqualification
-4@s.s@Totals@s.s@1@s.s@Football@s.s@17@s.s@Más +@scannerbet.global.decimal@@s.s@None@s.s@Totals Over@s.s@Over @scannerbet.global.decimal@@s.s@Over @scannerbet.global.decimal@
-6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@27@s.s@@scannerbet.bookmaker.teams.team1@/@scannerbet.bookmaker.teams.team2@@s.s@None@s.s@Half time/full time 1/2@s.s@1/2@s.s@@scannerbet.teams.team1@/@scannerbet.teams.team2@
-68@s.s@Half time/full time results@s.s@4@s.s@Rugby Union@s.s@698@s.s@@scannerbet.bookmaker.teams.team1@/@scannerbet.constants.draw@@s.s@None@s.s@Half time/full time 1/X@s.s@1/X@s.s@@scannerbet.teams.team1@/X
-13@s.s@Handicap@s.s@1@s.s@Football@s.s@20@s.s@@scannerbet.bookmaker.teams.any@ @scannerbet.constants.minus@@scannerbet.global.decimal@@s.s@None@s.s@Handicap Minus@s.s@@scannerbet.teams.any@ -@scannerbet.global.decimal@@s.s@@scannerbet.teams.any@ -@scannerbet.global.decimal@
-56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@870@s.s@@scannerbet.bookmaker.teams.team2@/@scannerbet.bookmaker.teams.team1@@s.s@None@s.s@Half time/full time 2/1@s.s@2/1@s.s@@scannerbet.teams.team2@/@scannerbet.teams.team1@
-83@s.s@1st set tiebreak @s.s@6@s.s@Tennis@s.s@1065@s.s@Yes@s.s@None@s.s@Yes@s.s@Yes@s.s@Yes
-30@s.s@3rd quarter odd/even@s.s@2@s.s@Basketball@s.s@493@s.s@Par@s.s@None@s.s@Even@s.s@Even@s.s@Even
-11@s.s@To qualify (Knock-out stage)@s.s@1@s.s@Football@s.s@1250@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
-73@s.s@Tiebreak Played@s.s@6@s.s@Tennis@s.s@1068@s.s@Yes@s.s@None@s.s@Yes@s.s@Yes@s.s@Yes
-27@s.s@2nd half points odd/even@s.s@2@s.s@Basketball@s.s@487@s.s@Impar@s.s@None@s.s@Odd@s.s@Odd@s.s@Odd
-59@s.s@Championship outright@s.s@5@s.s@Rugby League@s.s@863@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
-30@s.s@3rd quarter odd/even@s.s@2@s.s@Basketball@s.s@494@s.s@Impar@s.s@None@s.s@Odd@s.s@Odd@s.s@Odd
-88@s.s@Winning form@s.s@7@s.s@Boxing@s.s@1132@s.s@@scannerbet.bookmaker.teams.any@ - By Decision or Technical Decision@s.s@{" - By Decision or Technical Decision": " / - By Decision or Technical Decision"}@s.s@Winning Form (Decision or Technical Decision)@s.s@@scannerbet.teams.any@ - Decision or Technical Decision@s.s@@scannerbet.teams.any@ - Decision or Technical Decision
-28@s.s@1st quarter odd/even@s.s@2@s.s@Basketball@s.s@483@s.s@Impar@s.s@None@s.s@Odd@s.s@Odd@s.s@Odd
-13@s.s@Handicap@s.s@1@s.s@Football@s.s@21@s.s@@scannerbet.constants.empate@ @scannerbet.constants.plus@@scannerbet.global.decimal@@s.s@None@s.s@Draw Handicap Plus@s.s@X +@scannerbet.global.decimal@@s.s@X +@scannerbet.global.decimal@
-48@s.s@3-way@s.s@5@s.s@Rugby League@s.s@890@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
-56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@878@s.s@@scannerbet.bookmaker.teams.team2@/@scannerbet.constants.draw@@s.s@None@s.s@Half time/full time 2/X@s.s@2/X@s.s@@scannerbet.teams.team2@/X
-83@s.s@1st set tiebreak @s.s@6@s.s@Tennis@s.s@1066@s.s@No@s.s@None@s.s@No@s.s@No@s.s@No
-29@s.s@2nd quarter odd/even@s.s@2@s.s@Basketball@s.s@488@s.s@Par@s.s@None@s.s@Even@s.s@Even@s.s@Even
-56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@874@s.s@@scannerbet.bookmaker.teams.team1@/@scannerbet.constants.draw@@s.s@None@s.s@Half time/full time 1/X@s.s@1/X@s.s@@scannerbet.teams.team1@/X
-27@s.s@2nd half points odd/even@s.s@2@s.s@Basketball@s.s@486@s.s@Par@s.s@None@s.s@Even@s.s@Even@s.s@Even
-66@s.s@Total tries@s.s@4@s.s@Rugby Union@s.s@708@s.s@Más @scannerbet.global.decimal@@s.s@None@s.s@Totals Over@s.s@Over @scannerbet.global.decimal@@s.s@Over @scannerbet.global.decimal@
-50@s.s@Draw no bet@s.s@5@s.s@Rugby League@s.s@864@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
-6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@25@s.s@@scannerbet.bookmaker.teams.team1@/@scannerbet.bookmaker.teams.team1@@s.s@None@s.s@Half time/full time 1/1@s.s@1/1@s.s@@scannerbet.teams.team1@/@scannerbet.teams.team1@
-68@s.s@Half time/full time results@s.s@4@s.s@Rugby Union@s.s@701@s.s@Empate/Empate@s.s@None@s.s@Half time/full time X/X@s.s@X/X@s.s@X/X
-56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@871@s.s@Empate/Empate@s.s@None@s.s@Half time/full time X/X@s.s@X/X@s.s@X/X
-1@s.s@Correct score@s.s@1@s.s@Football@s.s@12@s.s@@scannerbet.global.integer@:@scannerbet.global.integer@@s.s@None@s.s@Correct Score@s.s@@scannerbet.global.integer@:@scannerbet.global.integer@@s.s@@scannerbet.global.integer@:@scannerbet.global.integer@
-56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@873@s.s@@scannerbet.bookmaker.teams.team1@/@scannerbet.bookmaker.teams.team2@@s.s@None@s.s@Half time/full time 1/2@s.s@1/2@s.s@@scannerbet.teams.team1@/@scannerbet.teams.team2@
-9@s.s@Total number of goals@s.s@1@s.s@Football@s.s@37@s.s@@scannerbet.global.integer@ @scannerbet.constants.o@ @scannerbet.constants.plus@@s.s@None@s.s@Number or more@s.s@@scannerbet.global.integer@ or +@s.s@@scannerbet.global.integer@ or more
-68@s.s@Half time/full time results@s.s@4@s.s@Rugby Union@s.s@700@s.s@Empate/@scannerbet.bookmaker.teams.team2@@s.s@None@s.s@Half time/full time X/2@s.s@X/2@s.s@X/@scannerbet.teams.team2@
-26@s.s@1st half points odd/even@s.s@2@s.s@Basketball@s.s@481@s.s@Impar@s.s@None@s.s@Odd@s.s@Odd@s.s@Odd
-57@s.s@Half time results@s.s@5@s.s@Rugby League@s.s@866@s.s@Empate@s.s@None@s.s@Draw@s.s@X@s.s@X
-73@s.s@Tiebreak Played@s.s@6@s.s@Tennis@s.s@1069@s.s@No@s.s@None@s.s@No@s.s@No@s.s@No
-9@s.s@Total number of goals@s.s@1@s.s@Football@s.s@40@s.s@@scannerbet.global.integer@-@scannerbet.global.integer@@s.s@0-2@s.s@Interval@s.s@@scannerbet.global.integer@-@scannerbet.global.integer@@s.s@@scannerbet.global.integer@-@scannerbet.global.integer@
-66@s.s@Total tries@s.s@4@s.s@Rugby Union@s.s@709@s.s@Menos @scannerbet.global.decimal@@s.s@None@s.s@Totals Under@s.s@Under @scannerbet.global.decimal@@s.s@Under @scannerbet.global.decimal@
-68@s.s@Half time/full time results@s.s@4@s.s@Rugby Union@s.s@702@s.s@Empate/@scannerbet.bookmaker.teams.team1@@s.s@None@s.s@Half time/full time X/1@s.s@X/1@s.s@X/@scannerbet.teams.team1@
-68@s.s@Half time/full time results@s.s@4@s.s@Rugby Union@s.s@704@s.s@@scannerbet.bookmaker.teams.team2@/@scannerbet.constants.draw@@s.s@None@s.s@Half time/full time 2/X@s.s@2/X@s.s@@scannerbet.teams.team2@/X
-56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@875@s.s@@scannerbet.bookmaker.teams.team1@/@scannerbet.bookmaker.teams.team1@@s.s@None@s.s@Half time/full time 1/1@s.s@1/1@s.s@@scannerbet.teams.team1@/@scannerbet.teams.team1@
-29@s.s@2nd quarter odd/even@s.s@2@s.s@Basketball@s.s@489@s.s@Impar@s.s@None@s.s@Odd@s.s@Odd@s.s@Odd
-56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@877@s.s@@scannerbet.bookmaker.teams.team2@/@scannerbet.bookmaker.teams.team2@@s.s@None@s.s@Half time/full time 2/2@s.s@2/2@s.s@@scannerbet.teams.team2@/@scannerbet.teams.team2@
-57@s.s@Half time results@s.s@5@s.s@Rugby League@s.s@865@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
-56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@872@s.s@Empate/@scannerbet.bookmaker.teams.team2@@s.s@None@s.s@Half time/full time X/2@s.s@X/2@s.s@X/@scannerbet.teams.team2@
-68@s.s@Half time/full time results@s.s@4@s.s@Rugby Union@s.s@705@s.s@@scannerbet.bookmaker.teams.team2@/@scannerbet.bookmaker.teams.team2@@s.s@None@s.s@Half time/full time 2/2@s.s@2/2@s.s@@scannerbet.teams.team2@/@scannerbet.teams.team2@
-6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@33@s.s@@scannerbet.bookmaker.teams.team2@/@scannerbet.bookmaker.teams.team2@@s.s@None@s.s@Half time/full time 2/2@s.s@2/2@s.s@@scannerbet.teams.team2@/@scannerbet.teams.team2@
-68@s.s@Half time/full time results@s.s@4@s.s@Rugby Union@s.s@703@s.s@@scannerbet.bookmaker.teams.team2@/@scannerbet.bookmaker.teams.team1@@s.s@None@s.s@Half time/full time 2/1@s.s@2/1@s.s@@scannerbet.teams.team2@/@scannerbet.teams.team1@
-94@s.s@Championship outright@s.s@10@s.s@Golf@s.s@1186@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
-6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@32@s.s@@scannerbet.bookmaker.teams.team2@/Empate@s.s@None@s.s@Half time/full time 2/X@s.s@2/X@s.s@@scannerbet.teams.team2@/X
-68@s.s@Half time/full time results@s.s@4@s.s@Rugby Union@s.s@699@s.s@@scannerbet.bookmaker.teams.team1@/@scannerbet.bookmaker.teams.team2@@s.s@None@s.s@Half time/full time 1/2@s.s@1/2@s.s@@scannerbet.teams.team1@/@scannerbet.teams.team2@
-56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@879@s.s@@scannerbet.bookmaker.teams.team2@/@scannerbet.bookmaker.teams.team1@@s.s@None@s.s@Half time/full time 2/1@s.s@2/1@s.s@@scannerbet.teams.team2@/@scannerbet.teams.team1@
-56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@867@s.s@Empate/@scannerbet.bookmaker.teams.team1@@s.s@None@s.s@Half time/full time X/1@s.s@X/1@s.s@X/@scannerbet.teams.team1@
-68@s.s@Half time/full time results@s.s@4@s.s@Rugby Union@s.s@697@s.s@@scannerbet.bookmaker.teams.team1@/@scannerbet.bookmaker.teams.team1@@s.s@None@s.s@Half time/full time 1/1@s.s@1/1@s.s@@scannerbet.teams.team1@/@scannerbet.teams.team1@
-60@s.s@3-way@s.s@4@s.s@Rugby Union@s.s@711@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
-48@s.s@3-way@s.s@5@s.s@Rugby League@s.s@889@s.s@Empate@s.s@None@s.s@Draw@s.s@X@s.s@X
-84@s.s@Total number of sets@s.s@6@s.s@Tennis@s.s@1070@s.s@@scannerbet.global.integer@ SETS@s.s@None@s.s@Number@s.s@@scannerbet.global.integer@@s.s@@scannerbet.global.integer@
-51@s.s@Winning Margins Rugby Union@s.s@5@s.s@Rugby League@s.s@891@s.s@Draw@s.s@None@s.s@Draw@s.s@X@s.s@X
 56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@876@s.s@Empate/@scannerbet.bookmaker.teams.team1@@s.s@None@s.s@Half time/full time X/1@s.s@X/1@s.s@X/@scannerbet.teams.team1@
-20@s.s@Odd or even number of total goals@s.s@1@s.s@Football@s.s@35@s.s@@scannerbet.constants.impar@@s.s@None@s.s@Odd@s.s@Odd@s.s@Odd
-28@s.s@1st quarter odd/even@s.s@2@s.s@Basketball@s.s@482@s.s@Par@s.s@None@s.s@Even@s.s@Even@s.s@Even
-67@s.s@Total points@s.s@4@s.s@Rugby Union@s.s@706@s.s@Más @scannerbet.global.decimal@@s.s@None@s.s@Totals Over@s.s@Over @scannerbet.global.decimal@@s.s@Over @scannerbet.global.decimal@
-72@s.s@Winner@s.s@6@s.s@Tennis@s.s@1071@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
-56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@869@s.s@@scannerbet.bookmaker.teams.team2@/@scannerbet.constants.draw@@s.s@None@s.s@Half time/full time 2/X@s.s@2/X@s.s@@scannerbet.teams.team2@/X
-67@s.s@Total points@s.s@4@s.s@Rugby Union@s.s@707@s.s@Menos @scannerbet.global.decimal@@s.s@None@s.s@Totals Under@s.s@Under @scannerbet.global.decimal@@s.s@Under @scannerbet.global.decimal@
-63@s.s@Winning Margins Rugby Union@s.s@4@s.s@Rugby Union@s.s@714@s.s@@scannerbet.bookmaker.teams.any@ @scannerbet.global.integer@+@s.s@France 1-10@s.s@Winning Margins +@s.s@@scannerbet.teams.any@ @scannerbet.global.integer@ or +@s.s@@scannerbet.teams.any@ @scannerbet.global.integer@ or more
-63@s.s@Winning Margins Rugby Union@s.s@4@s.s@Rugby Union@s.s@713@s.s@@scannerbet.bookmaker.teams.any@ @scannerbet.global.integer@-@scannerbet.global.integer@@s.s@France 1-10@s.s@Winning Margins@s.s@@scannerbet.teams.any@ @scannerbet.global.integer@-@scannerbet.global.integer@@s.s@@scannerbet.teams.any@ @scannerbet.global.integer@-@scannerbet.global.integer@
-55@s.s@Total points@s.s@5@s.s@Rugby League@s.s@885@s.s@Más @scannerbet.global.decimal@@s.s@None@s.s@Totals Over@s.s@Over @scannerbet.global.decimal@@s.s@Over @scannerbet.global.decimal@
-54@s.s@Total tries@s.s@5@s.s@Rugby League@s.s@887@s.s@Más @scannerbet.global.decimal@@s.s@None@s.s@Totals Over@s.s@Over @scannerbet.global.decimal@@s.s@Over @scannerbet.global.decimal@
-2@s.s@3-way@s.s@1@s.s@Football@s.s@3@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
-31@s.s@4th quarter odd/even@s.s@2@s.s@Basketball@s.s@497@s.s@Par@s.s@None@s.s@Even@s.s@Even@s.s@Even
-6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@31@s.s@@scannerbet.bookmaker.teams.team2@/@scannerbet.bookmaker.teams.team1@@s.s@None@s.s@Half time/full time 2/1@s.s@2/1@s.s@@scannerbet.teams.team2@/@scannerbet.teams.team1@
-63@s.s@Winning Margins Rugby Union@s.s@4@s.s@Rugby Union@s.s@1271@s.s@Empate@s.s@None@s.s@Draw@s.s@X@s.s@X
-40@s.s@Total points odd/even@s.s@2@s.s@Basketball@s.s@507@s.s@Par@s.s@None@s.s@Even@s.s@Even@s.s@Even
-26@s.s@1st half points odd/even@s.s@2@s.s@Basketball@s.s@480@s.s@Par@s.s@None@s.s@Even@s.s@Even@s.s@Even
-86@s.s@3-way@s.s@7@s.s@Boxing@s.s@1272@s.s@Empate@s.s@None@s.s@Draw@s.s@X@s.s@X
-10@s.s@Both teams to score@s.s@1@s.s@Football@s.s@10@s.s@@scannerbet.constants.no@@s.s@None@s.s@No@s.s@No@s.s@No
-20@s.s@Odd or even number of total goals@s.s@1@s.s@Football@s.s@36@s.s@@scannerbet.constants.par@@s.s@None@s.s@Even@s.s@Even@s.s@Even
-56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@883@s.s@@scannerbet.bookmaker.teams.team1@/@scannerbet.constants.draw@@s.s@None@s.s@Half time/full time 1/X@s.s@1/X@s.s@@scannerbet.teams.team1@/X
-60@s.s@3-way@s.s@4@s.s@Rugby Union@s.s@710@s.s@Empate@s.s@None@s.s@Draw@s.s@X@s.s@X
-86@s.s@3-way@s.s@7@s.s@Boxing@s.s@1273@s.s@Empate o Empate Tecnico@s.s@None@s.s@Draw@s.s@X@s.s@X
-56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@882@s.s@@scannerbet.bookmaker.teams.team1@/@scannerbet.bookmaker.teams.team2@@s.s@None@s.s@Half time/full time 1/2@s.s@1/2@s.s@@scannerbet.teams.team1@/@scannerbet.teams.team2@
-4@s.s@Totals@s.s@1@s.s@Football@s.s@18@s.s@Menos de +@scannerbet.global.decimal@@s.s@None@s.s@Totals Under@s.s@Under @scannerbet.global.decimal@@s.s@Under @scannerbet.global.decimal@
-1@s.s@Correct score@s.s@1@s.s@Football@s.s@1249@s.s@@scannerbet.bookmaker.teams.any@ @scannerbet.global.integer@:@scannerbet.global.integer@@s.s@None@s.s@Correct Score@s.s@@scannerbet.global.integer@:@scannerbet.global.integer@@s.s@@scannerbet.global.integer@:@scannerbet.global.integer@
-35@s.s@4th quarter winner@s.s@2@s.s@Basketball@s.s@499@s.s@Empate@s.s@None@s.s@Draw@s.s@X@s.s@X
-96@s.s@Superbowl winner@s.s@11@s.s@American Football@s.s@1207@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
-13@s.s@Handicap@s.s@1@s.s@Football@s.s@19@s.s@@scannerbet.bookmaker.teams.any@ @scannerbet.constants.plus@@scannerbet.global.decimal@@s.s@None@s.s@Handicap Plus@s.s@@scannerbet.teams.any@ +@scannerbet.global.decimal@@s.s@@scannerbet.teams.any@ +@scannerbet.global.decimal@
-9@s.s@Total number of goals@s.s@1@s.s@Football@s.s@38@s.s@@scannerbet.global.integer@@s.s@None@s.s@Number@s.s@@scannerbet.global.integer@@s.s@@scannerbet.global.integer@
-21@s.s@Double bet chance@s.s@1@s.s@Football@s.s@14@s.s@@scannerbet.bookmaker.teams.team1@ @scannerbet.constants.o@ @scannerbet.bookmaker.teams.team2@@s.s@{" o ": " / "}@s.s@Double bet chance 12@s.s@12@s.s@12
-7@s.s@Home team goals@s.s@1@s.s@Football@s.s@24@s.s@@scannerbet.global.integer@@s.s@None@s.s@Number@s.s@@scannerbet.global.integer@@s.s@@scannerbet.global.integer@
-8@s.s@Away team goals@s.s@1@s.s@Football@s.s@8@s.s@@scannerbet.global.integer@ @scannerbet.constants.o@ @scannerbet.constants.plus@@s.s@None@s.s@Number or more@s.s@@scannerbet.global.integer@ or +@s.s@@scannerbet.global.integer@ or more
-56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@884@s.s@@scannerbet.bookmaker.teams.team1@/@scannerbet.bookmaker.teams.team1@@s.s@None@s.s@Half time/full time 1/1@s.s@1/1@s.s@@scannerbet.teams.team1@/@scannerbet.teams.team1@
-9@s.s@Total number of goals@s.s@1@s.s@Football@s.s@39@s.s@@scannerbet.global.integer@@scannerbet.constants.plus@@s.s@None@s.s@Number or more@s.s@@scannerbet.global.integer@ or +@s.s@@scannerbet.global.integer@ or more
-76@s.s@Correct score@s.s@6@s.s@Tennis@s.s@1067@s.s@@scannerbet.bookmaker.teams.any@ @scannerbet.global.integer@-@scannerbet.global.integer@@s.s@None@s.s@Correct Score@s.s@@scannerbet.global.integer@:@scannerbet.global.integer@@s.s@@scannerbet.global.integer@:@scannerbet.global.integer@
-34@s.s@3rd quarter winner@s.s@2@s.s@Basketball@s.s@495@s.s@Empate@s.s@None@s.s@Draw@s.s@X@s.s@X
-8@s.s@Away team goals@s.s@1@s.s@Football@s.s@7@s.s@@scannerbet.global.integer@@s.s@None@s.s@Number@s.s@@scannerbet.global.integer@@s.s@@scannerbet.global.integer@
-63@s.s@Winning Margins Rugby Union@s.s@4@s.s@Rugby Union@s.s@712@s.s@Draw@s.s@None@s.s@Draw@s.s@X@s.s@X
 5@s.s@First half result@s.s@1@s.s@Football@s.s@6@s.s@@scannerbet.constants.empate@@s.s@None@s.s@Draw@s.s@X@s.s@X
-33@s.s@2nd quarter winner@s.s@2@s.s@Basketball@s.s@490@s.s@Empate@s.s@None@s.s@Draw@s.s@X@s.s@X
-5@s.s@First half result@s.s@1@s.s@Football@s.s@5@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
-15@s.s@Matchbet + both teams to score@s.s@1@s.s@Football@s.s@41@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Matchbet + both teams to score Any/Yes@s.s@@scannerbet.teams.any@/Yes@s.s@@scannerbet.teams.any@/Yes
-15@s.s@Matchbet + both teams to score@s.s@1@s.s@Football@s.s@42@s.s@@scannerbet.constants.empate@@s.s@None@s.s@Matchbet + both teams to score X/Yes@s.s@X/Yes@s.s@X/Yes
-69@s.s@Half time results@s.s@4@s.s@Rugby Union@s.s@695@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
-6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@29@s.s@@scannerbet.constants.empate@/@scannerbet.constants.empate@@s.s@None@s.s@Half time/full time X/X@s.s@X/X@s.s@X/X
-86@s.s@3-way@s.s@7@s.s@Boxing@s.s@1135@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+60@s.s@3-way@s.s@4@s.s@Rugby Union@s.s@711@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+2@s.s@3-way@s.s@1@s.s@Football@s.s@4@s.s@@scannerbet.constants.empate@@s.s@None@s.s@Draw@s.s@X@s.s@X
+56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@882@s.s@@scannerbet.bookmaker.teams.team1@/@scannerbet.bookmaker.teams.team2@@s.s@None@s.s@Half time/full time 1/2@s.s@1/2@s.s@@scannerbet.teams.team1@/@scannerbet.teams.team2@
+68@s.s@Half time/full time results@s.s@4@s.s@Rugby Union@s.s@703@s.s@@scannerbet.bookmaker.teams.team2@/@scannerbet.bookmaker.teams.team1@@s.s@None@s.s@Half time/full time 2/1@s.s@2/1@s.s@@scannerbet.teams.team2@/@scannerbet.teams.team1@
+66@s.s@Total tries@s.s@4@s.s@Rugby Union@s.s@708@s.s@Más @scannerbet.global.decimal@@s.s@None@s.s@Totals Over@s.s@Over @scannerbet.global.decimal@@s.s@Over @scannerbet.global.decimal@
+21@s.s@Double bet chance@s.s@1@s.s@Football@s.s@14@s.s@@scannerbet.bookmaker.teams.team1@ @scannerbet.constants.o@ @scannerbet.bookmaker.teams.team2@@s.s@{" o ": " / "}@s.s@Double bet chance 12@s.s@12@s.s@12
+56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@871@s.s@Empate/Empate@s.s@None@s.s@Half time/full time X/X@s.s@X/X@s.s@X/X
+56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@884@s.s@@scannerbet.bookmaker.teams.team1@/@scannerbet.bookmaker.teams.team1@@s.s@None@s.s@Half time/full time 1/1@s.s@1/1@s.s@@scannerbet.teams.team1@/@scannerbet.teams.team1@
+6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@26@s.s@@scannerbet.bookmaker.teams.team1@/Empate@s.s@None@s.s@Half time/full time 1/X@s.s@1/X@s.s@@scannerbet.teams.team1@/X
+68@s.s@Half time/full time results@s.s@4@s.s@Rugby Union@s.s@705@s.s@@scannerbet.bookmaker.teams.team2@/@scannerbet.bookmaker.teams.team2@@s.s@None@s.s@Half time/full time 2/2@s.s@2/2@s.s@@scannerbet.teams.team2@/@scannerbet.teams.team2@
+12@s.s@To qualify (Groups)@s.s@1@s.s@Football@s.s@34@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+69@s.s@Half time results@s.s@4@s.s@Rugby Union@s.s@696@s.s@Empate@s.s@None@s.s@Draw@s.s@X@s.s@X
+16@s.s@Championship outright@s.s@1@s.s@Football@s.s@11@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+88@s.s@Winning form@s.s@7@s.s@Boxing@s.s@1133@s.s@@scannerbet.bookmaker.teams.any@ - KO or TKO or Disqualification@s.s@{" - KO or TKO or Disqualification": " / KO or TKO or Disqualification"}@s.s@Winning Form (KO, TKO or Disqualification)@s.s@@scannerbet.teams.any@ - KO, TKO or Disqualification@s.s@@scannerbet.teams.any@ - KO, TKO or Disqualification
+6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@27@s.s@@scannerbet.bookmaker.teams.team1@/@scannerbet.bookmaker.teams.team2@@s.s@None@s.s@Half time/full time 1/2@s.s@1/2@s.s@@scannerbet.teams.team1@/@scannerbet.teams.team2@
+6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@31@s.s@@scannerbet.bookmaker.teams.team2@/@scannerbet.bookmaker.teams.team1@@s.s@None@s.s@Half time/full time 2/1@s.s@2/1@s.s@@scannerbet.teams.team2@/@scannerbet.teams.team1@
+6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@32@s.s@@scannerbet.bookmaker.teams.team2@/Empate@s.s@None@s.s@Half time/full time 2/X@s.s@2/X@s.s@@scannerbet.teams.team2@/X
+6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@33@s.s@@scannerbet.bookmaker.teams.team2@/@scannerbet.bookmaker.teams.team2@@s.s@None@s.s@Half time/full time 2/2@s.s@2/2@s.s@@scannerbet.teams.team2@/@scannerbet.teams.team2@
+9@s.s@Total number of goals@s.s@1@s.s@Football@s.s@37@s.s@@scannerbet.global.integer@ @scannerbet.constants.o@ @scannerbet.constants.plus@@s.s@None@s.s@Number or more@s.s@@scannerbet.global.integer@ or +@s.s@@scannerbet.global.integer@ or more
 55@s.s@Total points@s.s@5@s.s@Rugby League@s.s@886@s.s@Menos @scannerbet.global.decimal@@s.s@None@s.s@Totals Under@s.s@Under @scannerbet.global.decimal@@s.s@Under @scannerbet.global.decimal@
 54@s.s@Total tries@s.s@5@s.s@Rugby League@s.s@888@s.s@Menos @scannerbet.global.decimal@@s.s@None@s.s@Totals Under@s.s@Under @scannerbet.global.decimal@@s.s@Under @scannerbet.global.decimal@
-44@s.s@First half 1x2@s.s@2@s.s@Basketball@s.s@504@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
-91@s.s@Championship outright@s.s@9@s.s@Cycling@s.s@1176@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+68@s.s@Half time/full time results@s.s@4@s.s@Rugby Union@s.s@704@s.s@@scannerbet.bookmaker.teams.team2@/@scannerbet.constants.draw@@s.s@None@s.s@Half time/full time 2/X@s.s@2/X@s.s@@scannerbet.teams.team2@/X
+68@s.s@Half time/full time results@s.s@4@s.s@Rugby Union@s.s@702@s.s@Empate/@scannerbet.bookmaker.teams.team1@@s.s@None@s.s@Half time/full time X/1@s.s@X/1@s.s@X/@scannerbet.teams.team1@
+66@s.s@Total tries@s.s@4@s.s@Rugby Union@s.s@709@s.s@Menos @scannerbet.global.decimal@@s.s@None@s.s@Totals Under@s.s@Under @scannerbet.global.decimal@@s.s@Under @scannerbet.global.decimal@
+68@s.s@Half time/full time results@s.s@4@s.s@Rugby Union@s.s@700@s.s@Empate/@scannerbet.bookmaker.teams.team2@@s.s@None@s.s@Half time/full time X/2@s.s@X/2@s.s@X/@scannerbet.teams.team2@
+56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@869@s.s@@scannerbet.bookmaker.teams.team2@/@scannerbet.constants.draw@@s.s@None@s.s@Half time/full time 2/X@s.s@2/X@s.s@@scannerbet.teams.team2@/X
+68@s.s@Half time/full time results@s.s@4@s.s@Rugby Union@s.s@701@s.s@Empate/Empate@s.s@None@s.s@Half time/full time X/X@s.s@X/X@s.s@X/X
+63@s.s@Winning Margins Rugby Union@s.s@4@s.s@Rugby Union@s.s@1271@s.s@Empate@s.s@None@s.s@Draw@s.s@X@s.s@X
+86@s.s@3-way@s.s@7@s.s@Boxing@s.s@1272@s.s@Empate@s.s@None@s.s@Draw@s.s@X@s.s@X
+86@s.s@3-way@s.s@7@s.s@Boxing@s.s@1273@s.s@Empate o Empate Tecnico@s.s@None@s.s@Draw@s.s@X@s.s@X
+63@s.s@Winning Margins Rugby Union@s.s@4@s.s@Rugby Union@s.s@712@s.s@Draw@s.s@None@s.s@Draw@s.s@X@s.s@X
+13@s.s@Handicap@s.s@1@s.s@Football@s.s@22@s.s@@scannerbet.constants.empate@ @scannerbet.constants.minus@@scannerbet.global.decimal@@s.s@None@s.s@Draw Handicap Minus@s.s@X -@scannerbet.global.decimal@@s.s@X -@scannerbet.global.decimal@
+6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@28@s.s@@scannerbet.constants.empate@/@scannerbet.bookmaker.teams.team1@@s.s@None@s.s@Half time/full time X/1@s.s@X/1@s.s@X/@scannerbet.teams.team1@
+7@s.s@Home team goals@s.s@1@s.s@Football@s.s@23@s.s@@scannerbet.global.integer@ @scannerbet.constants.o@ @scannerbet.constants.plus@@s.s@None@s.s@Number or more@s.s@@scannerbet.global.integer@ or +@s.s@@scannerbet.global.integer@ or more
+4@s.s@Totals@s.s@1@s.s@Football@s.s@17@s.s@Más +@scannerbet.global.decimal@@s.s@None@s.s@Totals Over@s.s@Over @scannerbet.global.decimal@@s.s@Over @scannerbet.global.decimal@
+31@s.s@4th quarter odd/even@s.s@2@s.s@Basketball@s.s@497@s.s@Par@s.s@None@s.s@Even@s.s@Even@s.s@Even
+30@s.s@3rd quarter odd/even@s.s@2@s.s@Basketball@s.s@493@s.s@Par@s.s@None@s.s@Even@s.s@Even@s.s@Even
+29@s.s@2nd quarter odd/even@s.s@2@s.s@Basketball@s.s@488@s.s@Par@s.s@None@s.s@Even@s.s@Even@s.s@Even
+27@s.s@2nd half points odd/even@s.s@2@s.s@Basketball@s.s@486@s.s@Par@s.s@None@s.s@Even@s.s@Even@s.s@Even
+6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@30@s.s@@scannerbet.constants.empate@/@scannerbet.bookmaker.teams.team2@@s.s@None@s.s@Half time/full time X/2@s.s@X/2@s.s@X/@scannerbet.teams.team2@
+15@s.s@Matchbet + both teams to score@s.s@1@s.s@Football@s.s@42@s.s@@scannerbet.constants.empate@@s.s@None@s.s@Matchbet + both teams to score X/Yes@s.s@X/Yes@s.s@X/Yes
+5@s.s@First half result@s.s@1@s.s@Football@s.s@5@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+1@s.s@Correct score@s.s@1@s.s@Football@s.s@12@s.s@@scannerbet.global.integer@:@scannerbet.global.integer@@s.s@None@s.s@Correct Score@s.s@@scannerbet.global.integer@:@scannerbet.global.integer@@s.s@@scannerbet.global.integer@:@scannerbet.global.integer@
+28@s.s@1st quarter odd/even@s.s@2@s.s@Basketball@s.s@482@s.s@Par@s.s@None@s.s@Even@s.s@Even@s.s@Even
+26@s.s@1st half points odd/even@s.s@2@s.s@Basketball@s.s@480@s.s@Par@s.s@None@s.s@Even@s.s@Even@s.s@Even
+13@s.s@Handicap@s.s@1@s.s@Football@s.s@20@s.s@@scannerbet.bookmaker.teams.any@ @scannerbet.constants.minus@@scannerbet.global.decimal@@s.s@None@s.s@Handicap Minus@s.s@@scannerbet.teams.any@ -@scannerbet.global.decimal@@s.s@@scannerbet.teams.any@ -@scannerbet.global.decimal@
+30@s.s@3rd quarter odd/even@s.s@2@s.s@Basketball@s.s@494@s.s@Impar@s.s@None@s.s@Odd@s.s@Odd@s.s@Odd
+29@s.s@2nd quarter odd/even@s.s@2@s.s@Basketball@s.s@489@s.s@Impar@s.s@None@s.s@Odd@s.s@Odd@s.s@Odd
+96@s.s@Superbowl winner@s.s@11@s.s@American Football@s.s@1207@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+97@s.s@Winner@s.s@11@s.s@American Football@s.s@1200@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+27@s.s@2nd half points odd/even@s.s@2@s.s@Basketball@s.s@487@s.s@Impar@s.s@None@s.s@Odd@s.s@Odd@s.s@Odd
+28@s.s@1st quarter odd/even@s.s@2@s.s@Basketball@s.s@483@s.s@Impar@s.s@None@s.s@Odd@s.s@Odd@s.s@Odd
+26@s.s@1st half points odd/even@s.s@2@s.s@Basketball@s.s@481@s.s@Impar@s.s@None@s.s@Odd@s.s@Odd@s.s@Odd
+56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@872@s.s@Empate/@scannerbet.bookmaker.teams.team2@@s.s@None@s.s@Half time/full time X/2@s.s@X/2@s.s@X/@scannerbet.teams.team2@
 71@s.s@Championship outright@s.s@4@s.s@Rugby Union@s.s@693@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
-69@s.s@Half time results@s.s@4@s.s@Rugby Union@s.s@696@s.s@Empate@s.s@None@s.s@Draw@s.s@X@s.s@X
-2@s.s@3-way@s.s@1@s.s@Football@s.s@4@s.s@@scannerbet.constants.empate@@s.s@None@s.s@Draw@s.s@X@s.s@X
-89@s.s@Number of rounds@s.s@7@s.s@Boxing@s.s@1136@s.s@Ganara en 1 Asalto o menos@s.s@None@s.s@Totals Under Fixed 1@s.s@Under 1@s.s@Under 1
-35@s.s@4th quarter winner@s.s@2@s.s@Basketball@s.s@500@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+2@s.s@3-way@s.s@1@s.s@Football@s.s@3@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+21@s.s@Double bet chance@s.s@1@s.s@Football@s.s@15@s.s@@scannerbet.bookmaker.teams.team2@ @scannerbet.constants.o@ @scannerbet.constants.empate@@s.s@{" o ": " / "}@s.s@Double bet chance 2X@s.s@2X@s.s@2X
+6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@25@s.s@@scannerbet.bookmaker.teams.team1@/@scannerbet.bookmaker.teams.team1@@s.s@None@s.s@Half time/full time 1/1@s.s@1/1@s.s@@scannerbet.teams.team1@/@scannerbet.teams.team1@
+20@s.s@Odd or even number of total goals@s.s@1@s.s@Football@s.s@35@s.s@@scannerbet.constants.impar@@s.s@None@s.s@Odd@s.s@Odd@s.s@Odd
+10@s.s@Both teams to score@s.s@1@s.s@Football@s.s@9@s.s@@scannerbet.constants.sí@@s.s@None@s.s@Yes@s.s@Yes@s.s@Yes
+6@s.s@Halftime + Full time result@s.s@1@s.s@Football@s.s@29@s.s@@scannerbet.constants.empate@/@scannerbet.constants.empate@@s.s@None@s.s@Half time/full time X/X@s.s@X/X@s.s@X/X
+9@s.s@Total number of goals@s.s@1@s.s@Football@s.s@40@s.s@@scannerbet.global.integer@-@scannerbet.global.integer@@s.s@0-2@s.s@Interval@s.s@@scannerbet.global.integer@-@scannerbet.global.integer@@s.s@@scannerbet.global.integer@-@scannerbet.global.integer@
+35@s.s@4th quarter winner@s.s@2@s.s@Basketball@s.s@499@s.s@Empate@s.s@None@s.s@Draw@s.s@X@s.s@X
+13@s.s@Handicap@s.s@1@s.s@Football@s.s@21@s.s@@scannerbet.constants.empate@ @scannerbet.constants.plus@@scannerbet.global.decimal@@s.s@None@s.s@Draw Handicap Plus@s.s@X +@scannerbet.global.decimal@@s.s@X +@scannerbet.global.decimal@
+8@s.s@Away team goals@s.s@1@s.s@Football@s.s@8@s.s@@scannerbet.global.integer@ @scannerbet.constants.o@ @scannerbet.constants.plus@@s.s@None@s.s@Number or more@s.s@@scannerbet.global.integer@ or +@s.s@@scannerbet.global.integer@ or more
+34@s.s@3rd quarter winner@s.s@2@s.s@Basketball@s.s@495@s.s@Empate@s.s@None@s.s@Draw@s.s@X@s.s@X
+21@s.s@Double bet chance@s.s@1@s.s@Football@s.s@13@s.s@@scannerbet.bookmaker.teams.team1@ @scannerbet.constants.o@ @scannerbet.constants.empate@@s.s@{" o ": " / "}@s.s@Double bet chance 1X@s.s@1X@s.s@1X
+33@s.s@2nd quarter winner@s.s@2@s.s@Basketball@s.s@490@s.s@Empate@s.s@None@s.s@Draw@s.s@X@s.s@X
+9@s.s@Total number of goals@s.s@1@s.s@Football@s.s@39@s.s@@scannerbet.global.integer@@scannerbet.constants.plus@@s.s@None@s.s@Number or more@s.s@@scannerbet.global.integer@ or +@s.s@@scannerbet.global.integer@ or more
 32@s.s@1st quarter winner@s.s@2@s.s@Basketball@s.s@485@s.s@Empate@s.s@None@s.s@Draw@s.s@X@s.s@X
+34@s.s@3rd quarter winner@s.s@2@s.s@Basketball@s.s@496@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+37@s.s@2nd time result@s.s@2@s.s@Basketball@s.s@492@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+40@s.s@Total points odd/even@s.s@2@s.s@Basketball@s.s@508@s.s@Impar@s.s@None@s.s@Odd@s.s@Odd@s.s@Odd
+31@s.s@4th quarter odd/even@s.s@2@s.s@Basketball@s.s@498@s.s@Impar@s.s@None@s.s@Odd@s.s@Odd@s.s@Odd
+1@s.s@Correct score@s.s@1@s.s@Football@s.s@1249@s.s@@scannerbet.bookmaker.teams.any@ @scannerbet.global.integer@:@scannerbet.global.integer@@s.s@None@s.s@Correct Score@s.s@@scannerbet.global.integer@:@scannerbet.global.integer@@s.s@@scannerbet.global.integer@:@scannerbet.global.integer@
+3@s.s@2-way@s.s@1@s.s@Football@s.s@16@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+33@s.s@2nd quarter winner@s.s@2@s.s@Basketball@s.s@491@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+32@s.s@1st quarter winner@s.s@2@s.s@Basketball@s.s@484@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+44@s.s@First half 1x2@s.s@2@s.s@Basketball@s.s@503@s.s@Empate@s.s@None@s.s@Draw@s.s@X@s.s@X
+45@s.s@Second half 1x2@s.s@2@s.s@Basketball@s.s@505@s.s@Empate@s.s@None@s.s@Draw@s.s@X@s.s@X
+69@s.s@Half time results@s.s@4@s.s@Rugby Union@s.s@695@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+94@s.s@Championship outright@s.s@10@s.s@Golf@s.s@1186@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+11@s.s@To qualify (Knock-out stage)@s.s@1@s.s@Football@s.s@1250@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+60@s.s@3-way@s.s@4@s.s@Rugby Union@s.s@710@s.s@Empate@s.s@None@s.s@Draw@s.s@X@s.s@X
+40@s.s@Total points odd/even@s.s@2@s.s@Basketball@s.s@507@s.s@Par@s.s@None@s.s@Even@s.s@Even@s.s@Even
+72@s.s@Winner@s.s@6@s.s@Tennis@s.s@1071@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+91@s.s@Championship outright@s.s@9@s.s@Cycling@s.s@1176@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+76@s.s@Correct score@s.s@6@s.s@Tennis@s.s@1067@s.s@@scannerbet.bookmaker.teams.any@ @scannerbet.global.integer@-@scannerbet.global.integer@@s.s@None@s.s@Correct Score@s.s@@scannerbet.global.integer@:@scannerbet.global.integer@@s.s@@scannerbet.global.integer@:@scannerbet.global.integer@
+62@s.s@Draw no bet@s.s@4@s.s@Rugby Union@s.s@694@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@868@s.s@@scannerbet.bookmaker.teams.team2@/@scannerbet.bookmaker.teams.team2@@s.s@None@s.s@Half time/full time 2/2@s.s@2/2@s.s@@scannerbet.teams.team2@/@scannerbet.teams.team2@
+86@s.s@3-way@s.s@7@s.s@Boxing@s.s@1135@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+84@s.s@Total number of sets@s.s@6@s.s@Tennis@s.s@1070@s.s@@scannerbet.global.integer@ SETS@s.s@None@s.s@Number@s.s@@scannerbet.global.integer@@s.s@@scannerbet.global.integer@
+83@s.s@1st set tiebreak @s.s@6@s.s@Tennis@s.s@1065@s.s@Yes@s.s@None@s.s@Yes@s.s@Yes@s.s@Yes
+73@s.s@Tiebreak Played@s.s@6@s.s@Tennis@s.s@1068@s.s@Yes@s.s@None@s.s@Yes@s.s@Yes@s.s@Yes
+83@s.s@1st set tiebreak @s.s@6@s.s@Tennis@s.s@1066@s.s@No@s.s@None@s.s@No@s.s@No@s.s@No
+73@s.s@Tiebreak Played@s.s@6@s.s@Tennis@s.s@1069@s.s@No@s.s@None@s.s@No@s.s@No@s.s@No
+68@s.s@Half time/full time results@s.s@4@s.s@Rugby Union@s.s@698@s.s@@scannerbet.bookmaker.teams.team1@/@scannerbet.constants.draw@@s.s@None@s.s@Half time/full time 1/X@s.s@1/X@s.s@@scannerbet.teams.team1@/X
+51@s.s@Winning Margins Rugby Union@s.s@5@s.s@Rugby League@s.s@893@s.s@@scannerbet.bookmaker.teams.any@ @scannerbet.global.integer@+@s.s@France 1-10@s.s@Winning Margins +@s.s@@scannerbet.teams.any@ @scannerbet.global.integer@ or +@s.s@@scannerbet.teams.any@ @scannerbet.global.integer@ or more
+89@s.s@Number of rounds@s.s@7@s.s@Boxing@s.s@1136@s.s@Ganara en 1 Asalto o menos@s.s@None@s.s@Totals Under Fixed 1@s.s@Under 1@s.s@Under 1
+88@s.s@Winning form@s.s@7@s.s@Boxing@s.s@1132@s.s@@scannerbet.bookmaker.teams.any@ - By Decision or Technical Decision@s.s@{" - By Decision or Technical Decision": " / - By Decision or Technical Decision"}@s.s@Winning Form (Decision or Technical Decision)@s.s@@scannerbet.teams.any@ - Decision or Technical Decision@s.s@@scannerbet.teams.any@ - Decision or Technical Decision
+57@s.s@Half time results@s.s@5@s.s@Rugby League@s.s@866@s.s@Empate@s.s@None@s.s@Draw@s.s@X@s.s@X
+51@s.s@Winning Margins Rugby Union@s.s@5@s.s@Rugby League@s.s@892@s.s@@scannerbet.bookmaker.teams.any@ @scannerbet.global.integer@-@scannerbet.global.integer@@s.s@France 1-10@s.s@Winning Margins@s.s@@scannerbet.teams.any@ @scannerbet.global.integer@-@scannerbet.global.integer@@s.s@@scannerbet.teams.any@ @scannerbet.global.integer@-@scannerbet.global.integer@
+56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@880@s.s@Empate/Empate@s.s@None@s.s@Half time/full time X/X@s.s@X/X@s.s@X/X
+90@s.s@Championship outright@s.s@7@s.s@Boxing@s.s@1131@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+88@s.s@Winning form@s.s@7@s.s@Boxing@s.s@1134@s.s@Empate o Empate Tecnico@s.s@None@s.s@Winning Form (Draw or Technical draw)@s.s@Draw or Technical Draw@s.s@Draw or Technical Draw
+56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@870@s.s@@scannerbet.bookmaker.teams.team2@/@scannerbet.bookmaker.teams.team1@@s.s@None@s.s@Half time/full time 2/1@s.s@2/1@s.s@@scannerbet.teams.team2@/@scannerbet.teams.team1@
+56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@881@s.s@Empate/@scannerbet.bookmaker.teams.team2@@s.s@None@s.s@Half time/full time X/2@s.s@X/2@s.s@X/@scannerbet.teams.team2@
+39@s.s@Winner 2 way@s.s@2@s.s@Basketball@s.s@509@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+57@s.s@Half time results@s.s@5@s.s@Rugby League@s.s@865@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+89@s.s@Number of rounds@s.s@7@s.s@Boxing@s.s@1137@s.s@Ganara después del primer Asalto@s.s@None@s.s@Totals Over Fixed 1@s.s@Over 1@s.s@Over 1
+45@s.s@Second half 1x2@s.s@2@s.s@Basketball@s.s@506@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@874@s.s@@scannerbet.bookmaker.teams.team1@/@scannerbet.constants.draw@@s.s@None@s.s@Half time/full time 1/X@s.s@1/X@s.s@@scannerbet.teams.team1@/X
+10@s.s@Both teams to score@s.s@1@s.s@Football@s.s@10@s.s@@scannerbet.constants.no@@s.s@None@s.s@No@s.s@No@s.s@No
+20@s.s@Odd or even number of total goals@s.s@1@s.s@Football@s.s@36@s.s@@scannerbet.constants.par@@s.s@None@s.s@Even@s.s@Even@s.s@Even
+48@s.s@3-way@s.s@5@s.s@Rugby League@s.s@890@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@878@s.s@@scannerbet.bookmaker.teams.team2@/@scannerbet.constants.draw@@s.s@None@s.s@Half time/full time 2/X@s.s@2/X@s.s@@scannerbet.teams.team2@/X
+50@s.s@Draw no bet@s.s@5@s.s@Rugby League@s.s@864@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+67@s.s@Total points@s.s@4@s.s@Rugby Union@s.s@706@s.s@Más @scannerbet.global.decimal@@s.s@None@s.s@Totals Over@s.s@Over @scannerbet.global.decimal@@s.s@Over @scannerbet.global.decimal@
+15@s.s@Matchbet + both teams to score@s.s@1@s.s@Football@s.s@41@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Matchbet + both teams to score Any/Yes@s.s@@scannerbet.teams.any@/Yes@s.s@@scannerbet.teams.any@/Yes
+59@s.s@Championship outright@s.s@5@s.s@Rugby League@s.s@863@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@877@s.s@@scannerbet.bookmaker.teams.team2@/@scannerbet.bookmaker.teams.team2@@s.s@None@s.s@Half time/full time 2/2@s.s@2/2@s.s@@scannerbet.teams.team2@/@scannerbet.teams.team2@
+67@s.s@Total points@s.s@4@s.s@Rugby Union@s.s@707@s.s@Menos @scannerbet.global.decimal@@s.s@None@s.s@Totals Under@s.s@Under @scannerbet.global.decimal@@s.s@Under @scannerbet.global.decimal@
+56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@873@s.s@@scannerbet.bookmaker.teams.team1@/@scannerbet.bookmaker.teams.team2@@s.s@None@s.s@Half time/full time 1/2@s.s@1/2@s.s@@scannerbet.teams.team1@/@scannerbet.teams.team2@
+56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@879@s.s@@scannerbet.bookmaker.teams.team2@/@scannerbet.bookmaker.teams.team1@@s.s@None@s.s@Half time/full time 2/1@s.s@2/1@s.s@@scannerbet.teams.team2@/@scannerbet.teams.team1@
+63@s.s@Winning Margins Rugby Union@s.s@4@s.s@Rugby Union@s.s@714@s.s@@scannerbet.bookmaker.teams.any@ @scannerbet.global.integer@+@s.s@France 1-10@s.s@Winning Margins +@s.s@@scannerbet.teams.any@ @scannerbet.global.integer@ or +@s.s@@scannerbet.teams.any@ @scannerbet.global.integer@ or more
+48@s.s@3-way@s.s@5@s.s@Rugby League@s.s@889@s.s@Empate@s.s@None@s.s@Draw@s.s@X@s.s@X
+51@s.s@Winning Margins Rugby Union@s.s@5@s.s@Rugby League@s.s@891@s.s@Draw@s.s@None@s.s@Draw@s.s@X@s.s@X
+44@s.s@First half 1x2@s.s@2@s.s@Basketball@s.s@504@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+4@s.s@Totals@s.s@1@s.s@Football@s.s@18@s.s@Menos de +@scannerbet.global.decimal@@s.s@None@s.s@Totals Under@s.s@Under @scannerbet.global.decimal@@s.s@Under @scannerbet.global.decimal@
+63@s.s@Winning Margins Rugby Union@s.s@4@s.s@Rugby Union@s.s@713@s.s@@scannerbet.bookmaker.teams.any@ @scannerbet.global.integer@-@scannerbet.global.integer@@s.s@France 1-10@s.s@Winning Margins@s.s@@scannerbet.teams.any@ @scannerbet.global.integer@-@scannerbet.global.integer@@s.s@@scannerbet.teams.any@ @scannerbet.global.integer@-@scannerbet.global.integer@
+68@s.s@Half time/full time results@s.s@4@s.s@Rugby Union@s.s@697@s.s@@scannerbet.bookmaker.teams.team1@/@scannerbet.bookmaker.teams.team1@@s.s@None@s.s@Half time/full time 1/1@s.s@1/1@s.s@@scannerbet.teams.team1@/@scannerbet.teams.team1@
+13@s.s@Handicap@s.s@1@s.s@Football@s.s@19@s.s@@scannerbet.bookmaker.teams.any@ @scannerbet.constants.plus@@scannerbet.global.decimal@@s.s@None@s.s@Handicap Plus@s.s@@scannerbet.teams.any@ +@scannerbet.global.decimal@@s.s@@scannerbet.teams.any@ +@scannerbet.global.decimal@
+56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@867@s.s@Empate/@scannerbet.bookmaker.teams.team1@@s.s@None@s.s@Half time/full time X/1@s.s@X/1@s.s@X/@scannerbet.teams.team1@
+55@s.s@Total points@s.s@5@s.s@Rugby League@s.s@885@s.s@Más @scannerbet.global.decimal@@s.s@None@s.s@Totals Over@s.s@Over @scannerbet.global.decimal@@s.s@Over @scannerbet.global.decimal@
+43@s.s@First half (draw no bet)@s.s@2@s.s@Basketball@s.s@502@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+46@s.s@Championship outright@s.s@2@s.s@Basketball@s.s@501@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+35@s.s@4th quarter winner@s.s@2@s.s@Basketball@s.s@500@s.s@@scannerbet.bookmaker.teams.any@@s.s@None@s.s@Generic Championship outright@s.s@@scannerbet.teams.any@@s.s@@scannerbet.teams.any@
+54@s.s@Total tries@s.s@5@s.s@Rugby League@s.s@887@s.s@Más @scannerbet.global.decimal@@s.s@None@s.s@Totals Over@s.s@Over @scannerbet.global.decimal@@s.s@Over @scannerbet.global.decimal@
+9@s.s@Total number of goals@s.s@1@s.s@Football@s.s@38@s.s@@scannerbet.global.integer@@s.s@None@s.s@Number@s.s@@scannerbet.global.integer@@s.s@@scannerbet.global.integer@
+68@s.s@Half time/full time results@s.s@4@s.s@Rugby Union@s.s@699@s.s@@scannerbet.bookmaker.teams.team1@/@scannerbet.bookmaker.teams.team2@@s.s@None@s.s@Half time/full time 1/2@s.s@1/2@s.s@@scannerbet.teams.team1@/@scannerbet.teams.team2@
+7@s.s@Home team goals@s.s@1@s.s@Football@s.s@24@s.s@@scannerbet.global.integer@@s.s@None@s.s@Number@s.s@@scannerbet.global.integer@@s.s@@scannerbet.global.integer@
+8@s.s@Away team goals@s.s@1@s.s@Football@s.s@7@s.s@@scannerbet.global.integer@@s.s@None@s.s@Number@s.s@@scannerbet.global.integer@@s.s@@scannerbet.global.integer@
+56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@875@s.s@@scannerbet.bookmaker.teams.team1@/@scannerbet.bookmaker.teams.team1@@s.s@None@s.s@Half time/full time 1/1@s.s@1/1@s.s@@scannerbet.teams.team1@/@scannerbet.teams.team1@
+56@s.s@Half time/full time results@s.s@5@s.s@Rugby League@s.s@883@s.s@@scannerbet.bookmaker.teams.team1@/@scannerbet.constants.draw@@s.s@None@s.s@Half time/full time 1/X@s.s@1/X@s.s@@scannerbet.teams.team1@/X

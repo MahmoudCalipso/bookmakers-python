@@ -114,7 +114,7 @@ if os.path.exists(queue_csv_path):
                                             # Get odds from API
                                             event_feed_url = 'https://sports-offering.leovegas.com/offering/v2018/es/betoffer/event/' + str(event.get('id'))
                                             event_json_path = bookmaker_title + "-event.json"
-                                            with requests.get(event_feed_url, stream=True) as r:
+                                            with requests.get(event_feed_url, stream=True, timeout=15) as r:
                                                 with open(event_json_path, 'wb') as f:
                                                     for chunk in r.iter_content(chunk_size=8192): 
                                                         # If you have chunk encoded response uncomment if
@@ -123,7 +123,7 @@ if os.path.exists(queue_csv_path):
                                                         f.write(chunk)
 
                                             odds = []
-                                            markets = ijson.items(open(event_json_path, 'r', encoding="utf-8"), 'betoffers.item')
+                                            markets = ijson.items(open(event_json_path, 'r', encoding="utf-8"), 'betOffers.item')
 
                                             for market in markets:
                                                 if market.get('outcomes'):
@@ -137,12 +137,17 @@ if os.path.exists(queue_csv_path):
                                                         title = outcome.get('englishLabel')
 
                                                         if title == 'Over' or title == 'Under':
-                                                            title += ' ' + (outcome.get('line') / 1000)
+                                                            title += ' ' + str(outcome.get('line') / 1000)
 
-                                                        odds_fractional = Fraction(outcome.get('oddsFractional'))
+                                                        try:
+                                                            odds_fractional = Fraction(outcome.get('oddsFractional'))
+                                                            decimal = float(odds_fractional)
+                                                        except:
+                                                            decimal = 0
+
                                                         bookmaker_odd_outcome.outcome_id = str(outcome.get('id'))
                                                         bookmaker_odd_outcome.title = title
-                                                        bookmaker_odd_outcome.decimal = float(odds_fractional)
+                                                        bookmaker_odd_outcome.decimal = decimal
 
                                                         outcomes.append(bookmaker_odd_outcome)
 

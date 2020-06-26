@@ -84,7 +84,7 @@ if os.path.exists(queue_csv_path):
                                                 event_name_teams = event_name.split(' @ ')
                                                 event_name_teams.reverse()
 
-                                            if len(event_name_teams) >= 2:
+                                            if len(event_name_teams) > 0:
                                                 i = 0
                                                 for team in event_name_teams:
                                                     _team = BookmakerEventTeam.BookmakerEventTeam()
@@ -121,7 +121,7 @@ if os.path.exists(queue_csv_path):
                                                     bookmaker_odd_outcome = BookmakerOddOutcome.BookmakerOddOutcome()
 
                                                     # Get decimal by regular expression
-                                                    decimal_matches = re.search('[0-9]+(\.[0-9]{1,2})', price.text)
+                                                    decimal_matches = re.search(':([0-9]+\.[0-9]{1,2})', price.text)
 
                                                     bookmaker_odd_outcome.outcome_id = price.attrib['bet_ref'] if 'bet_ref' in price.attrib else None
                                                     bookmaker_odd_outcome.title = price.attrib['name']
@@ -151,6 +151,8 @@ if os.path.exists(queue_csv_path):
                                                         teams.append(team)
                                                         i += 1
                                                     break
+
+                                            bookmaker_event.teams = teams
 
                                             # Check if this event is referring to the championship winner
                                             now = datetime.now()

@@ -8,8 +8,8 @@ import csv
 start_time = time.time()
 
 try:
-	connection = psycopg2.connect(user = "asanchez",
-								  password = "aegha5Cu",
+	connection = psycopg2.connect(user = "postgres",
+								  password = "",
 								  host = "127.0.0.1",
 								  port = "5432",
 								  database = "scannerbet")

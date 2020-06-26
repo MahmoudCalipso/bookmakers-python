@@ -95,7 +95,7 @@ if os.path.exists(queue_csv_path):
 									if len(event_name_teams) == 2:
 										event_name = event_name_teams[0] + ' vs ' + event_name_teams[1]
 
-									#print(bookmaker_title + ' :: Processing API event: ' + event_name)
+									print(bookmaker_title + ' :: Processing API event: ' + event_name)
 
 									teams = []
 									epl = event.get('epl')
@@ -109,6 +109,7 @@ if os.path.exists(queue_csv_path):
 											_team.local = i == 0
 
 											checkTeamMembers(sport, _team)
+											teams.append(_team)
 
 											i += 1
 

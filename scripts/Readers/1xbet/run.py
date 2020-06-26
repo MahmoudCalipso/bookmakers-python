@@ -10,6 +10,7 @@ sys.path.append("../")
 sys.path.append("../../")
 from models import BookmakerEvent, BookmakerEventTeam, BookmakerEventTeamMember, BookmakerOdd, BookmakerOddOutcome
 import bookmaker_updater
+import socketio
 
 # Constants
 MARKET_1X2 = '1X2';
@@ -1062,6 +1063,22 @@ def checkTeamMembers(sport, team):
 
 			team.members = members
 
+sio = socketio.Client()
+
+@sio.event
+def connect():
+    print('Connection established')
+
+@sio.event
+def connect_error():
+    print("The connection failed!")
+
+@sio.event
+def disconnect():
+    print('Disconnected from server')
+
+sio.connect('http://127.0.0.1:5000', namespaces=['/seeder'])
+
 start_time = time.time()
 timestamp = str(int(time.time()));
 bookmaker_id = 14
@@ -1218,5 +1235,14 @@ if os.path.exists(queue_csv_path):
 									print(bookmaker_title + ' :: Could not process event: ' + str(ex))
 
 bookmaker_updater.finish()
+
+sio.emit('read_complete', {
+	'bookmaker_id': bookmaker_id,
+	'bookmaker_title': bookmaker_title
+}, namespace='/seeder')
+
+sio.sleep(5)
+print('Disconnecting!')
+sio.disconnect()
 
 print("--- %s seconds ---" % (time.time() - start_time))

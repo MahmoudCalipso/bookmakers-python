@@ -15,10 +15,18 @@ def disconnect(sid):
 	print('disconnect ', sid)
 
 @sio.on('download_complete', namespace='/readers')
-def my_custom_event(sid, data):
+def download_complete(sid, data):
 	if data['bookmaker']:
 		print('Download complete! Waking up reader...')
 		#os.system('cd Readers/' + data['bookmaker'] + ' && python run.py')
+	pass
+
+@sio.on('read_complete', namespace='/seeder')
+def read_complete(sid, data):
+	print(data)
+	if data['bookmaker_id'] and data['bookmaker_title']:
+		print('Download complete! Waking up seeder...')
+		os.system('cd Seeder && python run.py ' + str(data['bookmaker_id']) + ' ' + data['bookmaker_title'])
 	pass
 
 if __name__ == '__main__':

@@ -988,7 +988,7 @@ def buildBookmakerEventMarkets(bookmaker_event, event_title, event_date):
 						for team in bookmaker_event.teams:
 							teams_titles.append(team.title)
 
-						sql += "(DEFAULT, {sport=" + bookmaker_event.sport + "&tournament=" + bookmaker_event.tournament + "&event=" + event_title + "&date=" + event_date + "&market_title=" + odd.title + "&teams=" + json.dumps(teams_titles) + "}, {team_id}, '" + outcome.outcome_id + "', {outcome_title=" + outcome.title.strip() + "}, " + str(round(outcome.decimal, 2)) + ", NULL, '{created_at}', '{updated_at}', " + ("'" + json.dumps(outcome.deep_link) + "'" if outcome.deep_link else 'NULL') + ", {outcome_rule_id})"
+						sql += "(DEFAULT, {sport=" + bookmaker_event.sport + "&tournament=" + bookmaker_event.tournament + "&event=" + event_title + "&date=" + event_date + "&market_title=" + odd.title + "&teams=" + json.dumps(teams_titles) + "}, {team_id}, '" + (outcome.outcome_id if outcome.outcome_id else '') + "', {outcome_title=" + outcome.title.strip() + "}, " + str(round(outcome.decimal, 2)) + ", NULL, '{created_at}', '{updated_at}', " + ("'" + json.dumps(outcome.deep_link) + "'" if outcome.deep_link else 'NULL') + ", {outcome_rule_id})"
 
 						with open(sql_files_path + BOOKMAKER_EVENT_MARKET_OUTCOMES_TABLE + '.sql', 'a', encoding="utf-8") as fd:
 							fd.write(sql)

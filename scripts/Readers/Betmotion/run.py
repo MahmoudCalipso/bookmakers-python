@@ -155,7 +155,7 @@ if os.path.exists(queue_csv_path):
                                                             # Get odds from API
                                                             event_feed_url = 'http://dataexport-uof-betmotion.biahosted.com/Export/GetMarkets?importerId=2919&eventId=' + str(event.get('EventId'))
                                                             event_json_path = bookmaker_title + "-event.json"
-                                                            with requests.get(event_feed_url, stream=True) as r:
+                                                            with requests.get(event_feed_url, stream=True, timeout=15) as r:
                                                                 with open(event_json_path, 'wb') as f:
                                                                     for chunk in r.iter_content(chunk_size=8192): 
                                                                         # If you have chunk encoded response uncomment if

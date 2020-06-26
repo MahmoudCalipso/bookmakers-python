@@ -15,21 +15,21 @@ EVENT_CHAMPIONSHIP_WINNER = 'Winner'
 MYSQL_DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 def checkTeamMembers(sport, team):
-    if sport == 'Tennis':
-        matches = re.search('(.*)\/(.*)', team.title)
+	if sport == 'Tennis':
+		matches = re.search('(.*)\/(.*)', team.title)
 
-        if matches and matches.group(1) and matches.group(2) and matches.group(1) != matches.group(2):
-            members = []
-            
-            member = BookmakerEventTeamMember.BookmakerEventTeamMember()
-            member.title = matches.group(1)
-            members.append(member)
+		if matches and matches.group(1) and matches.group(2) and matches.group(1) != matches.group(2):
+			members = []
+			
+			member = BookmakerEventTeamMember.BookmakerEventTeamMember()
+			member.title = matches.group(1)
+			members.append(member)
 
-            member = BookmakerEventTeamMember.BookmakerEventTeamMember()
-            member.title = matches.group(2)
-            members.append(member)
+			member = BookmakerEventTeamMember.BookmakerEventTeamMember()
+			member.title = matches.group(2)
+			members.append(member)
 
-            team.members = members
+			team.members = members
 
 start_time = time.time()
 timestamp = str(int(time.time()));
@@ -109,13 +109,13 @@ if os.path.exists(queue_csv_path):
 													# Get odds from API
 													event_feed_url = 'https://vbetaffiliates-admin.com/global/feed/json/?language=eng&timeZone=179&filterData%5Bstart_ts%5D=172800&brandId=4&gameid=' + str(event.get('id'))
 													event_json_path = bookmaker_title + "-event.json"
-		                                            with requests.get(event_feed_url, stream=True) as r:
-		                                                with open(event_json_path, 'wb') as f:
-		                                                    for chunk in r.iter_content(chunk_size=8192): 
-		                                                        # If you have chunk encoded response uncomment if
-		                                                        # and set chunk_size parameter to None.
-		                                                        #if chunk: 
-		                                                        f.write(chunk)
+													with requests.get(event_feed_url, stream=True, timeout=15) as r:
+														with open(event_json_path, 'wb') as f:
+															for chunk in r.iter_content(chunk_size=8192): 
+																# If you have chunk encoded response uncomment if
+																# and set chunk_size parameter to None.
+																#if chunk: 
+																f.write(chunk)
 
 													markets = ijson.items(open(event_json_path, 'r', encoding="utf-8"), 'markets.item')
 

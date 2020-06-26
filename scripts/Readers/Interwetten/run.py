@@ -112,7 +112,7 @@ if os.path.exists(queue_csv_path):
 														for selection in selections:
 															bookmaker_odd_outcome = BookmakerOddOutcome.BookmakerOddOutcome()
 
-															bookmaker_odd_outcome.outcome_id = selection.get('id')
+															bookmaker_odd_outcome.outcome_id = str(selection.get('id'))
 															bookmaker_odd_outcome.title = selection.get('name') if selection.get('name') else selection.get('tip')
 															bookmaker_odd_outcome.decimal = selection.get('odd')
 
@@ -120,7 +120,7 @@ if os.path.exists(queue_csv_path):
 
 														odd = BookmakerOdd.BookmakerOdd()
 
-														odd.id = market.get('id')
+														odd.id = str(market.get('id'))
 														odd.title = market.get('name')
 														odd.outcomes = outcomes
 
