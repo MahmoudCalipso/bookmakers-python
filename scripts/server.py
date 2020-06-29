@@ -3,8 +3,8 @@ import uvicorn
 import os
 
 # create a Socket.IO server
-sio = socketio.AsyncServer(async_mode='asgi')
-app = socketio.ASGIApp(sio)
+sio = socketio.Server(async_mode='threading')
+app = socketio.WSGIApp(sio)
 
 @sio.event
 def connect(sid, environ):
@@ -18,14 +18,13 @@ def disconnect(sid):
 def download_complete(sid, data):
 	if data['bookmaker']:
 		print('Download complete! Waking up reader...')
-		#os.system('cd Readers/' + data['bookmaker'] + ' && python run.py')
+		os.system('cd Readers/' + data['bookmaker'] + ' && python run.py')
 	pass
 
 @sio.on('read_complete', namespace='/seeder')
 def read_complete(sid, data):
-	print(data)
 	if data['bookmaker_id'] and data['bookmaker_title']:
-		print('Download complete! Waking up seeder...')
+		print('Download complete! Waking up ' + data['bookmaker_title'] + ' seeder...')
 		os.system('cd Seeder && python run.py ' + str(data['bookmaker_id']) + ' ' + data['bookmaker_title'])
 	pass
 

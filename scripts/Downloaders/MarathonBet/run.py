@@ -4,23 +4,8 @@ import os
 import xml.etree.ElementTree as ET
 from datetime import date
 import sys
-import socketio
-
-sio = socketio.Client()
-
-@sio.event
-def connect():
-    print('Connection established')
-
-@sio.event
-def connect_error():
-    print("The connection failed!")
-
-@sio.event
-def disconnect():
-    print('Disconnected from server')
-
-sio.connect('http://127.0.0.1:5000', namespaces=['/readers'])
+import socket
+import json
 
 is_live = False
 
@@ -77,16 +62,32 @@ if len(event_feeds):
     with open(queue_csv_path, 'a') as fd:
         fd.write(timestamp + ';All;' + download_type + ';' + ",".join(event_feeds) + "\n")
 
-sio.emit('download_complete', {
-    'bookmaker': bookmaker_title,
-    'timestamp': timestamp,
-    'sport': 'All',
-    'type': download_type,
-    'feeds': event_feeds
-}, namespace='/readers')
+# local host IP '127.0.0.1' 
+host = '127.0.0.1'
 
-sio.sleep(5)
-print('Disconnecting!')
-sio.disconnect()
+# Define the port on which you want to connect 
+port = 12345
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
+
+# connect to server on local computer 
+s.connect((host,port)) 
+
+# message you send to server 
+message = json.dumps({
+    'message': 'download_complete',
+    'data': {
+        'bookmaker_title': bookmaker_title,
+        'timestamp': timestamp,
+        'sport': 'All',
+        'type': download_type,
+        'feeds': event_feeds
+    }
+})
+
+# message sent to server 
+s.send(message.encode('utf8'))
+
+s.close()
 
 print("--- %s seconds ---" % (time.time() - start_time))

@@ -10,7 +10,8 @@ sys.path.append("../")
 sys.path.append("../../")
 from models import BookmakerEvent, BookmakerEventTeam, BookmakerEventTeamMember, BookmakerOdd, BookmakerOddOutcome
 import bookmaker_updater
-import socketio
+import socket
+import json
 
 EVENT_CHAMPIONSHIP_WINNER = 'Winner'
 MYSQL_DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
@@ -48,22 +49,6 @@ def checkTeamMembers(sport, team):
             members.append(member)
 
             team.members = members
-
-sio = socketio.Client()
-
-@sio.event
-def connect():
-    print('Connection established')
-
-@sio.event
-def connect_error():
-    print("The connection failed!")
-
-@sio.event
-def disconnect():
-    print('Disconnected from server')
-
-sio.connect('http://127.0.0.1:5000', namespaces=['/seeder'])
 
 start_time = time.time()
 timestamp = str(int(time.time()));
@@ -235,13 +220,29 @@ if os.path.exists(queue_csv_path):
 
 bookmaker_updater.finish()
 
-sio.emit('read_complete', {
-    'bookmaker_id': bookmaker_id,
-    'bookmaker_title': bookmaker_title
-}, namespace='/seeder')
+# local host IP '127.0.0.1' 
+host = '127.0.0.1'
 
-sio.sleep(5)
-print('Disconnecting!')
-sio.disconnect()
+# Define the port on which you want to connect 
+port = 12345
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
+
+# connect to server on local computer 
+s.connect((host,port)) 
+
+# message you send to server 
+message = json.dumps({
+    'message': 'read_complete',
+    'data': {
+        'bookmaker_id': bookmaker_id,
+        'bookmaker_title': bookmaker_title
+    }
+})
+
+# message sent to server 
+s.send(message.encode('utf8'))
+
+s.close()
 
 print("--- %s seconds ---" % (time.time() - start_time))

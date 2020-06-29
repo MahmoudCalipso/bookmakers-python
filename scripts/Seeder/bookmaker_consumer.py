@@ -52,11 +52,11 @@ def run(id, title):
 	global queue_path
 	global connection
 	global bookmaker_update_queues_sql
-
+	global saved_outcomes
 
 	if connection == None:
 		connection = psycopg2.connect(user = "postgres",
-								  password = "",
+								  password = "aegha5Cu",
 								  host = "127.0.0.1",
 								  port = "5432",
 								  database = "scannerbet")
@@ -64,7 +64,6 @@ def run(id, title):
 	bookmaker_id = id
 	bookmaker_title = title
 	queue_csv_path = '../../queues/Readers/' + bookmaker_title + '/queue.csv'
-	saved_outcomes = []
 	not_processed_outcomes = NOT_PROCESSED_STRUCTURE
 	bookmaker_update_queues_sql = 'INSERT INTO bookmaker_update_queues VALUES \n'
 
@@ -85,13 +84,14 @@ def run(id, title):
 
 				if os.path.exists(queue_path):
 					print('Processing page ' + page)
+					saved_outcomes = []
 					picket_at = datetime.datetime.now().strftime(MYSQL_DATETIME_FORMAT)
 					seedDB()
 					now = datetime.datetime.now().strftime(MYSQL_DATETIME_FORMAT)
 					if row_index > 0:
-						bookmaker_update_queues_sql += '\n'
+						bookmaker_update_queues_sql += '\n,'
 
-					bookmaker_update_queues_sql += '(DEFAULT, ' + str(bookmaker_id) + ', NULL, \'' + queue_path + '\', ' + page  + ', 0, 1, 0, 0, NULL, \'' + json.dumps(not_processed_outcomes) + '\', \'' + now + '\', \'' + now + '\', \'' + picket_at + '\', \'' + row[1] + '\', \'' + json.dumps(saved_outcomes) + '\')\n' 
+					bookmaker_update_queues_sql += '(DEFAULT, ' + str(bookmaker_id) + ', NULL, \'' + queue_path + '\', ' + page  + ', 0, 1, 0, 0, NULL, \'' + json.dumps(not_processed_outcomes) + '\', \'' + now + '\', \'' + now + '\', \'' + picket_at + '\', \'' + row[2] + '\', \'' + json.dumps(saved_outcomes) + '\')\n' 
 					row_index += 1
 
 					# Remove folder
@@ -106,7 +106,6 @@ def run(id, title):
 			cursor.execute(bookmaker_update_queues_sql)
 			connection.commit()
 		except (Exception, psycopg2.DatabaseError) as error:
-			print(error)                 
 			connection.rollback()
 
 def initBookmakerEntities(title):
@@ -616,19 +615,19 @@ def filterEvents(sql_path):
 					event_data = _line.split(',')
 					tournament_id = event_data[1].strip()
 					title = event_data[3].replace("'", "")
-					date = event_data[4].replace("'", "")
+					_date = event_data[4].replace("'", "")
 					time = event_data[12].replace("'", "")
-					date = date.strip()
+					_date = _date.strip()
 					time = time.strip()
-					date = datetime.datetime.strptime(date, MYSQL_DATE_FORMAT)
+					_date = datetime.datetime.strptime(_date, MYSQL_DATE_FORMAT)
 
 					if len(teams_ids) == 2:
 						# Check current, previous and next dates
 						today = datetime.datetime.now().strftime(MYSQL_DATE_FORMAT)
-						two_days_ago_date = (date - timedelta(days=2)).strftime(MYSQL_DATE_FORMAT)
-						previous_date = (date - timedelta(days=1)).strftime(MYSQL_DATE_FORMAT)
-						next_date = (date + timedelta(days=1)).strftime(MYSQL_DATE_FORMAT)
-						two_days_after_date = (date + timedelta(days=2)).strftime(MYSQL_DATE_FORMAT)
+						two_days_ago_date = (_date - timedelta(days=2)).strftime(MYSQL_DATE_FORMAT)
+						previous_date = (_date - timedelta(days=1)).strftime(MYSQL_DATE_FORMAT)
+						next_date = (_date + timedelta(days=1)).strftime(MYSQL_DATE_FORMAT)
+						two_days_after_date = (_date + timedelta(days=2)).strftime(MYSQL_DATE_FORMAT)
 
 						dates_to_check = [today, previous_date, next_date, two_days_after_date, two_days_ago_date]
 
@@ -655,7 +654,7 @@ def filterEvents(sql_path):
 					events_lines_to_double_check.append({
 						'tournament_id': tournament_id,
 						'title': title,
-						'date': date.strftime(MYSQL_DATE_FORMAT),
+						'date': _date.strftime(MYSQL_DATE_FORMAT),
 						'time': time,
 						'teams_ids': teams_ids,
 						'line': line
@@ -670,7 +669,7 @@ def filterEvents(sql_path):
 					processed_events.append({
 						'tournament_id': tournament_id,
 						'title': title.lstrip(),
-						'date': date.strftime(MYSQL_DATE_FORMAT),
+						'date': _date.strftime(MYSQL_DATE_FORMAT),
 						'time': time,
 						'outrights': True
 					})
@@ -685,12 +684,12 @@ def filterEvents(sql_path):
 
 			if len(records) > 0:
 				for row in records:
-					event_id = row[0]
+					event_id = str(row[0])
 					event_date = str(row[1])
 					event_time = str(row[2])
 					event_title = row[3]
-					tournament_id = row[4]
-					event_team_id = row[5]
+					tournament_id = str(row[4])
+					event_team_id = str(row[5])
 
 					if not tournament_id in events:
 						events[tournament_id] = {}
@@ -701,15 +700,27 @@ def filterEvents(sql_path):
 					if not event_id in events[tournament_id][event_date]:
 						events[tournament_id][event_date][event_id] = {
 							'teams': [],
+							'date': event_date,
 							'datetime': event_date + ' ' + event_time,
 							'title': event_title
 						}
 
-					events[tournament_id][event_date][event_id]['teams'].append(event_team_id)
+					if event_team_id not in events[tournament_id][event_date][event_id]['teams']:
+						events[tournament_id][event_date][event_id]['teams'].append(event_team_id)
 
 			for event_to_double_check in events_lines_to_double_check:
 				tournament_id = event_to_double_check['tournament_id']
 				teams_ids = event_to_double_check['teams_ids']
+				_date = event_to_double_check['date']
+				_date = datetime.datetime.strptime(_date, MYSQL_DATE_FORMAT)
+				# Check current, previous and next dates
+				today = datetime.datetime.now().strftime(MYSQL_DATE_FORMAT)
+				two_days_ago_date = (_date - timedelta(days=2)).strftime(MYSQL_DATE_FORMAT)
+				previous_date = (_date - timedelta(days=1)).strftime(MYSQL_DATE_FORMAT)
+				next_date = (_date + timedelta(days=1)).strftime(MYSQL_DATE_FORMAT)
+				two_days_after_date = (_date + timedelta(days=2)).strftime(MYSQL_DATE_FORMAT)
+
+				dates_to_check = [today, previous_date, next_date, two_days_after_date, two_days_ago_date]
 				found = False
 
 				for date_part in dates_to_check:
@@ -811,6 +822,7 @@ def seedBookmakerEventMarketOutcomes(ids):
 	global teams_maps
 	global markets_maps
 	global market_parser
+	global saved_outcomes
 
 	not_processed_outcomes = NOT_PROCESSED_STRUCTURE
 
@@ -859,6 +871,7 @@ def seedBookmakerEventMarketOutcomes(ids):
 					outcome_title = match.group(7)
 					not_mapped = True
 					replaced = False
+					duplicated = False
 
 					#print('Preg replace ' + event_title + ' => ' + bookmaker_market_title + ' // ' + outcome_title)
 
@@ -946,6 +959,9 @@ def seedBookmakerEventMarketOutcomes(ids):
 											if bookmaker_event_market_id not in outcomes:
 												outcomes[bookmaker_event_market_id] = []
 
+											if outcome in outcomes[bookmaker_event_market_id]:
+												duplicated = True
+
 											if (
 												(len(outcome) > 0 or outcome.isnumeric())
 												and outcome not in outcomes[bookmaker_event_market_id]
@@ -967,13 +983,12 @@ def seedBookmakerEventMarketOutcomes(ids):
 													saved_outcomes.append({
 														'market': market_display_title,
 														'bookmaker_market': bookmaker_market_title,
-														'outcome': outcome_title.replace("'", ""),
+														'outcome': outcome_title.replace("'", "´"),
 														'sport': sport_title,
 														'tournament': bookmaker_tournament_title,
-														'teams': event_teams,
 														'event': event_title,
 														'output': outcome,
-														'rule': matching_outcome_rule,
+														'rule': matching_outcome_rule.id,
 														'datetime': now
 													})
 											if not replaced and len(missing_bookmaker_teams) == 0 and outcome not in outcomes[bookmaker_event_market_id]:
@@ -1017,7 +1032,7 @@ def seedBookmakerEventMarketOutcomes(ids):
 										break
 								break
 
-					if not_mapped:
+					if not_mapped and not duplicated:
 						if bookmaker_market_title not in not_processed['not_mapped']:
 							not_processed['not_mapped'][bookmaker_market_title] = {}
 
@@ -1025,7 +1040,7 @@ def seedBookmakerEventMarketOutcomes(ids):
 							not_processed['not_mapped'][bookmaker_market_title][event_title] = []
 
 						not_processed['not_mapped'][bookmaker_market_title][event_title].append({
-							'outcome': outcome_title,
+							'outcome': outcome_title.replace("'", "´"),
 							'sport': bookmaker_sport_title,
 							'tournament': bookmaker_tournament_title,
 							'datetime': datetime.datetime.now().strftime(MYSQL_DATETIME_FORMAT) 
