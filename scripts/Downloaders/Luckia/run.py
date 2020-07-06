@@ -4,7 +4,7 @@ import os
 import gzip
 import shutil
 import sys
-from datetime import date
+from datetime import date, datetime
 import socket
 import json
 
@@ -16,6 +16,7 @@ if len(sys.argv) > 1 and sys.argv[1] == 'live':
 bookmaker_title = 'Luckia';
 download_type = 'live' if is_live else 'prematch';
 
+started_at = datetime.now().strftime('%Y-%m-%d@%H:%M:%S')
 start_time = time.time()
 timestamp = str(int(time.time()));
 queue_path = '../../../queues/Downloaders/'
@@ -47,11 +48,6 @@ with requests.get(events_feed_url, stream=True, headers=headers) as r:
 
 event_feeds.append("events.xml")
 
-# Add to queue
-if len(event_feeds):
-	with open(queue_csv_path, 'a') as fd:
-	    fd.write(timestamp + ';All;' + download_type + ';' + ",".join(event_feeds) + "\n")
-
 # local host IP '127.0.0.1' 
 host = '127.0.0.1'
 
@@ -71,7 +67,8 @@ message = json.dumps({
         'timestamp': timestamp,
         'sport': 'All',
         'type': download_type,
-        'feeds': event_feeds
+        'feeds': event_feeds,
+        'started_at': started_at
     }
 })
 

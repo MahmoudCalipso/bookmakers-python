@@ -1,6 +1,7 @@
 import requests
 import time
 import os
+from os import walk
 import csv
 import sys
 import re
@@ -40,258 +41,261 @@ timestamp = str(int(time.time()));
 bookmaker_id = 5
 bookmaker_title = 'Luckia'
 queue_path = '../../../queues/Downloaders/' + bookmaker_title + '/'
-queue_csv_path = queue_path + 'queue.csv';
 queue_reader_path = queue_path + bookmaker_title + '/' + timestamp + '/';
 
-bookmaker_updater.init(bookmaker_id, bookmaker_title)
+if len(sys.argv) > 3:
+    bookmaker_updater.init(bookmaker_id, bookmaker_title)
+    folder_path = queue_path + sys.argv[1] + '/' + sys.argv[2] + '/'
+    live = sys.argv[2] == 'live'
+    started_at = sys.argv[3]
+    if os.path.exists(folder_path):
+        files = []
+        for (dirpath, dirnames, filenames) in walk(folder_path):
+            files.extend(filenames)
+            break
+        if len(files) > 0:
+            for file in files:
+                file_path = folder_path + file
+                if os.path.exists(file_path):
+                    print('Processing ' + file)
+                    root = ET.parse(file_path).getroot()
+                    for event in root.findall('Event'):
+                        try:
+                            date = ''
+                            event_name = ''
+                            team1 = ''
+                            team2 = ''
+                            tournament = event.attrib['League']
+                            event_type = event.attrib['EventType'] if 'EventType' in event.attrib else None
+                            sport = event.attrib['Branch']
 
-# Extract row from CSV and process it
-if os.path.exists(queue_csv_path):
-    with open(queue_csv_path, 'r') as file:
-        reader = csv.reader(file, delimiter=';')
-        for row in reader:
-            # timestamp;sports;type;files(separated by comma)
-            live = row[2] == 'live'
-            folder_path = queue_path + row[2] + '/' + row[0] + '/'
-            if os.path.exists(folder_path):
-                files = row[3].split(',')
-                if len(files) > 0:
-                    for file in files:
-                        file_path = folder_path + file
-                        if os.path.exists(file_path):
-                            print('Processing ' + file)
-                            root = ET.parse(file_path).getroot()
-                            for event in root.findall('Event'):
+                            participants = event.findall('Participants')
+                            if participants[0]:
+                                participant1 = participants[0].findall('Participant1')
+                                participant2 = participants[0].findall('Participant2')
+
+                                if len(participant1) > 0 and len(participant2) > 0:
+                                    team1 = participant1[0].attrib['Name']
+                                    team2 = participant2[0].attrib['Name']
+                                    event_name = team1 + ' vs ' + team2
+                            elif 'EventName' in event.attrib:
+                                event_name = event.attrib['EventName']
+                                teams = event_name.split(' vs ')
+
+                                if len(teams) == 2:
+                                    team1 = teams[0]
+                                    team2 = teams[1]
+
+                            if len(event_name) > 0:
+                                #print(bookmaker_title + ' :: Processing API event: ' + event_name)
+                                bookmaker_event = BookmakerEvent.BookmakerEvent()
+                                teams = []
+
+                                if team1 and team2:
+                                    _team1 = BookmakerEventTeam.BookmakerEventTeam()
+                                    _team2 = BookmakerEventTeam.BookmakerEventTeam()
+
+                                    _team1.title = team1
+                                    _team1.local = True
+
+                                    _team2.title = team2
+                                    _team2.local = False
+
+                                    checkTeamMembers(sport, _team1)
+                                    checkTeamMembers(sport, _team2)
+
+                                    teams = [_team1, _team2]
+
+                                _datetime = datetime.strptime(event.attrib['DateTimeGMT'], '%d/%m/%Y %H:%M:%S')
+
+                                if _datetime:
+                                    _datetime = _datetime + timedelta(hours=2)
+                                    date = _datetime.strftime(MYSQL_DATETIME_FORMAT)
+
+                                bookmaker_event.event_id = event.attrib['ID'] if 'ID' in event.attrib else event.attrib['QAID']
+                                bookmaker_event.title = event_name
+                                bookmaker_event.tournament = tournament
+                                bookmaker_event.sport = sport
+                                bookmaker_event.date = date
+
+                                odds = []
+                                market = None
                                 try:
-                                    date = ''
-                                    event_name = ''
-                                    team1 = ''
-                                    team2 = ''
-                                    tournament = event.attrib['League']
-                                    event_type = event.attrib['EventType'] if 'EventType' in event.attrib else None
-                                    sport = event.attrib['Branch']
+                                    event_type = int(event.attrib['EventType'])
+                                    market = MARKETS[event_type]
+                                except:
+                                    pass
 
-                                    participants = event.findall('Participants')
-                                    if participants[0]:
-                                        participant1 = participants[0].findall('Participant1')
-                                        participant2 = participants[0].findall('Participant2')
+                                if market:
+                                    spread = event.findall('Spread')
 
-                                        if len(participant1) > 0 and len(participant2) > 0:
-                                            team1 = participant1[0].attrib['Name']
-                                            team2 = participant2[0].attrib['Name']
-                                            event_name = team1 + ' vs ' + team2
-                                    elif 'EventName' in event.attrib:
-                                        event_name = event.attrib['EventName']
-                                        teams = event_name.split(' vs ')
+                                    if spread:
+                                        spread = spread[0]
+                                        outcomes = []
 
-                                        if len(teams) == 2:
-                                            team1 = teams[0]
-                                            team2 = teams[1]
+                                        # Home
+                                        outcome = BookmakerOddOutcome.BookmakerOddOutcome()
+                                        outcome.outcome_id = spread.attrib['Home_LineID']
+                                        outcome.title = 'Home ' + spread.attrib['Home_Points']
+                                        outcome.decimal = float(spread.attrib['Home_Odds'])
+                                        outcomes.append(outcome)
 
-                                    if len(event_name) > 0:
-                                        #print(bookmaker_title + ' :: Processing API event: ' + event_name)
-                                        bookmaker_event = BookmakerEvent.BookmakerEvent()
-                                        teams = []
+                                        # Away
+                                        outcome = BookmakerOddOutcome.BookmakerOddOutcome()
+                                        outcome.outcome_id = spread.attrib['Away_LineID']
+                                        outcome.title = 'Away ' + spread.attrib['Away_Points']
+                                        outcome.decimal = float(spread.attrib['Away_Odds'])
+                                        outcomes.append(outcome)
 
-                                        if team1 and team2:
-                                            _team1 = BookmakerEventTeam.BookmakerEventTeam()
-                                            _team2 = BookmakerEventTeam.BookmakerEventTeam()
+                                        odd = BookmakerOdd.BookmakerOdd()
+                                        odd.title = MARKETS[event_type] + ' - Spread'
+                                        odd.outcomes = outcomes
 
-                                            _team1.title = team1
-                                            _team1.local = True
+                                        odds.append(odd)
 
-                                            _team2.title = team2
-                                            _team2.local = False
+                                    total = event.findall('Total')
 
-                                            checkTeamMembers(sport, _team1)
-                                            checkTeamMembers(sport, _team2)
+                                    if total:
+                                        total = total[0]
+                                        outcomes = []
 
-                                            teams = [_team1, _team2]
+                                        # Over
+                                        outcome = BookmakerOddOutcome.BookmakerOddOutcome()
+                                        outcome.outcome_id = total.attrib['Over_LineID']
+                                        outcome.title = 'Over ' + total.attrib['Points']
+                                        outcome.decimal = float(total.attrib['Over'])
+                                        outcomes.append(outcome)
 
-                                        _datetime = datetime.strptime(event.attrib['DateTimeGMT'], '%d/%m/%Y %H:%M:%S')
+                                        # Under
+                                        outcome = BookmakerOddOutcome.BookmakerOddOutcome()
+                                        outcome.outcome_id = total.attrib['Under_LineID']
+                                        outcome.title = 'Under ' + total.attrib['Points']
+                                        outcome.decimal = float(total.attrib['Under'])
+                                        outcomes.append(outcome)
 
-                                        if _datetime:
-                                            _datetime = _datetime + timedelta(hours=2)
-                                            date = _datetime.strftime(MYSQL_DATETIME_FORMAT)
+                                        odd = BookmakerOdd.BookmakerOdd()
+                                        odd.title = MARKETS[event_type] + ' - Total'
+                                        odd.outcomes = outcomes
 
-                                        bookmaker_event.event_id = event.attrib['ID'] if 'ID' in event.attrib else event.attrib['QAID']
-                                        bookmaker_event.title = event_name
-                                        bookmaker_event.tournament = tournament
-                                        bookmaker_event.sport = sport
-                                        bookmaker_event.date = date
+                                        odds.append(odd)
 
-                                        odds = []
-                                        market = None
-                                        try:
-                                            event_type = int(event.attrib['EventType'])
-                                            market = MARKETS[event_type]
-                                        except:
-                                            pass
+                                    moneyline = event.findall('MoneyLine')
 
-                                        if market:
-                                            spread = event.findall('Spread')
+                                    if moneyline:
+                                        moneyline = moneyline[0]
+                                        outcomes = []
 
-                                            if spread:
-                                                spread = spread[0]
-                                                outcomes = []
+                                        # Home
+                                        if 'Home' in moneyline.attrib:
+                                            outcome = BookmakerOddOutcome.BookmakerOddOutcome()
+                                            outcome.outcome_id = moneyline.attrib['Home_LineID']
+                                            outcome.title = 'Home'
+                                            outcome.decimal = float(moneyline.attrib['Home'])
+                                            outcomes.append(outcome)
 
-                                                # Home
-                                                outcome = BookmakerOddOutcome.BookmakerOddOutcome()
-                                                outcome.outcome_id = spread.attrib['Home_LineID']
-                                                outcome.title = 'Home ' + spread.attrib['Home_Points']
-                                                outcome.decimal = float(spread.attrib['Home_Odds'])
-                                                outcomes.append(outcome)
+                                        # Draw
+                                        if 'Draw' in moneyline.attrib:
+                                            outcome = BookmakerOddOutcome.BookmakerOddOutcome()
+                                            outcome.outcome_id = moneyline.attrib['Draw_LineID']
+                                            outcome.title = 'Draw'
+                                            outcome.decimal = float(moneyline.attrib['Draw'])
+                                            outcomes.append(outcome)
 
-                                                # Away
-                                                outcome = BookmakerOddOutcome.BookmakerOddOutcome()
-                                                outcome.outcome_id = spread.attrib['Away_LineID']
-                                                outcome.title = 'Away ' + spread.attrib['Away_Points']
-                                                outcome.decimal = float(spread.attrib['Away_Odds'])
-                                                outcomes.append(outcome)
+                                        # Away
+                                        if 'Away' in moneyline.attrib:
+                                            outcome = BookmakerOddOutcome.BookmakerOddOutcome()
+                                            outcome.outcome_id = moneyline.attrib['Away_LineID']
+                                            outcome.title = 'Away'
+                                            outcome.decimal = float(moneyline.attrib['Away'])
+                                            outcomes.append(outcome)
 
-                                                odd = BookmakerOdd.BookmakerOdd()
-                                                odd.title = MARKETS[event_type] + ' - Spread'
-                                                odd.outcomes = outcomes
+                                        odd = BookmakerOdd.BookmakerOdd()
+                                        odd.title = MARKETS[event_type] + ' - Moneyline'
+                                        odd.outcomes = outcomes
 
-                                                odds.append(odd)
+                                        odds.append(odd)
 
-                                            total = event.findall('Total')
+                                    # Check odds in participants node
+                                    _participants = participants[0].findall('Participant')
+                                    odd = BookmakerOdd.BookmakerOdd()
+                                    outcomes = []
 
-                                            if total:
-                                                total = total[0]
-                                                outcomes = []
+                                    for participant in _participants:
+                                        outcome = BookmakerOddOutcome.BookmakerOddOutcome()
+                                        _odd = participant.findall('Odds')[0]
 
-                                                # Over
-                                                outcome = BookmakerOddOutcome.BookmakerOddOutcome()
-                                                outcome.outcome_id = total.attrib['Over_LineID']
-                                                outcome.title = 'Over ' + total.attrib['Points']
-                                                outcome.decimal = float(total.attrib['Over'])
-                                                outcomes.append(outcome)
+                                        outcome.outcome_id = _odd.attrib['LineID']
+                                        outcome.title = participant.attrib['Name']
+                                        outcome.decimal = float(_odd.attrib['OddsValue'])
 
-                                                # Under
-                                                outcome = BookmakerOddOutcome.BookmakerOddOutcome()
-                                                outcome.outcome_id = total.attrib['Under_LineID']
-                                                outcome.title = 'Under ' + total.attrib['Points']
-                                                outcome.decimal = float(total.attrib['Under'])
-                                                outcomes.append(outcome)
+                                        outcomes.append(outcome)
 
-                                                odd = BookmakerOdd.BookmakerOdd()
-                                                odd.title = MARKETS[event_type] + ' - Total'
-                                                odd.outcomes = outcomes
+                                    odd.title = MARKETS[event_type]
+                                    odd.outcomes = outcomes
 
-                                                odds.append(odd)
+                                    odds.append(odd)
 
-                                            moneyline = event.findall('MoneyLine')
+                                bookmaker_event.odds = odds
 
-                                            if moneyline:
-                                                moneyline = moneyline[0]
-                                                outcomes = []
+                                # Get teams from markets if array is empty
+                                if len(teams) == 0:
+                                    for odd in odds:
+                                        i = 0
+                                        for outcome in odd.outcomes:
+                                            team = BookmakerEventTeam.BookmakerEventTeam()
 
-                                                # Home
-                                                if 'Home' in moneyline.attrib:
-                                                    outcome = BookmakerOddOutcome.BookmakerOddOutcome()
-                                                    outcome.outcome_id = moneyline.attrib['Home_LineID']
-                                                    outcome.title = 'Home'
-                                                    outcome.decimal = float(moneyline.attrib['Home'])
-                                                    outcomes.append(outcome)
+                                            team.title = outcome.title
+                                            team.local = i == 0
 
-                                                # Draw
-                                                if 'Draw' in moneyline.attrib:
-                                                    outcome = BookmakerOddOutcome.BookmakerOddOutcome()
-                                                    outcome.outcome_id = moneyline.attrib['Draw_LineID']
-                                                    outcome.title = 'Draw'
-                                                    outcome.decimal = float(moneyline.attrib['Draw'])
-                                                    outcomes.append(outcome)
+                                            checkTeamMembers(sport, team)
 
-                                                # Away
-                                                if 'Away' in moneyline.attrib:
-                                                    outcome = BookmakerOddOutcome.BookmakerOddOutcome()
-                                                    outcome.outcome_id = moneyline.attrib['Away_LineID']
-                                                    outcome.title = 'Away'
-                                                    outcome.decimal = float(moneyline.attrib['Away'])
-                                                    outcomes.append(outcome)
+                                            teams.append(team)
+                                            i += 1
+                                        break
 
-                                                odd = BookmakerOdd.BookmakerOdd()
-                                                odd.title = MARKETS[event_type] + ' - Moneyline'
-                                                odd.outcomes = outcomes
+                                bookmaker_event.teams = teams
 
-                                                odds.append(odd)
+                                # Check if this event is referring to the championship winner
+                                if event_name.find(tournament) > -1 and event_name.endswith('- Winner') and len(teams) > 2:
+                                    bookmaker_event.replace_title = EVENT_CHAMPIONSHIP_WINNER
 
-                                            # Check odds in participants node
-                                            _participants = participants[0].findall('Participant')
-                                            odd = BookmakerOdd.BookmakerOdd()
-                                            outcomes = []
+                                bookmaker_event.live = live
 
-                                            for participant in _participants:
-                                                outcome = BookmakerOddOutcome.BookmakerOddOutcome()
-                                                _odd = participant.findall('Odds')[0]
+                                bookmaker_updater.processEvent(bookmaker_event)
+                        except (Exception) as ex:
+                            print(bookmaker_title + ' :: Could not process event: ' + str(ex))
 
-                                                outcome.outcome_id = _odd.attrib['LineID']
-                                                outcome.title = participant.attrib['Name']
-                                                outcome.decimal = float(_odd.attrib['OddsValue'])
+			bookmaker_updater.finish()
 
-                                                outcomes.append(outcome)
+			# Delete download folder
+			shutil.rmtree(folder_path)
 
-                                            odd.title = MARKETS[event_type]
-                                            odd.outcomes = outcomes
+			# local host IP '127.0.0.1' 
+			host = '127.0.0.1'
 
-                                            odds.append(odd)
+			# Define the port on which you want to connect 
+			port = 12345
 
-                                        bookmaker_event.odds = odds
+			s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
 
-                                        # Get teams from markets if array is empty
-                                        if len(teams) == 0:
-                                            for odd in odds:
-                                                i = 0
-                                                for outcome in odd.outcomes:
-                                                    team = BookmakerEventTeam.BookmakerEventTeam()
+			# connect to server on local computer 
+			s.connect((host,port)) 
 
-                                                    team.title = outcome.title
-                                                    team.local = i == 0
+			# message you send to server 
+			message = json.dumps({
+				'message': 'read_complete',
+				'data': {
+				    'bookmaker_id': bookmaker_id,
+					'bookmaker_title': bookmaker_title,
+					'timestamp': timestamp,
+					'live': live,
+					'started_at': started_at
+			    }
+			})
 
-                                                    checkTeamMembers(sport, team)
+			# message sent to server 
+			s.send(message.encode('utf8'))
 
-                                                    teams.append(team)
-                                                    i += 1
-                                                break
-
-                                        bookmaker_event.teams = teams
-
-                                        # Check if this event is referring to the championship winner
-                                        if event_name.find(tournament) > -1 and event_name.endswith('- Winner') and len(teams) > 2:
-                                            bookmaker_event.replace_title = EVENT_CHAMPIONSHIP_WINNER
-
-                                        bookmaker_event.live = live
-
-                                        bookmaker_updater.processEvent(bookmaker_event)
-                                except (Exception) as ex:
-                                    print(bookmaker_title + ' :: Could not process event: ' + str(ex))
-
-bookmaker_updater.finish()
-
-# local host IP '127.0.0.1' 
-host = '127.0.0.1'
-
-# Define the port on which you want to connect 
-port = 12345
-
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
-
-# connect to server on local computer 
-s.connect((host,port)) 
-
-# message you send to server 
-message = json.dumps({
-	'message': 'read_complete',
-	'data': {
-	    'bookmaker_id': bookmaker_id,
-		'bookmaker_title': bookmaker_title
-    }
-})
-
-# message sent to server 
-s.send(message.encode('utf8'))
-
-s.close()
+			s.close()
 
 print("--- %s seconds ---" % (time.time() - start_time))

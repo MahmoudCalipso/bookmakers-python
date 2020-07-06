@@ -63,6 +63,7 @@ def run(id, title, timestamp, live, started_at):
 								  port = "5432",
 								  database = "scannerbet_prod")
 
+	live = live == 'True'
 	bookmaker_id = id
 	bookmaker_title = title
 	queue_csv_path = '../../queues/Readers/' + bookmaker_title + '/' + timestamp + '/'
@@ -97,32 +98,27 @@ def run(id, title, timestamp, live, started_at):
 					if row_index > 0:
 						bookmaker_update_queues_sql += '\n,'
 
-					bookmaker_update_queues_sql += '(DEFAULT, ' + str(bookmaker_id) + ', NULL, \'' + queue_path + '\', ' + page  + ', 0, 1, 0, 0, NULL, \'' + json.dumps(not_processed_outcomes) + '\', \'' + now + '\', \'' + now + '\', \'' + picket_at + '\', \'' + row[2] + '\', \'' + json.dumps(saved_outcomes) + '\')\n' 
+					bookmaker_update_queues_sql += '(DEFAULT, ' + str(bookmaker_id) + ', NULL, \'' + queue_path + '\', ' + page  + ', 0, 1, 0, 0, NULL, \'' + json.dumps(not_processed_outcomes) + '\', \'' + now + '\', \'' + now + '\', \'' + picket_at + '\', \'' + started_at + '\', \'' + json.dumps(saved_outcomes) + '\')\n' 
 					row_index += 1
-
-					# Remove folder
-					try:
-						os.remove(queue_path)
-					except:
-						pass
 				except:
 					pass
 
 		# Delete download folder
 		shutil.rmtree(queue_csv_path)
 
-	if len(bookmaker_update_queues_sql):
+	if len(bookmaker_update_queues_sql) > 0:
 		try:
 			cursor = connection.cursor()
 			cursor.execute(bookmaker_update_queues_sql)
 			connection.commit()
 		except (Exception, psycopg2.DatabaseError) as error:
+			print(error)
 			connection.rollback()
 
 	# Update status
 	try:
 		cursor = connection.cursor()
-		print('UPDATE bookmaker_statuses SET started_at = \'' + started_at + '\', updated_at = \'' + updated_at + '\' WHERE fk_bookmaker_id = ' + str(bookmaker_id) + ' AND live = ' + str(live))
+		print('UPDATE bookmaker_statuses SET started_at = \'' + started_at.replace('@', ' ') + '\', updated_at = \'' + updated_at + '\' WHERE fk_bookmaker_id = ' + str(bookmaker_id) + ' AND live = ' + ('1' if live else '0'))
 		cursor.execute('UPDATE bookmaker_statuses SET started_at = \'' + started_at.replace('@', ' ') + '\', updated_at = \'' + updated_at + '\' WHERE fk_bookmaker_id = ' + str(bookmaker_id) + ' AND live = ' + ('1' if live else '0'))
 		connection.commit()
 	except (Exception, psycopg2.DatabaseError) as error:

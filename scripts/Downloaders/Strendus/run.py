@@ -3,7 +3,7 @@ import requests
 import time
 import os
 import sys
-from datetime import date
+from datetime import date, datetime
 import socket
 import json
 
@@ -54,10 +54,10 @@ def download(id):
         current_page += 1
         download(id)
 
+started_at = datetime.now().strftime('%Y-%m-%d@%H:%M:%S')
 start_time = time.time()
 timestamp = str(int(time.time()));
 queue_path = '../../../queues/Downloaders/'
-queue_csv_path = queue_path + bookmaker_title + '/queue.csv';
 queue_downloader_path = queue_path + bookmaker_title + '/' + download_type + '/' + timestamp + '/';
 event_feeds = []
 
@@ -94,18 +94,6 @@ else:
         print('Beginning events feed download...')
         download(id)
 
-# Delete temporary files that have been downloaded
-#if os.path.exists("sports.json"):
-#  os.remove("sports.json")
-
-#if os.path.exists("tournaments.json"):
-#  os.remove("tournaments.json")
-
-# Add to queue
-if len(event_feeds) > 0:
-    with open(queue_csv_path, 'a') as fd:
-        fd.write(timestamp + ';All;' + download_type + ';' + ",".join(event_feeds) + "\n")
-
 # local host IP '127.0.0.1' 
 host = '127.0.0.1'
 
@@ -125,7 +113,8 @@ message = json.dumps({
         'timestamp': timestamp,
         'sport': 'All',
         'type': download_type,
-        'feeds': event_feeds
+        'feeds': event_feeds,
+        'started_at': started_at
     }
 })
 

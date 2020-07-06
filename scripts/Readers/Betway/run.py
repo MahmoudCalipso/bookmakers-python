@@ -1,6 +1,7 @@
 import requests
 import time
 import os
+from os import walk
 import csv
 import sys
 import re
@@ -55,194 +56,197 @@ timestamp = str(int(time.time()));
 bookmaker_id = 3
 bookmaker_title = 'Betway'
 queue_path = '../../../queues/Downloaders/' + bookmaker_title + '/'
-queue_csv_path = queue_path + 'queue.csv';
 queue_reader_path = queue_path + bookmaker_title + '/' + timestamp + '/';
 event_feeds = []
 
-bookmaker_updater.init(bookmaker_id, bookmaker_title)
+if len(sys.argv) > 3:
+    bookmaker_updater.init(bookmaker_id, bookmaker_title)
+    folder_path = queue_path + sys.argv[1] + '/' + sys.argv[2] + '/'
+    live = sys.argv[2] == 'live'
+    started_at = sys.argv[3]
+    if os.path.exists(folder_path):
+        files = []
+        for (dirpath, dirnames, filenames) in walk(folder_path):
+            files.extend(filenames)
+            break
+        if len(files) > 0:
+            for file in files:
+                file_path = folder_path + file
+                if os.path.exists(file_path):
+                    print('Processing ' + file)
+                    root = ET.parse(file_path).getroot()
+                    events = root.findall('Event')
 
-# Extract row from CSV and process it
-if os.path.exists(queue_csv_path):
-    with open(queue_csv_path, 'r') as file:
-        reader = csv.reader(file, delimiter=';')
-        for row in reader:
-            # timestamp;sports;type;files(separated by comma)
-            live = row[2] == 'live'
-            folder_path = queue_path + row[2] + '/' + row[0] + '/'
-            if os.path.exists(folder_path):
-                files = row[3].split(',')
-                if len(files) > 0:
-                    for file in files:
-                        file_path = folder_path + file
-                        if os.path.exists(file_path):
-                            print('Processing ' + file)
-                            root = ET.parse(file_path).getroot()
-                            events = root.findall('Event')
+                    for event in events:
+                        try:
+                            date = ''
+                            keywords = event.findall('Keywords')[0].findall('Keyword')
+                            keyword_sport = ''
+                            keyword_tournament = ''
+                            keyword_country = ''
+                            keyword_teams = []
+                            event_name = event.findall('Names')[0].findall('Name')[0].text
+                            tournament = ''
+                            winner_event_found = False
 
-                            for event in events:
-                                try:
-                                    date = ''
-                                    keywords = event.findall('Keywords')[0].findall('Keyword')
-                                    keyword_sport = ''
-                                    keyword_tournament = ''
-                                    keyword_country = ''
-                                    keyword_teams = []
-                                    event_name = event.findall('Names')[0].findall('Name')[0].text
-                                    tournament = ''
-                                    winner_event_found = False
+                            # Extract sport, league and teams from keywords
+                            for keyword in keywords:
+                                type = keyword.attrib['type_cname']
 
-                                    # Extract sport, league and teams from keywords
-                                    for keyword in keywords:
-                                        type = keyword.attrib['type_cname']
+                                if type == 'sport':
+                                    keyword_sport = keyword.text
+                                elif type == 'league':
+                                    keyword_tournament = keyword.text
+                                elif type == 'country':
+                                    keyword_country = keyword.text
+                                elif type == 'team':
+                                    keyword_teams.append(keyword.text)
 
-                                        if type == 'sport':
-                                            keyword_sport = keyword.text
-                                        elif type == 'league':
-                                            keyword_tournament = keyword.text
-                                        elif type == 'country':
-                                            keyword_country = keyword.text
-                                        elif type == 'team':
-                                            keyword_teams.append(keyword.text)
+                            if len(keyword_teams) == 0:
+                                # Get tournament from event name if this is related to the winner market
+                                if event_name.find(keyword_tournament) > -1 and event_name.find('Winner') > -1:
+                                    pos = event_name.find('Winner')
+                                    tournament = event_name[0:pos]
+                                    winner_event_found = True
+                                else:
+                                    tournament = keyword_country + ' ' + keyword_tournament
+                            else:
+                                if keyword_sport == 'Motor Sport':
+                                    keyword_sport = keyword_country
 
-                                    if len(keyword_teams) == 0:
-                                        # Get tournament from event name if this is related to the winner market
-                                        if event_name.find(keyword_tournament) > -1 and event_name.find('Winner') > -1:
-                                            pos = event_name.find('Winner')
-                                            tournament = event_name[0:pos]
-                                            winner_event_found = True
-                                        else:
-                                            tournament = keyword_country + ' ' + keyword_tournament
-                                    else:
-                                        if keyword_sport == 'Motor Sport':
-                                            keyword_sport = keyword_country
+                                tournament = keyword_country + ' ' + keyword_tournament
 
-                                        tournament = keyword_country + ' ' + keyword_tournament
+                            #print(bookmaker_title + ' :: Processing API event: ' + event_name)
+                            bookmaker_event = BookmakerEvent.BookmakerEvent()
+                            teams = []
 
-                                    #print(bookmaker_title + ' :: Processing API event: ' + event_name)
-                                    bookmaker_event = BookmakerEvent.BookmakerEvent()
-                                    teams = []
+                            if len(keyword_teams) > 0 and len(keyword_teams) == 2:
+                                team1_pos = event_name.find(keyword_teams[0])
+                                team2_pos = event_name.find(keyword_teams[1])
 
-                                    if len(keyword_teams) > 0 and len(keyword_teams) == 2:
-                                        team1_pos = event_name.find(keyword_teams[0])
-                                        team2_pos = event_name.find(keyword_teams[1])
+                                if team1_pos > team2_pos:
+                                    keyword_teams = [keyword_teams[1], keyword_teams[0]]
 
-                                        if team1_pos > team2_pos:
-                                            keyword_teams = [keyword_teams[1], keyword_teams[0]]
+                                i = 0
+                                for keyword_team in keyword_teams:
+                                    team = BookmakerEventTeam.BookmakerEventTeam()
 
-                                        i = 0
-                                        for keyword_team in keyword_teams:
-                                            team = BookmakerEventTeam.BookmakerEventTeam()
+                                    team.title = keyword_team
+                                    team.local = i == 0
 
-                                            team.title = keyword_team
-                                            team.local = i == 0
+                                    checkTeamMembers(keyword_sport, team)
+                                    teams.append(team)
 
-                                            checkTeamMembers(keyword_sport, team)
-                                            teams.append(team)
+                                    i += 1
 
-                                            i += 1
+                                event_name = teams[0].title + ' vs ' + teams[1].title
 
-                                        event_name = teams[0].title + ' vs ' + teams[1].title
+                            filterTeams(keyword_sport, teams)
 
-                                    filterTeams(keyword_sport, teams)
+                            start_at = event.attrib['start_at']
+                            _datetime = datetime.strptime(start_at, '%Y/%m/%dT%H:%M:%SZ UTC')
 
-                                    start_at = event.attrib['start_at']
-                                    _datetime = datetime.strptime(start_at, '%Y/%m/%dT%H:%M:%SZ UTC')
+                            if _datetime:
+                                _datetime = _datetime + timedelta(hours=2)
+                                date = _datetime.strftime(MYSQL_DATETIME_FORMAT)
 
-                                    if _datetime:
-                                        _datetime = _datetime + timedelta(hours=2)
-                                        date = _datetime.strftime(MYSQL_DATETIME_FORMAT)
+                            bookmaker_event.event_id = event.attrib['id']
+                            bookmaker_event.title = event_name
+                            bookmaker_event.tournament = tournament
+                            bookmaker_event.sport = keyword_sport
+                            bookmaker_event.date = date
 
-                                    bookmaker_event.event_id = event.attrib['id']
-                                    bookmaker_event.title = event_name
-                                    bookmaker_event.tournament = tournament
-                                    bookmaker_event.sport = keyword_sport
-                                    bookmaker_event.date = date
+                            odds = []
+                            markets = event.findall('Markets')[0].findall('Market')
 
-                                    odds = []
-                                    markets = event.findall('Markets')[0].findall('Market')
+                            if markets:
+                                for market in markets:
+                                    title = market.findall('Names')[0].findall('Name')[0].text
+                                    odd = BookmakerOdd.BookmakerOdd()
+                                    outcomes = []
+                                    selections = market.findall('Outcomes')[0].findall('Outcome')
 
-                                    if markets:
-                                        for market in markets:
-                                            title = market.findall('Names')[0].findall('Name')[0].text
-                                            odd = BookmakerOdd.BookmakerOdd()
-                                            outcomes = []
-                                            selections = market.findall('Outcomes')[0].findall('Outcome')
+                                    for selection in selections:
+                                        bookmaker_odd_outcome = BookmakerOddOutcome.BookmakerOddOutcome()
+                                        outcome_title = selection.findall('Names')[0].findall('Name')[0].text
 
-                                            for selection in selections:
-                                                bookmaker_odd_outcome = BookmakerOddOutcome.BookmakerOddOutcome()
-                                                outcome_title = selection.findall('Names')[0].findall('Name')[0].text
+                                        if 'handicap' in market.attrib:
+                                            outcome_title += ' ' + market.attrib['handicap']
 
-                                                if 'handicap' in market.attrib:
-                                                    outcome_title += ' ' + market.attrib['handicap']
+                                        # Get decimal by regular expression
+                                        bookmaker_odd_outcome.outcome_id = selection.attrib['id'] if 'id' in selection.attrib else None
+                                        bookmaker_odd_outcome.title = outcome_title
+                                        bookmaker_odd_outcome.decimal = float(selection.attrib['price_dec']) if 'price_dec' in selection.attrib else 0
 
-                                                # Get decimal by regular expression
-                                                bookmaker_odd_outcome.outcome_id = selection.attrib['id'] if 'id' in selection.attrib else None
-                                                bookmaker_odd_outcome.title = outcome_title
-                                                bookmaker_odd_outcome.decimal = float(selection.attrib['price_dec']) if 'price_dec' in selection.attrib else 0
+                                        outcomes.append(bookmaker_odd_outcome)
 
-                                                outcomes.append(bookmaker_odd_outcome)
+                                    odd.title = title
+                                    odd.outcomes = outcomes
 
-                                            odd.title = title
-                                            odd.outcomes = outcomes
+                                    odds.append(odd)
 
-                                            odds.append(odd)
+                            bookmaker_event.odds = odds
 
-                                    bookmaker_event.odds = odds
+                            # Get teams from markets if array is empty
+                            if len(teams) == 0:
+                                for odd in odds:
+                                    i = 0
+                                    for outcome in odd.outcomes:
+                                        team = BookmakerEventTeam.BookmakerEventTeam()
 
-                                    # Get teams from markets if array is empty
-                                    if len(teams) == 0:
-                                        for odd in odds:
-                                            i = 0
-                                            for outcome in odd.outcomes:
-                                                team = BookmakerEventTeam.BookmakerEventTeam()
+                                        team.title = outcome.title
+                                        team.local = i == 0
 
-                                                team.title = outcome.title
-                                                team.local = i == 0
+                                        checkTeamMembers(keyword_sport, team)
 
-                                                checkTeamMembers(keyword_sport, team)
+                                        teams.append(team)
+                                        i += 1
+                                    break
 
-                                                teams.append(team)
-                                                i += 1
-                                            break
+                            bookmaker_event.teams = teams
 
-                                    bookmaker_event.teams = teams
+                            # Check if this event is referring to the championship winner
+                            if winner_event_found:
+                                bookmaker_event.replace_title = EVENT_CHAMPIONSHIP_WINNER
 
-                                    # Check if this event is referring to the championship winner
-                                    if winner_event_found:
-                                        bookmaker_event.replace_title = EVENT_CHAMPIONSHIP_WINNER
+                            bookmaker_event.live = live
 
-                                    bookmaker_event.live = live
+                            bookmaker_updater.processEvent(bookmaker_event)
 
-                                    bookmaker_updater.processEvent(bookmaker_event)
+                        except (Exception) as ex:
+                            print(bookmaker_title + ' :: Could not process event: ' + str(ex))
 
-                                except (Exception) as ex:
-                                    print(bookmaker_title + ' :: Could not process event: ' + str(ex))
+            bookmaker_updater.finish()
 
-bookmaker_updater.finish()
+            # Delete download folder
+            shutil.rmtree(folder_path)
 
-# local host IP '127.0.0.1' 
-host = '127.0.0.1'
+            # local host IP '127.0.0.1' 
+            host = '127.0.0.1'
 
-# Define the port on which you want to connect 
-port = 12345
+            # Define the port on which you want to connect 
+            port = 12345
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
 
-# connect to server on local computer 
-s.connect((host,port)) 
+            # connect to server on local computer 
+            s.connect((host,port)) 
 
-# message you send to server 
-message = json.dumps({
-    'message': 'read_complete',
-    'data': {
-        'bookmaker_id': bookmaker_id,
-        'bookmaker_title': bookmaker_title
-    }
-})
+            # message you send to server 
+            message = json.dumps({
+                'message': 'read_complete',
+                'data': {
+                    'bookmaker_id': bookmaker_id,
+                    'bookmaker_title': bookmaker_title,
+                    'timestamp': timestamp,
+                    'live': live,
+                    'started_at': started_at
+                }
+            })
 
-# message sent to server 
-s.send(message.encode('utf8'))
+            # message sent to server 
+            s.send(message.encode('utf8'))
 
-s.close()
+            s.close()
 
 print("--- %s seconds ---" % (time.time() - start_time))
