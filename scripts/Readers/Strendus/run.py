@@ -3,6 +3,7 @@ import requests
 import time
 import os
 from os import walk
+import shutil
 import csv
 import sys
 import re
@@ -63,7 +64,7 @@ if len(sys.argv) > 3:
                             tournament = event.get('ltn') if live else event.get('tn')
                             event_name = event.get('ht') + ' vs ' + event.get('at')
 
-                            print(bookmaker_title + ' :: Processing API event: ' + event_name)
+                            #print(bookmaker_title + ' :: Processing API event: ' + event_name)
                             bookmaker_event = BookmakerEvent.BookmakerEvent()
                             teams = []
 

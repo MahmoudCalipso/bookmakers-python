@@ -27,7 +27,7 @@ def download(id):
 
     offset = current_page * records_per_page;
     feed_url = 'https://sports.strendus.com.mx/rest/FEMobile/GetPagedMatches?Culture=en&affi=49&DateFilterType=0&WidgetType=2&StartRecord=' + str(offset) + '&EndRecord=' + str(offset + records_per_page) + '&SportID=' + str(id)
-    print(feed_url)
+    #print(feed_url)
     response = requests.get(feed_url)
     if not os.path.exists(queue_downloader_path):
         os.makedirs(queue_downloader_path)
@@ -41,7 +41,6 @@ def download(id):
 
     items = ijson.items(open(queue_downloader_path + "events-" + str(id) + "-" + str(current_page) + ".json", 'r'), 'd.m.item');
 
-    print(items)
     has_items = False;
     try:
         for item in items:
@@ -91,7 +90,6 @@ else:
         current_page = 0
         print("Looping sport " + name + " with ID " + str(id))
         # Download events feed
-        print('Beginning events feed download...')
         download(id)
 
 # local host IP '127.0.0.1' 

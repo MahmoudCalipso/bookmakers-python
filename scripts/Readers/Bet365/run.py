@@ -2,6 +2,7 @@ import requests
 import time
 import os
 from os import walk
+import shutil
 import csv
 import sys
 import re
@@ -100,7 +101,7 @@ if len(sys.argv) > 3:
 									event_name_teams = event_name.split(' vs ')
 								elif event_name.find(' @ ') > -1:
 									event_name_teams = event_name.split(' @ ')
-									event_name_teams = reversed(event_name_teams)
+									event_name_teams = [event_name_teams[1], event_name_teams[0]]
 
 								if len(event_name_teams) > 0:
 									i = 0

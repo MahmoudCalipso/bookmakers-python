@@ -3,6 +3,7 @@ import requests
 import time
 import os
 from os import walk
+import shutil
 import csv
 import sys
 import re

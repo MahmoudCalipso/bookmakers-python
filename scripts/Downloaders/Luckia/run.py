@@ -25,12 +25,12 @@ queue_downloader_path = queue_path + bookmaker_title + '/' + download_type + '/'
 event_feeds = []
 
 print('-- Beginning events feed download...')
-events_feed_url = 'http://luckiaxml.sbtech.com/lines.aspx?OddsStyle=DECIMAL&IncludeLinesIDs=true&BranchID=1,2,14,64,11,35,6,20,43,16,12,3';
+events_feed_url = 'http://luckiaxml.sbtech.com/lines.aspx?OddsStyle=DECIMAL&IncludeLinesIDs=true';
 
 if is_live:
     events_feed_url += '&eventtype=39&eventtype=2560';
 
-print(events_feed_url)
+#print(events_feed_url)
 
 headers = {
 	'Accept-Encoding': 'deflate, gzip'	

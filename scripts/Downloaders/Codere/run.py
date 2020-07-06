@@ -45,7 +45,7 @@ for sport in sports:
     id = sport.get('NodeId')
     print("Looping sport " + name + " with ID " + id)
     # Download tournaments feed
-    print('-- Beginning tournaments feed download...')
+    #print('-- Beginning tournaments feed download...')
     leagues_feed_url = 'http://coderesbgonlinesbs.azurewebsites.net/api/feeds/sports/' + id + '/leagues'
 
     try:
@@ -66,15 +66,15 @@ for sport in sports:
                 # Download events feed
                 name = league.get('Name')
                 id = league.get('NodeId')
-                print("---- Looping tournament " + name + " with ID " + id)
-                print('------ Beginning events feed download...')
+                #print("---- Looping tournament " + name + " with ID " + id)
+                #print('------ Beginning events feed download...')
 
                 if is_live:
                     events_feed_url = 'http://coderesbgonlinesbs.azurewebsites.net/api/feeds/leagues/' + id + '/liveEvents';
                 else:
                     events_feed_url = 'http://coderesbgonlinesbs.azurewebsites.net/api/feeds/leagues/' + id + '/nonLiveEvents'
 
-                print(events_feed_url)
+                #print(events_feed_url)
                 if not os.path.exists(queue_downloader_path):
                     os.makedirs(queue_downloader_path)
 

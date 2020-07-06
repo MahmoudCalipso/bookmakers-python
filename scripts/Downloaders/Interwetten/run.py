@@ -68,7 +68,7 @@ if token:
 		print('-- Beginning events feed download...')
 
 		events_feed_url = 'https://partner.odds.ws/api/sport/EN/' + str(id) + '?eventFilter=' + ('Live' if is_live else 'PreMatch') + '&marketFilter=All'
-		print(events_feed_url)
+		#print(events_feed_url)
 		if response.text:
 			if not os.path.exists(queue_downloader_path):
 			    os.makedirs(queue_downloader_path)

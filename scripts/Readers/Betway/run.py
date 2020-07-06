@@ -2,6 +2,7 @@ import requests
 import time
 import os
 from os import walk
+import shutil
 import csv
 import sys
 import re
@@ -170,7 +171,7 @@ if len(sys.argv) > 3:
                                         bookmaker_odd_outcome = BookmakerOddOutcome.BookmakerOddOutcome()
                                         outcome_title = selection.findall('Names')[0].findall('Name')[0].text
 
-                                        if 'handicap' in market.attrib:
+                                        if 'handicap' in market.attrib and market.attrib['handicap'] != '0':
                                             outcome_title += ' ' + market.attrib['handicap']
 
                                         # Get decimal by regular expression

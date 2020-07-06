@@ -3,6 +3,7 @@ import requests
 import time
 import os
 from os import walk
+import shutil
 import csv
 import sys
 import re
@@ -42,15 +43,15 @@ queue_path = '../../../queues/Downloaders/' + bookmaker_title + '/'
 queue_reader_path = queue_path + bookmaker_title + '/' + timestamp + '/';
 
 if len(sys.argv) > 3:
-    bookmaker_updater.init(bookmaker_id, bookmaker_title)
-    folder_path = queue_path + sys.argv[1] + '/' + sys.argv[2] + '/'
-    live = sys.argv[2] == 'live'
-    started_at = sys.argv[3]
-    if os.path.exists(folder_path):
-        files = []
-        for (dirpath, dirnames, filenames) in walk(folder_path):
-            files.extend(filenames)
-            break
+	bookmaker_updater.init(bookmaker_id, bookmaker_title)
+	folder_path = queue_path + sys.argv[1] + '/' + sys.argv[2] + '/'
+	live = sys.argv[2] == 'live'
+	started_at = sys.argv[3]
+	if os.path.exists(folder_path):
+		files = []
+		for (dirpath, dirnames, filenames) in walk(folder_path):
+			files.extend(filenames)
+			break
 		if len(files) > 0:
 			for file in files:
 				file_path = folder_path + file
@@ -63,7 +64,6 @@ if len(sys.argv) > 3:
 						for sport_key in sports:
 							sport_entry = sports.get(sport_key)
 							sport = sport_entry.get('name')
-							print(sport)
 							regions = sport_entry.get('region')
 							for region_key in regions:
 								region = regions.get(region_key)
@@ -168,12 +168,12 @@ if len(sys.argv) > 3:
 			message = json.dumps({
 				'message': 'read_complete',
 				'data': {
-				    'bookmaker_id': bookmaker_id,
+					'bookmaker_id': bookmaker_id,
 					'bookmaker_title': bookmaker_title,
 					'timestamp': timestamp,
 					'live': live,
 					'started_at': started_at
-			    }
+				}
 			})
 
 			# message sent to server 

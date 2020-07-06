@@ -100,7 +100,7 @@ def run(id, title, timestamp, live, started_at):
 
 					bookmaker_update_queues_sql += '(DEFAULT, ' + str(bookmaker_id) + ', NULL, \'' + queue_path + '\', ' + page  + ', 0, 1, 0, 0, NULL, \'' + json.dumps(not_processed_outcomes) + '\', \'' + now + '\', \'' + now + '\', \'' + picket_at + '\', \'' + started_at + '\', \'' + json.dumps(saved_outcomes) + '\')\n' 
 					row_index += 1
-				except:
+				except (Exception) as ex:
 					pass
 
 		# Delete download folder
@@ -118,7 +118,6 @@ def run(id, title, timestamp, live, started_at):
 	# Update status
 	try:
 		cursor = connection.cursor()
-		print('UPDATE bookmaker_statuses SET started_at = \'' + started_at.replace('@', ' ') + '\', updated_at = \'' + updated_at + '\' WHERE fk_bookmaker_id = ' + str(bookmaker_id) + ' AND live = ' + ('1' if live else '0'))
 		cursor.execute('UPDATE bookmaker_statuses SET started_at = \'' + started_at.replace('@', ' ') + '\', updated_at = \'' + updated_at + '\' WHERE fk_bookmaker_id = ' + str(bookmaker_id) + ' AND live = ' + ('1' if live else '0'))
 		connection.commit()
 	except (Exception, psycopg2.DatabaseError) as error:
@@ -935,7 +934,7 @@ def seedBookmakerEventMarketOutcomes(ids):
 
 						market = markets_maps[bookmaker_market['id']]
 						market_title = market['market_title']
-						market_display_title = market['market_display_title']
+						market_display_title = market['market_display_title'] if 'market_display_title' in market else market_title
 						for event_id in processed_events:
 							processed_event = processed_events[event_id]
 							_datetime = processed_event['date'] + ' ' + processed_event['time']
@@ -1003,7 +1002,7 @@ def seedBookmakerEventMarketOutcomes(ids):
 														'bookmaker_market': bookmaker_market_title,
 														'outcome': outcome_title.replace("'", "´"),
 														'sport': sport_title,
-														'tournament': bookmaker_tournament_title,
+														'tournament': bookmaker_tournament_title.replace("'", "´"),
 														'event': event_title,
 														'output': outcome,
 														'rule': matching_outcome_rule.id,
@@ -1023,7 +1022,7 @@ def seedBookmakerEventMarketOutcomes(ids):
 													'bookmaker_market': bookmaker_market_title,
 													'outcome': outcome_title.replace("'", "´"),
 													'sport': sport_title,
-													'tournament': bookmaker_tournament_title,
+													'tournament': bookmaker_tournament_title.replace("'", "´"),
 													'event': event_title,
 													'output': outcome,
 													'final_outcomes': outcomes[bookmaker_event_market_id],
@@ -1041,7 +1040,7 @@ def seedBookmakerEventMarketOutcomes(ids):
 												'bookmaker_market': bookmaker_market_title,
 												'outcome': outcome_title.replace("'", "´"),
 												'sport': sport_title,
-												'tournament': bookmaker_tournament_title,
+												'tournament': bookmaker_tournament_title.replace("'", "´"),
 												'event': event_title,
 												'error': str(error),
 												'datetime': datetime.datetime.now().strftime(MYSQL_DATETIME_FORMAT)

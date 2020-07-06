@@ -3,6 +3,7 @@ import requests
 import time
 import os
 from os import walk
+import shutil
 import csv
 import sys
 import re
@@ -18,21 +19,21 @@ EVENT_CHAMPIONSHIP_WINNER = 'Winner'
 MYSQL_DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 def checkTeamMembers(sport, team):
-    if sport == 'Tennis':
-        matches = re.search('(.*)\/(.*)', team.title)
+	if sport == 'Tennis':
+		matches = re.search('(.*)\/(.*)', team.title)
 
-        if matches and matches.group(1) and matches.group(2) and matches.group(1) != matches.group(2):
-            members = []
-            
-            member = BookmakerEventTeamMember.BookmakerEventTeamMember()
-            member.title = matches.group(1)
-            members.append(member)
+		if matches and matches.group(1) and matches.group(2) and matches.group(1) != matches.group(2):
+			members = []
+			
+			member = BookmakerEventTeamMember.BookmakerEventTeamMember()
+			member.title = matches.group(1)
+			members.append(member)
 
-            member = BookmakerEventTeamMember.BookmakerEventTeamMember()
-            member.title = matches.group(2)
-            members.append(member)
+			member = BookmakerEventTeamMember.BookmakerEventTeamMember()
+			member.title = matches.group(2)
+			members.append(member)
 
-            team.members = members
+			team.members = members
 
 start_time = time.time()
 timestamp = str(int(time.time()));
@@ -43,15 +44,15 @@ queue_reader_path = queue_path + bookmaker_title + '/' + timestamp + '/';
 event_feeds = []
 
 if len(sys.argv) > 3:
-    bookmaker_updater.init(bookmaker_id, bookmaker_title)
-    folder_path = queue_path + sys.argv[1] + '/' + sys.argv[2] + '/'
-    live = sys.argv[2] == 'live'
-    started_at = sys.argv[3]
-    if os.path.exists(folder_path):
-        files = []
-        for (dirpath, dirnames, filenames) in walk(folder_path):
-            files.extend(filenames)
-            break
+	bookmaker_updater.init(bookmaker_id, bookmaker_title)
+	folder_path = queue_path + sys.argv[1] + '/' + sys.argv[2] + '/'
+	live = sys.argv[2] == 'live'
+	started_at = sys.argv[3]
+	if os.path.exists(folder_path):
+		files = []
+		for (dirpath, dirnames, filenames) in walk(folder_path):
+			files.extend(filenames)
+			break
 		if len(files) > 0:
 			for file in files:
 				file_path = folder_path + file
@@ -71,7 +72,7 @@ if len(sys.argv) > 3:
 									try:
 										bookmaker_event = BookmakerEvent.BookmakerEvent()
 										event_name = event.get('name')
-										print(bookmaker_title + ' :: Processing API event: ' + event_name)
+										#print(bookmaker_title + ' :: Processing API event: ' + event_name)
 
 										date = ''
 										_datetime = datetime.strptime(event.get('start'), '%Y-%m-%dT%H:%M:%SZ')
@@ -171,12 +172,12 @@ if len(sys.argv) > 3:
 			message = json.dumps({
 				'message': 'read_complete',
 				'data': {
-				    'bookmaker_id': bookmaker_id,
+					'bookmaker_id': bookmaker_id,
 					'bookmaker_title': bookmaker_title,
 					'timestamp': timestamp,
 					'live': live,
 					'started_at': started_at
-			    }
+				}
 			})
 
 			# message sent to server 

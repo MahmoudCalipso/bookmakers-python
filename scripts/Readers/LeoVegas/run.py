@@ -3,6 +3,7 @@ import requests
 import time
 import os
 from os import walk
+import shutil
 import csv
 import sys
 import re
@@ -90,7 +91,7 @@ if len(sys.argv) > 3:
 
                                 if _datetime:
                                     date = _datetime.strftime(MYSQL_DATETIME_FORMAT)
-                                    print(bookmaker_title + ' :: Processing API event: ' + event_name)
+                                    #print(bookmaker_title + ' :: Processing API event: ' + event_name)
 
                                     teams = []
 

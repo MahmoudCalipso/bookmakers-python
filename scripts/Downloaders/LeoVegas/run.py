@@ -38,7 +38,7 @@ for sport in sports:
     id = sport.get('termKey')
     print("Looping sport " + name + " with ID " + str(id))
     # Download tournaments feed
-    print('-- Beginning events feed download...')
+    #print('-- Beginning events feed download...')
     events_feed_url = 'https://sports-offering.leovegas.com/offering/v2018/es/listView/' + str(id) + '?lang=en_US&market=all&includeParticipants=true';
 
     if not os.path.exists(queue_downloader_path):

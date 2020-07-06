@@ -3,6 +3,7 @@ import requests
 import time
 import os
 from os import walk
+import shutil
 import csv
 import sys
 import re
@@ -56,7 +57,7 @@ if len(sys.argv) > 3:
             for file in files:
                 file_path = folder_path + file
                 if os.path.exists(file_path):
-                    print('Processing ' + file)
+                    #print('Processing ' + file)
                     events_to_process = {}
                     items = ijson.items(open(file_path, 'r', encoding="utf-8"), 'item');
                     for item in items:
@@ -141,11 +142,11 @@ if len(sys.argv) > 3:
                                 else:
                                     bookmaker_event.odds[odd_index].outcomes.append(outcome)
                         except (Exception) as ex:
-                            print(bookmaker_title + ' :: Could not process event: ' + str(ex))
+                            pass
 
                     for key in events_to_process:
                         try:
-                            print(bookmaker_title + ' :: Processing API event: ' + events_to_process[key].title)
+                            #print(bookmaker_title + ' :: Processing API event: ' + events_to_process[key].title)
                             bookmaker_updater.processEvent(events_to_process[key])
                         except (Exception) as ex:
                             print(bookmaker_title + ' :: Could not process event: ' + str(ex))

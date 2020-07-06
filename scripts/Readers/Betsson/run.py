@@ -3,6 +3,7 @@ import requests
 import time
 import os
 from os import walk
+import shutil
 import csv
 import sys
 import re
@@ -95,7 +96,7 @@ if len(sys.argv) > 3:
 							if len(event_name_teams) == 2:
 								event_name = event_name_teams[0] + ' vs ' + event_name_teams[1]
 
-							print(bookmaker_title + ' :: Processing API event: ' + event_name)
+							#print(bookmaker_title + ' :: Processing API event: ' + event_name)
 
 							teams = []
 							epl = event.get('epl')
