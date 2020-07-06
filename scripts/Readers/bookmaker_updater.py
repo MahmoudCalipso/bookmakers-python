@@ -128,7 +128,7 @@ def initNextSqlFile(open_next = True):
 	closeSqlFiles()
 
 	if add_to_queue:
-		addProcessToQueue()
+		#addProcessToQueue()
 		processed_files += 1
 
 	resetCounters()

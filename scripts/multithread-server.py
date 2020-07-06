@@ -27,14 +27,14 @@ def threaded(c):
 		if data['message'] == 'download_complete':
 			data = data['data']
 			if 'bookmaker_title' in data:
-				print('Download complete! Waking up reader...')
-				os.system('cd Readers/' + data['bookmaker_title'] + ' && python run.py') 
+				print('Download complete! Waking up ' + data['bookmaker_title'] + ' reader...')
+				os.system('cd Readers/' + data['bookmaker_title'] + ' && python run.py ' + data['type'] + ' ' + data['timestamp'] + ' ' + data['started_at']) 
 		elif data['message'] == 'read_complete':
 			data = data['data']
 			# run reader
 			if 'bookmaker_id' in data and 'bookmaker_title' in data:
-				print('Download complete! Waking up seeder...')
-				os.system('cd Seeder && python run.py ' + str(data['bookmaker_id']) + ' ' + data['bookmaker_title'])
+				print('Download complete! Waking up ' + data['bookmaker_title'] + ' seeder...')
+				os.system('cd Seeder && python run.py ' + str(data['bookmaker_id']) + ' ' + data['bookmaker_title'] + ' ' + data['timestamp'] + ' ' + str(data['live']) + ' ' + data['started_at'])
   
 	# connection closed 
 	c.close()

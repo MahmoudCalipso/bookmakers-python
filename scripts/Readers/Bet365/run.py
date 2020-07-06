@@ -81,10 +81,10 @@ if os.path.exists(queue_csv_path):
 							tournaments = sport.findall('EventGroup')
 
 							for tournament in tournaments:
-								if 'Name' not in tournament.attrib:
+								if 'Name' not in tournament.attrib and 'name' not in tournament.attrib:
 									continue
 
-								tournament_title = tournament.attrib['Name']
+								tournament_title = tournament.attrib['Name'] if 'Name' in tournament.attrib else tournament.attrib['name']
 								events = tournament.findall('Event')
 
 								for event in events:
@@ -120,9 +120,13 @@ if os.path.exists(queue_csv_path):
 											event_name = teams[0].title + ' vs ' + teams[1].title
 
 										#print(bookmaker_title + ' :: Processing API event: ' + event_name)
+										markets = event.findall('Market')
 										
 										# Add 1 hour as it's UTC time
-										_time = event.attrib['StartTime']
+										if 'StartTime' in event.attrib:
+											_time = event.attrib['StartTime']
+										elif len(markets) >= 1 and 'StartTime' in markets[0].attrib:
+											_time = markets[0].attrib['StartTime']
 
 										if len(_time) > 0:
 											_datetime = datetime.strptime(_time, '%d/%m/%y %H:%M:%S')
@@ -138,8 +142,7 @@ if os.path.exists(queue_csv_path):
 										bookmaker_event.date = date
 
 										odds = []
-										markets = event.findall('Market')
-
+										
 										if markets:
 											for market in markets:
 												odd = BookmakerOdd.BookmakerOdd()

@@ -9,10 +9,10 @@ connection = None
 
 try:
 	connection = psycopg2.connect(user = "postgres",
-								  password = "",
+								  password = "aegha5Cu",
 								  host = "127.0.0.1",
 								  port = "5432",
-								  database = "scannerbet")
+								  database = "scannerbet_prod")
 
 	cursor = connection.cursor()
 

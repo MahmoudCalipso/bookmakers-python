@@ -3,6 +3,8 @@ import sys
 import re
 import psycopg2
 import os
+from os import walk
+import shutil
 import csv
 import datetime
 import json
@@ -46,7 +48,7 @@ processed_events = []
 not_processed_outcomes = NOT_PROCESSED_STRUCTURE
 bookmaker_update_queues_sql = ''
 
-def run(id, title):
+def run(id, title, timestamp, live, started_at):
 	global bookmaker_id
 	global bookmaker_title
 	global queue_path
@@ -59,13 +61,14 @@ def run(id, title):
 								  password = "aegha5Cu",
 								  host = "127.0.0.1",
 								  port = "5432",
-								  database = "scannerbet")
+								  database = "scannerbet_prod")
 
 	bookmaker_id = id
 	bookmaker_title = title
-	queue_csv_path = '../../queues/Readers/' + bookmaker_title + '/queue.csv'
+	queue_csv_path = '../../queues/Readers/' + bookmaker_title + '/' + timestamp + '/'
 	not_processed_outcomes = NOT_PROCESSED_STRUCTURE
 	bookmaker_update_queues_sql = 'INSERT INTO bookmaker_update_queues VALUES \n'
+	updated_at = datetime.datetime.now().strftime(MYSQL_DATETIME_FORMAT)
 
 	# Init bookmaker entities
 	initBookmakerEntities(title)
@@ -74,16 +77,19 @@ def run(id, title):
 	initEvents()
 
 	if os.path.exists(queue_csv_path):
-		with open(queue_csv_path, 'r') as file:
-			reader = csv.reader(file, delimiter=';')
-			row_index = 0
-			for row in reader:
-				timestamp = row[0]
-				page = row[1]
-				queue_path = '../../queues/Readers/' + bookmaker_title + '/' + timestamp + '/' + page + '/'
+		pages = []
 
-				if os.path.exists(queue_path):
-					print('Processing page ' + page)
+		for (dirpath, dirnames, files_names) in walk(queue_csv_path):
+			pages.extend(dirnames)
+			break
+
+		row_index = 0
+		for page in pages:
+			queue_path = '../../queues/Readers/' + bookmaker_title + '/' + timestamp + '/' + page + '/'
+
+			if os.path.exists(queue_path):
+				print('Processing page ' + page)
+				try:
 					saved_outcomes = []
 					picket_at = datetime.datetime.now().strftime(MYSQL_DATETIME_FORMAT)
 					seedDB()
@@ -99,6 +105,11 @@ def run(id, title):
 						os.remove(queue_path)
 					except:
 						pass
+				except:
+					pass
+
+		# Delete download folder
+		shutil.rmtree(queue_csv_path)
 
 	if len(bookmaker_update_queues_sql):
 		try:
@@ -107,6 +118,15 @@ def run(id, title):
 			connection.commit()
 		except (Exception, psycopg2.DatabaseError) as error:
 			connection.rollback()
+
+	# Update status
+	try:
+		cursor = connection.cursor()
+		print('UPDATE bookmaker_statuses SET started_at = \'' + started_at + '\', updated_at = \'' + updated_at + '\' WHERE fk_bookmaker_id = ' + str(bookmaker_id) + ' AND live = ' + str(live))
+		cursor.execute('UPDATE bookmaker_statuses SET started_at = \'' + started_at.replace('@', ' ') + '\', updated_at = \'' + updated_at + '\' WHERE fk_bookmaker_id = ' + str(bookmaker_id) + ' AND live = ' + ('1' if live else '0'))
+		connection.commit()
+	except (Exception, psycopg2.DatabaseError) as error:
+		connection.rollback()
 
 def initBookmakerEntities(title):
 	global bookmaker_sports
@@ -744,6 +764,8 @@ def filterEvents(sql_path):
 
 					if not line.startswith(',') and len(processed_events) > 0:
 						line = ',' + line
+					elif line.startswith(',') and len(processed_events) == 0:
+						line = line.lstrip(',')
 
 					output += line
 					processed_events.append({

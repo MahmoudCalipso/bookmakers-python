@@ -177,22 +177,6 @@ sports = {
 	}
 }
 
-sio = socketio.Client()
-
-@sio.event
-def connect():
-    print('Connection established')
-
-@sio.event
-def connect_error():
-    print("The connection failed!")
-
-@sio.event
-def disconnect():
-    print('Disconnected from server')
-
-sio.connect('http://127.0.0.1:5000', namespaces=['/readers'])
-
 is_live = False
 
 if len(sys.argv) > 1 and sys.argv[1] == 'live':
@@ -221,7 +205,7 @@ for sport in sports:
 			if not os.path.exists(queue_downloader_path):
 				os.makedirs(queue_downloader_path)
 
-			print(feed_url)
+			#print(feed_url)
 			with requests.get(feed_url, stream=True) as r:
 				r.raise_for_status()
 
