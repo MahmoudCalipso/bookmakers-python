@@ -2,26 +2,20 @@
 import socket
 import json
 import os
-  
-# import thread module 
-from _thread import *
-import threading 
-  
-print_lock = threading.Lock() 
-  
-# thread function 
-def threaded(c): 
-	while True: 
-  
-		# data received from client 
-		data = c.recv(1024).decode('utf8')
-		
+import sys
+import traceback
+from threading import Thread
+
+def clientThread(connection, ip, port, max_buffer_size = 5120):
+	is_active = True
+	while is_active:
+		data = receive_input(connection, max_buffer_size)
+
 		if not data:               
-			# lock released on exit 
-			print_lock.release() 
 			break
 
 		data = json.loads(data)
+
 		print('Message received from ' + data['data']['bookmaker_title'] + ': ' + data['message'])
 
 		if data['message'] == 'download_complete':
@@ -35,10 +29,16 @@ def threaded(c):
 			if 'bookmaker_id' in data and 'bookmaker_title' in data:
 				print('Download complete! Waking up ' + data['bookmaker_title'] + ' seeder...')
 				os.system('cd Seeder && python run.py ' + str(data['bookmaker_id']) + ' ' + data['bookmaker_title'] + ' ' + data['timestamp'] + ' ' + str(data['live']) + ' ' + data['started_at'])
-  
-	# connection closed 
-	c.close()
-  
+
+def receive_input(connection, max_buffer_size):
+	client_input = connection.recv(max_buffer_size)
+	client_input_size = sys.getsizeof(client_input)
+
+	if client_input_size > max_buffer_size:
+		print("The input size is greater than expected {}".format(client_input_size))
+	
+	return client_input.decode("utf8").rstrip()
+
 def Main(): 
 	host = "" 
   
@@ -47,26 +47,31 @@ def Main():
 	# can be anything 
 	port = 12345
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
-	s.bind((host, port)) 
-	print("socket binded to port", port) 
-  
+	s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+	print("Socket created")
+	try:
+		s.bind((host, port)) 
+	except:
+		print('Bind failed. Error: ' + str(sys.exc_info()))
+		sys.exit()
+
+	print("socket binded to port", port)
 	# put the socket into listening mode 
-	s.listen(5) 
-	print("socket is listening") 
-  
+	s.listen(20)
+	print("socket is listening")
+	
 	# a forever loop until client wants to exit 
 	while True: 
-  
 		# establish connection with client 
-		c, addr = s.accept() 
-  
-		# lock acquired by client 
-		print_lock.acquire() 
-		print('Connected to :', addr[0], ':', addr[1]) 
-  
-		# Start a new thread and return its identifier 
-		start_new_thread(threaded, (c,)) 
-	s.close() 
+		connection, address = s.accept() 
+		ip, port = str(address[0]), str(address[1])
+		print("Connected with " + ip + ":" + port)
+		try:
+			Thread(target=clientThread, args=(connection, ip, port)).start()
+		except:
+			print("Thread did not start.")
+			traceback.print_exc()
+			s.close()
   
 if __name__ == '__main__': 
 	Main()
