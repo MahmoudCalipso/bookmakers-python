@@ -1,20 +1,32 @@
 # Updaters
+## Prematch
 */5 * * * * cd /home/antonio/Python/bookmakers-python && ./1xbet.sh
 */5 * * * * cd /home/antonio/Python/bookmakers-python && ./888sport.sh
 */5 * * * * cd /home/antonio/Python/bookmakers-python && ./bet365.sh
 */5 * * * * cd /home/antonio/Python/bookmakers-python && ./bethard.sh
-*/5 * * * * cd /home/antonio/Python/bookmakers-python && ./betmotion.sh
 */5 * * * * cd /home/antonio/Python/bookmakers-python && ./betsson.sh
 */5 * * * * cd /home/antonio/Python/bookmakers-python && ./betway.sh
 */5 * * * * cd /home/antonio/Python/bookmakers-python && ./codere.sh
 */5 * * * * cd /home/antonio/Python/bookmakers-python && ./interwetten.sh
 */5 * * * * cd /home/antonio/Python/bookmakers-python && ./leovegas.sh
 */5 * * * * cd /home/antonio/Python/bookmakers-python && ./luckia.sh
-*/5 * * * * cd /home/antonio/Python/bookmakers-python && ./marathonbet.sh
-*/5 * * * * cd /home/antonio/Python/bookmakers-python && ./rivalo.sh
 */5 * * * * cd /home/antonio/Python/bookmakers-python && ./sportium.sh
 */5 * * * * cd /home/antonio/Python/bookmakers-python && ./strendus.sh
 */5 * * * * cd /home/antonio/Python/bookmakers-python && ./vbet.sh
+
+## Live
+* * * * * cd /home/antonio/Python/bookmakers-python && ./1xbet.sh live
+* * * * * cd /home/antonio/Python/bookmakers-python && ./888sport.sh live
+* * * * * cd /home/antonio/Python/bookmakers-python && ./bet365.sh live
+* * * * * cd /home/antonio/Python/bookmakers-python && ./bethard.sh live
+* * * * * cd /home/antonio/Python/bookmakers-python && ./betsson.sh live
+* * * * * cd /home/antonio/Python/bookmakers-python && ./betway.sh live
+* * * * * cd /home/antonio/Python/bookmakers-python && ./codere.sh live
+* * * * * cd /home/antonio/Python/bookmakers-python && ./interwetten.sh live
+* * * * * cd /home/antonio/Python/bookmakers-python && ./leovegas.sh live
+* * * * * cd /home/antonio/Python/bookmakers-python && ./luckia.sh live
+* * * * * cd /home/antonio/Python/bookmakers-python && ./strendus.sh live
+* * * * * cd /home/antonio/Python/bookmakers-python && ./vbet.sh live
 
 # Cache tasks
 */30 * * * * cd /home/antonio/Python/bookmakers-python && ./bookmakers.sh

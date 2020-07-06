@@ -65,7 +65,6 @@ message = json.dumps({
         'timestamp': timestamp,
         'sport': 'All',
         'type': download_type,
-        'feeds': event_feeds,
         'started_at': started_at
     }
 })
