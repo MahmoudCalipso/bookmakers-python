@@ -43,33 +43,34 @@
 
 	# Updaters
 	## Prematch
-	*/5 * * * * cd /var/www/html/bookmakers-python && ./1xbet.sh >> /dev/null 2>&1
-	*/5 * * * * cd /var/www/html/bookmakers-python && ./888sport.sh >> /dev/null 2>&1
-	*/5 * * * * cd /var/www/html/bookmakers-python && ./bet365.sh >> /dev/null 2>&1
-	*/5 * * * * cd /var/www/html/bookmakers-python && ./bethard.sh >> /dev/null 2>&1
-	*/5 * * * * cd /var/www/html/bookmakers-python && ./betsson.sh >> /dev/null 2>&1
-	*/5 * * * * cd /var/www/html/bookmakers-python && ./betway.sh >> /dev/null 2>&1
-	*/5 * * * * cd /var/www/html/bookmakers-python && ./codere.sh >> /dev/null 2>&1
-	*/5 * * * * cd /var/www/html/bookmakers-python && ./interwetten.sh >> /dev/null 2>&1
-	*/5 * * * * cd /var/www/html/bookmakers-python && ./leovegas.sh >> /dev/null 2>&1
-	*/5 * * * * cd /var/www/html/bookmakers-python && ./luckia.sh >> /dev/null 2>&1
-	*/5 * * * * cd /var/www/html/bookmakers-python && ./sportium.sh >> /dev/null 2>&1
-	*/5 * * * * cd /var/www/html/bookmakers-python && ./strendus.sh >> /dev/null 2>&1
-	*/5 * * * * cd /var/www/html/bookmakers-python && ./vbet.sh >> /dev/null 2>&1
+	*/5 * * * * /usr/bin/pgrep -f /var/www/html/bookmakers-python/1xbet.sh > /dev/null 2> /dev/null || /var/www/html/bookmakers-python/1xbet.sh
+	*/5 * * * * /usr/bin/pgrep -f /var/www/html/bookmakers-python/888sport.sh > /dev/null 2> /dev/null || /var/www/html/bookmakers-python/888sport.sh
+	*/5 * * * * /usr/bin/pgrep -f /var/www/html/bookmakers-python/bet365.sh > /dev/null 2> /dev/null || /var/www/html/bookmakers-python/bet365.sh
+	*/5 * * * * /usr/bin/pgrep -f /var/www/html/bookmakers-python/bethard.sh > /dev/null 2> /dev/null || /var/www/html/bookmakers-python/bethard.sh
+	*/5 * * * * /usr/bin/pgrep -f /var/www/html/bookmakers-python/betsson.sh > /dev/null 2> /dev/null || /var/www/html/bookmakers-python/betsson.sh
+	*/5 * * * * /usr/bin/pgrep -f /var/www/html/bookmakers-python/betway.sh > /dev/null 2> /dev/null || /var/www/html/bookmakers-python/betway.sh
+	*/5 * * * * /usr/bin/pgrep -f /var/www/html/bookmakers-python/codere.sh > /dev/null 2> /dev/null || /var/www/html/bookmakers-python/codere.sh
+	*/5 * * * * /usr/bin/pgrep -f /var/www/html/bookmakers-python/interwetten.sh > /dev/null 2> /dev/null || /var/www/html/bookmakers-python/interwetten.sh
+	*/5 * * * * /usr/bin/pgrep -f /var/www/html/bookmakers-python/leovegas.sh > /dev/null 2> /dev/null || /var/www/html/bookmakers-python/leovegas.sh
+	*/5 * * * * /usr/bin/pgrep -f /var/www/html/bookmakers-python/luckia.sh > /dev/null 2> /dev/null || /var/www/html/bookmakers-python/luckia.sh
+	*/5 * * * * /usr/bin/pgrep -f /var/www/html/bookmakers-python/sportium.sh > /dev/null 2> /dev/null || /var/www/html/bookmakers-python/sportium.sh
+	*/5 * * * * /usr/bin/pgrep -f /var/www/html/bookmakers-python/strendus.sh > /dev/null 2> /dev/null || /var/www/html/bookmakers-python/strendus.sh
+	*/5 * * * * /usr/bin/pgrep -f /var/www/html/bookmakers-python/vbet.sh > /dev/null 2> /dev/null || /var/www/html/bookmakers-python/vbet.sh
 
 	## Live
-	* * * * * cd /var/www/html/bookmakers-python && ./1xbet.sh live >> /dev/null 2>&1
-	* * * * * cd /var/www/html/bookmakers-python && ./888sport.sh live >> /dev/null 2>&1
-	* * * * * cd /var/www/html/bookmakers-python && ./bet365.sh live >> /dev/null 2>&1
-	* * * * * cd /var/www/html/bookmakers-python && ./bethard.sh live >> /dev/null 2>&1
-	* * * * * cd /var/www/html/bookmakers-python && ./betsson.sh live >> /dev/null 2>&1
-	* * * * * cd /var/www/html/bookmakers-python && ./betway.sh live >> /dev/null 2>&1
-	* * * * * cd /var/www/html/bookmakers-python && ./codere.sh live >> /dev/null 2>&1
-	* * * * * cd /var/www/html/bookmakers-python && ./interwetten.sh live >> /dev/null 2>&1
-	* * * * * cd /var/www/html/bookmakers-python && ./leovegas.sh live >> /dev/null 2>&1
-	* * * * * cd /var/www/html/bookmakers-python && ./luckia.sh live >> /dev/null 2>&1
-	* * * * * cd /var/www/html/bookmakers-python && ./strendus.sh live >> /dev/null 2>&1
-	* * * * * cd /var/www/html/bookmakers-python && ./vbet.sh live >> /dev/null 2>&1
+	*/5 * * * * /usr/bin/pgrep -f /var/www/html/bookmakers-python/1xbet.sh live > /dev/null 2> /dev/null || /var/www/html/bookmakers-python/1xbet.sh live
+	*/5 * * * * /usr/bin/pgrep -f /var/www/html/bookmakers-python/888sport.sh live > /dev/null 2> /dev/null || /var/www/html/bookmakers-python/888sport.sh live
+	*/5 * * * * /usr/bin/pgrep -f /var/www/html/bookmakers-python/bet365.sh live > /dev/null 2> /dev/null || /var/www/html/bookmakers-python/bet365.sh live
+	*/5 * * * * /usr/bin/pgrep -f /var/www/html/bookmakers-python/bethard.sh live > /dev/null 2> /dev/null || /var/www/html/bookmakers-python/bethard.sh live
+	*/5 * * * * /usr/bin/pgrep -f /var/www/html/bookmakers-python/betsson.sh live > /dev/null 2> /dev/null || /var/www/html/bookmakers-python/betsson.sh live
+	*/5 * * * * /usr/bin/pgrep -f /var/www/html/bookmakers-python/betway.sh live > /dev/null 2> /dev/null || /var/www/html/bookmakers-python/betway.sh live
+	*/5 * * * * /usr/bin/pgrep -f /var/www/html/bookmakers-python/codere.sh live > /dev/null 2> /dev/null || /var/www/html/bookmakers-python/codere.sh live
+	*/5 * * * * /usr/bin/pgrep -f /var/www/html/bookmakers-python/interwetten.sh live > /dev/null 2> /dev/null || /var/www/html/bookmakers-python/interwetten.sh live
+	*/5 * * * * /usr/bin/pgrep -f /var/www/html/bookmakers-python/leovegas.sh live > /dev/null 2> /dev/null || /var/www/html/bookmakers-python/leovegas.sh live
+	*/5 * * * * /usr/bin/pgrep -f /var/www/html/bookmakers-python/luckia.sh live > /dev/null 2> /dev/null || /var/www/html/bookmakers-python/luckia.sh live
+	*/5 * * * * /usr/bin/pgrep -f /var/www/html/bookmakers-python/sportium.sh live > /dev/null 2> /dev/null || /var/www/html/bookmakers-python/sportium.sh live
+	*/5 * * * * /usr/bin/pgrep -f /var/www/html/bookmakers-python/strendus.sh live > /dev/null 2> /dev/null || /var/www/html/bookmakers-python/strendus.sh live
+	*/5 * * * * /usr/bin/pgrep -f /var/www/html/bookmakers-python/vbet.sh live > /dev/null 2> /dev/null || /var/www/html/bookmakers-python/vbet.sh live
 
 	# Cache tasks
 	*/5 * * * * cd /var/www/html/bookmakers-python && ./bookmakers.sh >> /dev/null 2>&1
