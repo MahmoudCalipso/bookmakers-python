@@ -258,6 +258,15 @@ try:
 		csv_rows += str(row[0]) + '@s.s@' + str(row[1]) + '@s.s@' + str(row[2]) + '@s.s@' + str(row[3]) + '@s.s@' + str(row[4]) + '@s.s@' + str(row[5]) + '@s.s@' + str(row[6]) + '\n'
 		i += 1
 
+	# Update cronjob
+	print('Updating cronjob')
+	try:
+		cursor.execute("UPDATE cronjobs SET updated_at = '" + datetime.now().strftime('%Y-%m-%d %H:%M:%S') + "' WHERE title = 'Bookmakers cache reloader'")
+		connection.commit()
+	except (Exception, psycopg2.Error) as error:
+		connection.rollback()
+		print ("Error while updating cronjob", error)
+
 except (Exception, psycopg2.Error) as error :
 	print ("Error while connecting to PostgreSQL", error)
 finally:
