@@ -82,7 +82,7 @@ if len(sys.argv) > 3:
 							date = ''
 							_datetime = datetime.strptime(event.get('sd'), '%Y-%m-%dT%H:%M:%SZ')
 							if _datetime:
-								_datetime = _datetime + timedelta(hours=1)
+								_datetime = _datetime + timedelta(hours=2)
 								date = _datetime.strftime(MYSQL_DATETIME_FORMAT)
 
 							event_name = event.get('en')

@@ -146,7 +146,7 @@ if len(sys.argv) > 3:
 
                     for key in events_to_process:
                         try:
-                            #print(bookmaker_title + ' :: Processing API event: ' + events_to_process[key].title)
+                            print(bookmaker_title + ' :: Processing API event: ' + events_to_process[key].title)
                             bookmaker_updater.processEvent(events_to_process[key])
                         except (Exception) as ex:
                             print(bookmaker_title + ' :: Could not process event: ' + str(ex))

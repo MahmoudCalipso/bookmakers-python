@@ -77,7 +77,7 @@ if len(sys.argv) > 3:
             for file in files:
                 file_path = folder_path + file
                 if os.path.exists(file_path):
-                    #print('Processing ' + file)
+                    print('Processing ' + file)
                     events = ijson.items(open(file_path, 'r', encoding="utf-8"), 'events.item');
                     for event in events:
                         try:
@@ -132,12 +132,11 @@ if len(sys.argv) > 3:
                                     bookmaker_event.tournament = tournament
                                     bookmaker_event.sport = sport
                                     bookmaker_event.date = date
-                                    bookmaker_event.teams = teams
 
                                     # Get odds from API
                                     event_json_path = bookmaker_title + "-event.json"
                                     event_feed_url = event_feed_url.replace('{id}', str(event.get('id')))
-                                    with requests.get(event_feed_url, stream=True) as r:
+                                    with requests.get(event_feed_url, stream=True, timeout=15) as r:
                                         with open(event_json_path, 'wb') as f:
                                             for chunk in r.iter_content(chunk_size=8192): 
                                                 # If you have chunk encoded response uncomment if
@@ -146,6 +145,7 @@ if len(sys.argv) > 3:
                                                 f.write(chunk)
 
                                     odds = []
+                                    i = 0
                                     markets = ijson.items(open(event_json_path, 'r', encoding="utf-8"), 'betoffers.item')
 
                                     for market in markets:
@@ -186,6 +186,7 @@ if len(sys.argv) > 3:
                                         bookmaker_event.replace_title = EVENT_CHAMPIONSHIP_WINNER
 
                                     bookmaker_event.live = live
+                                    bookmaker_event.teams = teams
 
                                     bookmaker_updater.processEvent(bookmaker_event)
 

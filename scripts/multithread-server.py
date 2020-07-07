@@ -30,6 +30,8 @@ def clientThread(connection, ip, port, max_buffer_size = 5120):
 				print('Download complete! Waking up ' + data['bookmaker_title'] + ' seeder...')
 				os.system('cd Seeder && python run.py ' + str(data['bookmaker_id']) + ' ' + data['bookmaker_title'] + ' ' + data['timestamp'] + ' ' + str(data['live']) + ' ' + data['started_at'])
 
+		break
+
 def receive_input(connection, max_buffer_size):
 	client_input = connection.recv(max_buffer_size)
 	client_input_size = sys.getsizeof(client_input)

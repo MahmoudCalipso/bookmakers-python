@@ -738,7 +738,7 @@ def buildEvent(bookmaker_event):
 				len(bookmaker_event.date) > 0
 				and len(event_name) > 0
 				and (
-					(not has_members and not event_between_two_teams and ((teams_count > 0 and len(bookmaker_event.teams) != 2) or bookmaker_event.replace_title == EVENT_CHAMPIONSHIP_WINNER)) # Outright
+					(not has_members and not event_between_two_teams and (teams_count > 0 and teams_count != 2) and bookmaker_event.replace_title == EVENT_CHAMPIONSHIP_WINNER) # Outright
 					or (not has_members and event_between_two_teams and teams_count == 2) # 1 vs 1
 					or (has_members and event_between_two_teams_with_members and teams_count == 2) # 2 vs 2
 				)

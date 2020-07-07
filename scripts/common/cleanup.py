@@ -33,11 +33,17 @@ try:
 		connection.rollback()
 		print("Error while deleting update queues", error)
 
-	# Delete all the events that are equal or previous to this date
+	# Delete all the outcomes belonging to those events that are equal or previous to this date
 	print('Deleting events')
 	try:
 		now = now - relativedelta(months=3)
 		cursor.execute("DELETE FROM events e WHERE CONCAT(e.date, \' \', e.time) <= '" + now.strftime('%Y-%m-%d %H:%M:%S') + "'")
+		cursor.execute(
+			"DELETE FROM bookmaker_events be where fk_event_id IN (" +
+				"SELECT id FROM events e " +
+				"WHERE e.related_to_market IS NULL AND CONCAT(e.date, \' \', e.time) <= '" + now.strftime('%Y-%m-%d %H:%M:%S') + "' "
+			")"
+		)
 		connection.commit()
 		print("Affected rows = {}".format(cursor.rowcount))
 	except (Exception, psycopg2.Error) as error:

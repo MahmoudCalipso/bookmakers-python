@@ -94,8 +94,6 @@ if len(sys.argv) > 3:
 											else:
 												event_name = event.get('team1_name')
 
-											event_name = teams[0].title + ' vs ' + teams[1].title
-
 											#print(bookmaker_title + ' :: Processing API event: ' + event_name)
 
 											bookmaker_event.event_id = event.get('id')

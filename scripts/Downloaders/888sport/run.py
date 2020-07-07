@@ -53,7 +53,7 @@ else:
         id = sport.get('id')
         print("Looping sport " + name + " with ID " + str(id))
         # Download tournaments feed
-        print('-- Beginning events feed download...')
+        #print('-- Beginning events feed download...')
         events_feed_url = 'http://www.smart-feeds.com/getfeeds.aspx?Param=event/group/' + str(id) + '&includeParticipants=true';
 
         if not os.path.exists(queue_downloader_path):

@@ -1,6 +1,8 @@
-205@s.s@Division Winner@s.s@Division Winner@s.s@44@s.s@Baseball@s.s@1199966@s.s@Winner - AL West Champion
+200@s.s@Championship outright@s.s@Championship outright@s.s@44@s.s@Baseball@s.s@1199963@s.s@Winner - National League Champion
 202@s.s@Race to 3 runs@s.s@Race to 3 runs@s.s@44@s.s@Baseball@s.s@704449@s.s@Special Markets - Race To 3 Runs
+16@s.s@Championship outright@s.s@Championship outright@s.s@1@s.s@Football@s.s@702513@s.s@Outrights - Winner
 198@s.s@Runs over/under@s.s@Total runs over/under@s.s@44@s.s@Baseball@s.s@704291@s.s@Match (including extra innings unless specified) - Total Runs
+210@s.s@Both teams to score@s.s@Both teams to score@s.s@44@s.s@Baseball@s.s@958023@s.s@Special Markets - Both Teams To Score (Incl Extra Innings)
 30@s.s@3rd quarter odd/even@s.s@3rd quarter odd/even@s.s@2@s.s@Basketball@s.s@704746@s.s@3rd Quarter - 3rd Quarter Total Points - Odd/Even
 26@s.s@1st half points odd/even@s.s@1st half points odd/even@s.s@2@s.s@Basketball@s.s@702331@s.s@1st Half - 1st Half Total Points - Odd/Even
 39@s.s@Winner 2 way@s.s@Winner@s.s@2@s.s@Basketball@s.s@704232@s.s@Match Winner (Including OT) - Match Winner (Including OT)
@@ -8,8 +10,8 @@
 55@s.s@Total points@s.s@Total points@s.s@5@s.s@Rugby League@s.s@1255761@s.s@Total Points Over/Under - Total Points
 50@s.s@Draw no bet@s.s@Draw no bet@s.s@5@s.s@Rugby League@s.s@1255760@s.s@Draw no bet - Draw no Bet
 199@s.s@Total runs odd/even@s.s@Total runs odd/even@s.s@44@s.s@Baseball@s.s@704262@s.s@Special Markets - Number of Runs
-29@s.s@2nd quarter odd/even@s.s@2nd quarter odd/even@s.s@2@s.s@Basketball@s.s@704760@s.s@2nd Quarter - 2nd Quarter Total Points - Odd/Even
 28@s.s@1st quarter odd/even@s.s@1st quarter odd/even@s.s@2@s.s@Basketball@s.s@702336@s.s@1st Quarter - 1st Quarter Total Points - Odd/Even
+29@s.s@2nd quarter odd/even@s.s@2nd quarter odd/even@s.s@2@s.s@Basketball@s.s@704760@s.s@2nd Quarter - 2nd Quarter Total Points - Odd/Even
 193@s.s@1st Game Winner@s.s@1st Game Winner@s.s@39@s.s@Table Tennis@s.s@702701@s.s@Games - Game 1 Winner
 190@s.s@Games Handicap@s.s@Games Handicap@s.s@39@s.s@Table Tennis@s.s@702700@s.s@Match - Match Game Handicap
 188@s.s@Match Winner@s.s@Match Winner@s.s@39@s.s@Table Tennis@s.s@702201@s.s@Match Winner - Match Winner
@@ -49,15 +51,14 @@
 80@s.s@2nd set winner@s.s@2nd set winner@s.s@6@s.s@Tennis@s.s@804925@s.s@More Markets - Set 2 Winner
 51@s.s@Winning Margins Rugby Union@s.s@Winning Margins@s.s@5@s.s@Rugby League@s.s@1224240@s.s@Winning Margin - Winning Margin
 35@s.s@4th quarter winner@s.s@4th quarter winner@s.s@2@s.s@Basketball@s.s@704764@s.s@4th Quarter - 4th Quarter Winner
-27@s.s@2nd half points odd/even@s.s@2nd half points odd/even@s.s@2@s.s@Basketball@s.s@704761@s.s@2nd Half - 2nd Half Total Points - Odd/Even
 40@s.s@Total points odd/even@s.s@Total points odd/even@s.s@2@s.s@Basketball@s.s@702341@s.s@More Markets - Total Points - Odd/Even (Inc. OT)
 86@s.s@3-way@s.s@Winner@s.s@7@s.s@Boxing@s.s@922835@s.s@Match Winner - Winner
+27@s.s@2nd half points odd/even@s.s@2nd half points odd/even@s.s@2@s.s@Basketball@s.s@704761@s.s@2nd Half - 2nd Half Total Points - Odd/Even
 59@s.s@Championship outright@s.s@Championship outright@s.s@5@s.s@Rugby League@s.s@1149705@s.s@Winner - Winner Rugby League
 2@s.s@3-way@s.s@Winner@s.s@1@s.s@Football@s.s@702383@s.s@Match Winner - Match Result
 72@s.s@Winner@s.s@Winner@s.s@6@s.s@Tennis@s.s@702193@s.s@Match Winner - Match Winner
 98@s.s@Outright winner (pilot)@s.s@Outright winner@s.s@12@s.s@Formula 1@s.s@704921@s.s@Winner - Winner
 44@s.s@First half 1x2@s.s@First half winner (1X2)@s.s@2@s.s@Basketball@s.s@702328@s.s@1st Half - 1st Half Result
-36@s.s@1st half result@s.s@1st half winner@s.s@2@s.s@Basketball@s.s@702327@s.s@1st Half - 1st Half Winner
 166@s.s@2nd Quarter Points@s.s@2nd Quarter Points@s.s@2@s.s@Basketball@s.s@704732@s.s@2nd Quarter - 2nd Quarter Total Points
 168@s.s@4th Quarter Points@s.s@4th Quarter Points@s.s@2@s.s@Basketball@s.s@704768@s.s@4th Quarter - 4th Quarter Total Points
 31@s.s@4th quarter odd/even@s.s@4th quarter odd/even@s.s@2@s.s@Basketball@s.s@704769@s.s@4th Quarter - 4th Quarter Total Points - Odd/Even
@@ -79,22 +80,21 @@
 1@s.s@Correct score@s.s@Correct score@s.s@1@s.s@Football@s.s@702400@s.s@Correct Score - Correct Score
 24@s.s@Minute interval the first goal is scored in@s.s@1st goal scored - Minute interval@s.s@1@s.s@Football@s.s@1078850@s.s@Goals - Time of first match goal
 3@s.s@2-way@s.s@Draw no bet@s.s@1@s.s@Football@s.s@893602@s.s@Match - Draw No Bet
+36@s.s@1st half result@s.s@1st half winner@s.s@2@s.s@Basketball@s.s@702327@s.s@1st Half - 1st Half Winner
 45@s.s@Second half 1x2@s.s@Second half Winner (1X2)@s.s@2@s.s@Basketball@s.s@704738@s.s@2nd Half - 2nd Half Result
-165@s.s@1st Quarter Points@s.s@1st Quarter Points@s.s@2@s.s@Basketball@s.s@702335@s.s@1st Quarter - 1st Quarter Total Points
-14@s.s@Asian Handicap@s.s@Asian Handicap@s.s@1@s.s@Football@s.s@702417@s.s@Handicap - Asian Handicap
 80@s.s@2nd set winner@s.s@2nd set winner@s.s@6@s.s@Tennis@s.s@702194@s.s@Sets - Set 2 Winner
 1@s.s@Correct score@s.s@Correct score@s.s@1@s.s@Football@s.s@704615@s.s@Correct Score - Correct Score - Full Time
 49@s.s@Point spread (handicap)@s.s@Handicap@s.s@5@s.s@Rugby League@s.s@1149710@s.s@Handicap - Handicap
+14@s.s@Asian Handicap@s.s@Asian Handicap@s.s@1@s.s@Football@s.s@702417@s.s@Handicap - Asian Handicap
 34@s.s@3rd quarter winner@s.s@3rd quarter winner@s.s@2@s.s@Basketball@s.s@704742@s.s@3rd Quarter - 3rd Quarter Winner
 42@s.s@Point spread (handicap)@s.s@Handicap@s.s@2@s.s@Basketball@s.s@1277287@s.s@Handicap - Handicap 1X2 (Inc. OT)
-9@s.s@Total number of goals@s.s@Total number of goals@s.s@1@s.s@Football@s.s@702384@s.s@Goals - Number of goals
+165@s.s@1st Quarter Points@s.s@1st Quarter Points@s.s@2@s.s@Basketball@s.s@702335@s.s@1st Quarter - 1st Quarter Total Points
 82@s.s@Total games over/under@s.s@Total games over/under@s.s@6@s.s@Tennis@s.s@1295129@s.s@Total Games Played - Total Games Played
-74@s.s@Game Handicap@s.s@Game Handicap@s.s@6@s.s@Tennis@s.s@1295128@s.s@Handicap - Games Handicap
 99@s.s@Outright winner (team)@s.s@Outright winner (team)@s.s@12@s.s@Formula 1@s.s@63605208@s.s@Winner - Constructor Winner
 9@s.s@Total number of goals@s.s@Total number of goals@s.s@1@s.s@Football@s.s@704544@s.s@Goals - Exact Number of Goals
 4@s.s@Totals@s.s@Goals - over/under@s.s@1@s.s@Football@s.s@893875@s.s@Number of goals - Total Goals
 195@s.s@Winner@s.s@Winner@s.s@37@s.s@TV & Politics@s.s@708880@s.s@Winner - Winner
-210@s.s@Both teams to score@s.s@Both teams to score@s.s@44@s.s@Baseball@s.s@958023@s.s@Special Markets - Both Teams To Score (Incl Extra Innings)
+74@s.s@Game Handicap@s.s@Game Handicap@s.s@6@s.s@Tennis@s.s@1295128@s.s@Handicap - Games Handicap
 170@s.s@2nd half points@s.s@2nd half points@s.s@2@s.s@Basketball@s.s@704733@s.s@2nd Half - 2nd Half Total Points
 169@s.s@1st half points@s.s@1st half points@s.s@2@s.s@Basketball@s.s@702330@s.s@1st Half - 1st Half Total Points
 10@s.s@Both teams to score@s.s@Both teams to score@s.s@1@s.s@Football@s.s@704178@s.s@Match - Both Teams To Score
@@ -115,7 +115,7 @@
 21@s.s@Double bet chance@s.s@Double bet chance@s.s@1@s.s@Football@s.s@702390@s.s@Match - Double chance
 50@s.s@Draw no bet@s.s@Draw no bet@s.s@5@s.s@Rugby League@s.s@1149707@s.s@Money Line - Draw no Bet
 205@s.s@Division Winner@s.s@Division Winner@s.s@44@s.s@Baseball@s.s@1199968@s.s@Winner - NL East Champion
-200@s.s@Championship outright@s.s@Championship outright@s.s@44@s.s@Baseball@s.s@1199963@s.s@Winner - National League Champion
+205@s.s@Division Winner@s.s@Division Winner@s.s@44@s.s@Baseball@s.s@1199966@s.s@Winner - AL West Champion
 205@s.s@Division Winner@s.s@Division Winner@s.s@44@s.s@Baseball@s.s@1199964@s.s@Winner - AL Central Champion
 205@s.s@Division Winner@s.s@Division Winner@s.s@44@s.s@Baseball@s.s@1199965@s.s@Winner - AL East Champion
 205@s.s@Division Winner@s.s@Division Winner@s.s@44@s.s@Baseball@s.s@1199967@s.s@Winner - NL Central Champion
@@ -139,7 +139,7 @@
 20@s.s@Odd or even number of total goals@s.s@Total goals - odd/even@s.s@1@s.s@Football@s.s@704183@s.s@Goals - Odd/Even number of goals
 196@s.s@Match Winner@s.s@Match Winner@s.s@44@s.s@Baseball@s.s@703871@s.s@Match Winner - Moneyline
 2@s.s@3-way@s.s@Winner@s.s@1@s.s@Football@s.s@702505@s.s@Match - Match Winner
+9@s.s@Total number of goals@s.s@Total number of goals@s.s@1@s.s@Football@s.s@702384@s.s@Goals - Number of goals
 161@s.s@Map 1 - Winner@s.s@Map 1 - Winner@s.s@14@s.s@E-Sports@s.s@702170@s.s@Match Markets - Map 1 - Winner
-16@s.s@Championship outright@s.s@Championship outright@s.s@1@s.s@Football@s.s@702513@s.s@Outrights - Winner
 195@s.s@Winner@s.s@Winner@s.s@37@s.s@TV & Politics@s.s@702343@s.s@Winner - Winner
 95@s.s@First round leader@s.s@First round leader@s.s@10@s.s@Golf@s.s@702314@s.s@1st Round - 1st Round

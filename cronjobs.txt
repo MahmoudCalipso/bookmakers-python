@@ -1,37 +1,80 @@
-# Updaters
-## Prematch
-*/5 * * * * cd /home/antonio/Python/bookmakers-python && ./1xbet.sh
-*/5 * * * * cd /home/antonio/Python/bookmakers-python && ./888sport.sh
-*/5 * * * * cd /home/antonio/Python/bookmakers-python && ./bet365.sh
-*/5 * * * * cd /home/antonio/Python/bookmakers-python && ./bethard.sh
-*/5 * * * * cd /home/antonio/Python/bookmakers-python && ./betsson.sh
-*/5 * * * * cd /home/antonio/Python/bookmakers-python && ./betway.sh
-*/5 * * * * cd /home/antonio/Python/bookmakers-python && ./codere.sh
-*/5 * * * * cd /home/antonio/Python/bookmakers-python && ./interwetten.sh
-*/5 * * * * cd /home/antonio/Python/bookmakers-python && ./leovegas.sh
-*/5 * * * * cd /home/antonio/Python/bookmakers-python && ./luckia.sh
-*/5 * * * * cd /home/antonio/Python/bookmakers-python && ./sportium.sh
-*/5 * * * * cd /home/antonio/Python/bookmakers-python && ./strendus.sh
-*/5 * * * * cd /home/antonio/Python/bookmakers-python && ./vbet.sh
+- Local environment
 
-## Live
-* * * * * cd /home/antonio/Python/bookmakers-python && ./1xbet.sh live
-* * * * * cd /home/antonio/Python/bookmakers-python && ./888sport.sh live
-* * * * * cd /home/antonio/Python/bookmakers-python && ./bet365.sh live
-* * * * * cd /home/antonio/Python/bookmakers-python && ./bethard.sh live
-* * * * * cd /home/antonio/Python/bookmakers-python && ./betsson.sh live
-* * * * * cd /home/antonio/Python/bookmakers-python && ./betway.sh live
-* * * * * cd /home/antonio/Python/bookmakers-python && ./codere.sh live
-* * * * * cd /home/antonio/Python/bookmakers-python && ./interwetten.sh live
-* * * * * cd /home/antonio/Python/bookmakers-python && ./leovegas.sh live
-* * * * * cd /home/antonio/Python/bookmakers-python && ./luckia.sh live
-* * * * * cd /home/antonio/Python/bookmakers-python && ./strendus.sh live
-* * * * * cd /home/antonio/Python/bookmakers-python && ./vbet.sh live
+	# Updaters
+	## Prematch
+	*/5 * * * * cd /home/antonio/Python/bookmakers-python && ./1xbet.sh >> /dev/null 2>&1
+	*/5 * * * * cd /home/antonio/Python/bookmakers-python && ./888sport.sh >> /dev/null 2>&1
+	*/5 * * * * cd /home/antonio/Python/bookmakers-python && ./bet365.sh >> /dev/null 2>&1
+	*/5 * * * * cd /home/antonio/Python/bookmakers-python && ./bethard.sh >> /dev/null 2>&1
+	*/5 * * * * cd /home/antonio/Python/bookmakers-python && ./betsson.sh >> /dev/null 2>&1
+	*/5 * * * * cd /home/antonio/Python/bookmakers-python && ./betway.sh >> /dev/null 2>&1
+	*/5 * * * * cd /home/antonio/Python/bookmakers-python && ./codere.sh >> /dev/null 2>&1
+	*/5 * * * * cd /home/antonio/Python/bookmakers-python && ./interwetten.sh >> /dev/null 2>&1
+	*/5 * * * * cd /home/antonio/Python/bookmakers-python && ./leovegas.sh >> /dev/null 2>&1
+	*/5 * * * * cd /home/antonio/Python/bookmakers-python && ./luckia.sh >> /dev/null 2>&1
+	*/5 * * * * cd /home/antonio/Python/bookmakers-python && ./sportium.sh >> /dev/null 2>&1
+	*/5 * * * * cd /home/antonio/Python/bookmakers-python && ./strendus.sh >> /dev/null 2>&1
+	*/5 * * * * cd /home/antonio/Python/bookmakers-python && ./vbet.sh >> /dev/null 2>&1
 
-# Cache tasks
-*/30 * * * * cd /home/antonio/Python/bookmakers-python && ./bookmakers.sh
-0 1 * * * cd /home/antonio/Python/bookmakers-python && ./market-parser.sh
+	## Live
+	* * * * * cd /home/antonio/Python/bookmakers-python && ./1xbet.sh live >> /dev/null 2>&1
+	* * * * * cd /home/antonio/Python/bookmakers-python && ./888sport.sh live >> /dev/null 2>&1
+	* * * * * cd /home/antonio/Python/bookmakers-python && ./bet365.sh live >> /dev/null 2>&1
+	* * * * * cd /home/antonio/Python/bookmakers-python && ./bethard.sh live >> /dev/null 2>&1
+	* * * * * cd /home/antonio/Python/bookmakers-python && ./betsson.sh live >> /dev/null 2>&1
+	* * * * * cd /home/antonio/Python/bookmakers-python && ./betway.sh live >> /dev/null 2>&1
+	* * * * * cd /home/antonio/Python/bookmakers-python && ./codere.sh live >> /dev/null 2>&1
+	* * * * * cd /home/antonio/Python/bookmakers-python && ./interwetten.sh live >> /dev/null 2>&1
+	* * * * * cd /home/antonio/Python/bookmakers-python && ./leovegas.sh live >> /dev/null 2>&1
+	* * * * * cd /home/antonio/Python/bookmakers-python && ./luckia.sh live >> /dev/null 2>&1
+	* * * * * cd /home/antonio/Python/bookmakers-python && ./strendus.sh live >> /dev/null 2>&1
+	* * * * * cd /home/antonio/Python/bookmakers-python && ./vbet.sh live >> /dev/null 2>&1
 
-# Common tasks
-* * * * * cd /home/antonio/Python/bookmakers-python && ./live.sh
-0 1 * * * cd /home/antonio/Python/bookmakers-python && ./cleanup.sh
+	# Cache tasks
+	*/5 * * * * cd /home/antonio/Python/bookmakers-python && ./bookmakers.sh >> /dev/null 2>&1
+	0 1 * * * cd /home/antonio/Python/bookmakers-python && ./market-parser.sh >> /dev/null 2>&1
+
+	# Common tasks
+	* * * * * cd /home/antonio/Python/bookmakers-python && ./live.sh >> /dev/null 2>&1
+	0 1 * * * cd /home/antonio/Python/bookmakers-python && ./cleanup.sh >> /dev/null 2>&1
+
+
+- Production environment
+
+	# Updaters
+	## Prematch
+	*/5 * * * * cd /var/www/html/bookmakers-python && ./1xbet.sh >> /dev/null 2>&1
+	*/5 * * * * cd /var/www/html/bookmakers-python && ./888sport.sh >> /dev/null 2>&1
+	*/5 * * * * cd /var/www/html/bookmakers-python && ./bet365.sh >> /dev/null 2>&1
+	*/5 * * * * cd /var/www/html/bookmakers-python && ./bethard.sh >> /dev/null 2>&1
+	*/5 * * * * cd /var/www/html/bookmakers-python && ./betsson.sh >> /dev/null 2>&1
+	*/5 * * * * cd /var/www/html/bookmakers-python && ./betway.sh >> /dev/null 2>&1
+	*/5 * * * * cd /var/www/html/bookmakers-python && ./codere.sh >> /dev/null 2>&1
+	*/5 * * * * cd /var/www/html/bookmakers-python && ./interwetten.sh >> /dev/null 2>&1
+	*/5 * * * * cd /var/www/html/bookmakers-python && ./leovegas.sh >> /dev/null 2>&1
+	*/5 * * * * cd /var/www/html/bookmakers-python && ./luckia.sh >> /dev/null 2>&1
+	*/5 * * * * cd /var/www/html/bookmakers-python && ./sportium.sh >> /dev/null 2>&1
+	*/5 * * * * cd /var/www/html/bookmakers-python && ./strendus.sh >> /dev/null 2>&1
+	*/5 * * * * cd /var/www/html/bookmakers-python && ./vbet.sh >> /dev/null 2>&1
+
+	## Live
+	* * * * * cd /var/www/html/bookmakers-python && ./1xbet.sh live >> /dev/null 2>&1
+	* * * * * cd /var/www/html/bookmakers-python && ./888sport.sh live >> /dev/null 2>&1
+	* * * * * cd /var/www/html/bookmakers-python && ./bet365.sh live >> /dev/null 2>&1
+	* * * * * cd /var/www/html/bookmakers-python && ./bethard.sh live >> /dev/null 2>&1
+	* * * * * cd /var/www/html/bookmakers-python && ./betsson.sh live >> /dev/null 2>&1
+	* * * * * cd /var/www/html/bookmakers-python && ./betway.sh live >> /dev/null 2>&1
+	* * * * * cd /var/www/html/bookmakers-python && ./codere.sh live >> /dev/null 2>&1
+	* * * * * cd /var/www/html/bookmakers-python && ./interwetten.sh live >> /dev/null 2>&1
+	* * * * * cd /var/www/html/bookmakers-python && ./leovegas.sh live >> /dev/null 2>&1
+	* * * * * cd /var/www/html/bookmakers-python && ./luckia.sh live >> /dev/null 2>&1
+	* * * * * cd /var/www/html/bookmakers-python && ./strendus.sh live >> /dev/null 2>&1
+	* * * * * cd /var/www/html/bookmakers-python && ./vbet.sh live >> /dev/null 2>&1
+
+	# Cache tasks
+	*/5 * * * * cd /var/www/html/bookmakers-python && ./bookmakers.sh >> /dev/null 2>&1
+	0 1 * * * cd /var/www/html/bookmakers-python && ./market-parser.sh >> /dev/null 2>&1
+
+	# Common tasks
+	* * * * * cd /var/www/html/bookmakers-python && ./live.sh >> /dev/null 2>&1
+	0 1 * * * cd /var/www/html/bookmakers-python && ./cleanup.sh >> /dev/null 2>&1
