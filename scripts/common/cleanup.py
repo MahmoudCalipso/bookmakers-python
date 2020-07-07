@@ -7,10 +7,11 @@ import csv
 from dateutil.relativedelta import relativedelta
 from datetime import datetime, timedelta
 
+connection = None
 start_time = time.time()
 
 try:
-	connection = psycopg2.connect(user = "asanchez",
+	connection = psycopg2.connect(user = "postgres",
 								  password = "aegha5Cu",
 								  host = "127.0.0.1",
 								  port = "5432",
@@ -37,7 +38,6 @@ try:
 	print('Deleting events')
 	try:
 		now = now - relativedelta(months=3)
-		cursor.execute("DELETE FROM events e WHERE CONCAT(e.date, \' \', e.time) <= '" + now.strftime('%Y-%m-%d %H:%M:%S') + "'")
 		cursor.execute(
 			"DELETE FROM bookmaker_events be where fk_event_id IN (" +
 				"SELECT id FROM events e " +
@@ -67,6 +67,16 @@ try:
 	except (Exception, psycopg2.Error) as error:
 		connection.rollback()
 		print ("Error while deleting outright outcomes", error)
+
+	# Update cronjob
+	print('Updating cronjob')
+	try:
+		cursor.execute("UPDATE cronjobs SET updated_at = '" + datetime.now().strftime('%Y-%m-%d %H:%M:%S') + "' WHERE title = 'Clean Up'")
+		connection.commit()
+		print("Affected rows = {}".format(cursor.rowcount))
+	except (Exception, psycopg2.Error) as error:
+		connection.rollback()
+		print ("Error while updating cronjob", error)
 	
 except (Exception, psycopg2.Error) as error:
 	if connection:

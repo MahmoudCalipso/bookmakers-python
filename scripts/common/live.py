@@ -7,9 +7,10 @@ import csv
 from datetime import datetime, timedelta
 
 start_time = time.time()
+connection = None
 
 try:
-	connection = psycopg2.connect(user = "asanchez",
+	connection = psycopg2.connect(user = "postgres",
 								  password = "aegha5Cu",
 								  host = "127.0.0.1",
 								  port = "5432",
@@ -44,6 +45,16 @@ try:
 	except (Exception, psycopg2.Error) as error:
 		connection.rollback()
 		print ("Error while updating has_markets flag", error)
+
+	# Update cronjob
+	print('Updating cronjob')
+	try:
+		cursor.execute("UPDATE cronjobs SET updated_at = '" + datetime.now().strftime('%Y-%m-%d %H:%M:%S') + "' WHERE title = 'Live Updater'")
+		connection.commit()
+		print("Affected rows = {}".format(cursor.rowcount))
+	except (Exception, psycopg2.Error) as error:
+		connection.rollback()
+		print ("Error while updating cronjob", error)
 except (Exception, psycopg2.Error) as error:
 	if connection:
 		connection.rollback()
