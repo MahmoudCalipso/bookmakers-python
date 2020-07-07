@@ -3,6 +3,7 @@
 import psycopg2
 import os
 import time
+import datetime
 
 start_time = time.time()
 connection = None
